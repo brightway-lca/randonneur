@@ -31,15 +31,23 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 
 All input functions take data in the [`wurst` format](https://wurst.readthedocs.io/#internal-data-format).
 
+### Basic pattern
+
+For migrating exchanges: Given a database, iterate through the datasets. If a `dataset_filter` is given, ignore any datasets which don't pass the filter. In each dataset, iterate through the exchanges. If an `exchange_filter` is given, ignore any exchanges which don't pass the filter. For each exchange, look at the following possible transformations in order: `delete`, `replace`, `update`, and `disaggregate`. Only one transformation can be done to an exchange. Each transformation will change or delete the exchange under consideration, and maybe add some new exchanges to the dataset, though this addition will only happen after the original exchanges have been examined. After looking at all the exchanges, apply the `create` transformation to add more exchanges if provided.
+
+For each exchange and transformation, we need to decide if that transformation should be applied. We do this based on the attributes of the dataset and exchange, and the attributes given in the transformation data. We compare the attribute values for a given set of fields, and these attributes must match exactly. The default fields are `name`, `reference product`, `product`, `location`, `unit`; you can specify your own fields.
+
+Migrating datasets works the same way, except that we operate directly on the datasets instead of the exchanges.
+
 ### Migrating exchanges
 
 Exchanges are the consumption or production of a good or service. Exchanges link two nodes (two activities, one product and one activity, one activity and one biosphere flow, or even other node types). We support the following types of exchange changes:
 
-* Create
-* Replace
-* Update
-* Delete
-* Disaggregate
+* `delete`
+* `replace`
+* `update`
+* `disaggregate`
+* `create`
 
 #### Generic data format
 
