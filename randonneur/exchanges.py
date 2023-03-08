@@ -6,15 +6,7 @@ try:
 except ImportError:
     tqdm = None
 
-
-def as_tuple(obj, fields):
-    def converter(value):
-        if isinstance(value, list):
-            return tuple(value)
-        else:
-            return value
-
-    return tuple([converter(obj.get(field)) for field in fields])
+from .utils import as_tuple
 
 
 def migrate_exchanges(
