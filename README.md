@@ -39,7 +39,9 @@ Exchange migration is specified in a JSON file. This file should include informa
 
 #### Create
 
-Creates a new exchange in all nodes, or in one specific node. Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
+Creates a new exchange in all nodes, or in one specific node.
+
+Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
 
 If you want to add an exchange to all nodes:
 
@@ -86,7 +88,7 @@ The data format for `replace` type is:
 
 ```python
 {
-    "create": [{
+    "replace": [{
         "source": {
             # All fields needed to identify the exchange to be replaced
         },
