@@ -146,11 +146,19 @@ def migrate_exchanges(
             #         new_exchange['amount'] *= other_exchange.pop("allocation", 1.0)
             #         new_exchange.update(other_exchange)
 
-        # if create:
-        #     exchanges_to_add.extend(creation_mapping.get(mapping_key(dataset), []))
+        if create:
+            exchanges_to_add.extend(create_generic_mapping)
+            try:
+                exchanges_to_add.extend(create_specific_mapping[node_key])
+            except KeyError:
+                pass
 
         if exchanges_to_delete:
-            exchanges = [exchange for exchange in exchanges if exchange not in exchanges_to_delete]
+            exchanges = [
+                exchange
+                for exchange in exchanges
+                if exchange not in exchanges_to_delete
+            ]
         if exchanges_to_add:
             exchanges.extend(exchanges_to_add)
         dataset["exchanges"] = exchanges
