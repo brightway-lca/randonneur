@@ -192,7 +192,7 @@ _randonneur_ is free and open source software.
 ## Issues
 
 If you encounter any problems,
-please [file an issue] along with a detailed description.
+please [file an issue](https://github.com/cmutel/randonneur/issues/new/choose) along with a detailed description.
 
 
 <!-- github-only -->
