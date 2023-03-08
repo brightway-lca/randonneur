@@ -105,7 +105,16 @@ def migrate_exchanges(
             if "node" in obj
         }
 
-        # disaggregation_mapping = {}
+        disaggregation_generic_mapping = {
+            mapping_key(obj["source"]): obj["targets"]
+            for obj in migration_data.get("disaggregate", [])
+            if "node" not in obj
+        }
+        disaggregation_specific_mapping = {
+            (mapping_key(obj["source"]), mapping_key(obj["node"])): obj["targets"]
+            for obj in migration_data.get("disaggregate", [])
+            if "node" in obj
+        }
     except TypeError as exc:
         ERROR = (
             "Couldn't cast input data to a hashable type, please use fields"
@@ -155,13 +164,25 @@ def migrate_exchanges(
                     new_exchange = update_specific_mapping[(exchange_key, node_key)]
                     exchange["amount"] *= new_exchange.pop("allocation", 1.0)
                     exchange.update(new_exchange)
-
-            # elif disaggregate and key in disaggregation_mapping:
-            #     exchanges_to_delete.append(exchange)
-            #     for other_exchange in disaggregation_mapping[key]:
-            #         new_exchange = copy(exchange)
-            #         new_exchange['amount'] *= other_exchange.pop("allocation", 1.0)
-            #         new_exchange.update(other_exchange)
+            elif disaggregate:
+                if exchange_key in disaggregation_generic_mapping:
+                    new_exchanges = disaggregation_generic_mapping[exchange_key]
+                    for new_exchange in new_exchanges:
+                        new_exchange["amount"] = exchange["amount"] * new_exchange.pop(
+                            "allocation", 1.0
+                        )
+                    exchanges_to_add.extend(new_exchanges)
+                    exchanges_to_delete.append(exchange)
+                elif (exchange_key, node_key) in disaggregation_specific_mapping:
+                    new_exchanges = disaggregation_specific_mapping[
+                        (exchange_key, node_key)
+                    ]
+                    for new_exchange in new_exchanges:
+                        new_exchange["amount"] = exchange["amount"] * new_exchange.pop(
+                            "allocation", 1.0
+                        )
+                    exchanges_to_add.extend(new_exchanges)
+                    exchanges_to_delete.append(exchange)
 
         if create:
             exchanges_to_add.extend(create_generic)
