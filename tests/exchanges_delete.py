@@ -121,7 +121,6 @@ def test_migrate_exchanges_delete_exchange_filter(generic, deletion):
 
 
 def test_migrate_exchanges_delete_custom_fields(generic, deletion):
-    assert len(generic[0]["exchanges"]) == 2
     result = migrate_exchanges(
         deletion, copy(generic), fields=("name", "location", "extra")
     )
@@ -129,8 +128,39 @@ def test_migrate_exchanges_delete_custom_fields(generic, deletion):
 
 
 def test_migrate_exchanges_delete_custom_fields_match_missing(generic, deletion):
-    assert len(generic[0]["exchanges"]) == 2
     result = migrate_exchanges(
         deletion, copy(generic), fields=("name", "location", "missing")
     )
+    assert len(result[0]["exchanges"]) == 0
+
+
+def test_migrate_exchanges_delete_multiple_identical(deletion):
+    database = [
+        {
+            "name": "n1",
+            "reference product": "rp1",
+            "location": "l1",
+            "unit": "u1",
+            "foo": "bar",
+            "exchanges": [
+                {
+                    "amount": 1,
+                    "name": "n1",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l1",
+                    "extra": "yes please",
+                },
+                {
+                    "amount": 1,
+                    "name": "n1",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l1",
+                },
+            ],
+        }
+    ]
+    assert len(database[0]["exchanges"]) == 2
+    result = migrate_exchanges(deletion, database)
     assert len(result[0]["exchanges"]) == 0

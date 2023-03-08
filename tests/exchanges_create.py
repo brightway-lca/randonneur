@@ -1,5 +1,5 @@
 # pylint: disable-msg-cat=WCREFI
-from copy import copy
+from copy import copy, deepcopy
 
 import pytest
 
@@ -55,6 +55,7 @@ def creation():
                     "reference product": "rp1",
                     "location": "l1",
                     "unit": "u1",
+                    "over": "there",
                 },
             },
             {
@@ -79,17 +80,6 @@ def test_migrate_exchanges_create_simple(generic, creation):
     assert len(result[0]["exchanges"]) == 4
 
 
-def test_migrate_exchanges_create_node_filter(generic, creation):
-    result = migrate_exchanges(
-        creation, copy(generic), node_filter=lambda x: x["name"] == "n2"
-    )
-    assert len(result[0]["exchanges"]) == 2
-    result = migrate_exchanges(
-        creation, copy(generic), node_filter=lambda x: x["name"] == "n1"
-    )
-    assert len(result[0]["exchanges"]) == 4
-
-
 def test_migrate_exchanges_create_empty(generic, creation):
     result = migrate_exchanges(
         {"create": []},
@@ -104,3 +94,58 @@ def test_migrate_exchanges_create_missing(generic, creation):
         copy(generic),
     )
     assert len(result[0]["exchanges"]) == 2
+
+
+def test_migrate_exchanges_create_node_filter(generic, creation):
+    result = migrate_exchanges(
+        creation, copy(generic), node_filter=lambda x: x["name"] == "n2"
+    )
+    assert len(result[0]["exchanges"]) == 2
+    result = migrate_exchanges(
+        creation, copy(generic), node_filter=lambda x: x["name"] == "n1"
+    )
+    assert len(result[0]["exchanges"]) == 4
+
+
+def test_migrate_exchanges_create_custom_fields(generic, creation):
+    result = migrate_exchanges(creation, deepcopy(generic), fields=("name", "location"))
+    assert len(result[0]["exchanges"]) == 4
+    result = migrate_exchanges(
+        creation, deepcopy(generic), fields=("name", "location", "over")
+    )
+    assert len(result[0]["exchanges"]) == 3
+
+
+def test_migrate_exchanges_create_custom_fields_match_missing(generic, creation):
+    result = migrate_exchanges(
+        creation, deepcopy(generic), fields=("name", "location", "missing")
+    )
+    assert len(result[0]["exchanges"]) == 4
+
+
+def test_migrate_exchanges_create_multiple_identical(generic):
+    change = {
+        "create": [
+            {
+                "targets": [
+                    {
+                        "name": "1001",
+                        "product": "1002",
+                        "unit": "1003",
+                        "location": "1004",
+                    },
+                    {
+                        "name": "1001",
+                        "product": "1002",
+                        "unit": "1003",
+                        "location": "1004",
+                    },
+                ],
+            },
+        ]
+    }
+    result = migrate_exchanges(
+        change,
+        deepcopy(generic),
+    )
+    assert len(result[0]["exchanges"]) == 4
