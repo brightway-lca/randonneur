@@ -1,4 +1,7 @@
-from tqdm import tqdm
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = None
 from functools import partial
 from copy import copy
 
@@ -37,7 +40,7 @@ def migrate_exchanges(
     """
     mapping_key = partial(as_tuple, fields=sorted(fields))
 
-    if verbose:
+    if verbose and tqdm:
         print("Preparing mappings from `migration_data`")
         progressbar = tqdm
     else:
