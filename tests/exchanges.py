@@ -100,14 +100,14 @@ def creation():
     }
 
 
+def test_migrate_exchanges_empty_migration(generic):
+    assert migrate_exchanges({}, generic)
+
+
 def test_migrate_exchanges_verbose(generic, deletion):
     result = migrate_exchanges(
         deletion,
         generic,
-        create=False,
-        disaggregate=False,
-        replace=False,
-        update=False,
         verbose=True,
     )
     assert not result[0]["exchanges"]
@@ -120,24 +120,35 @@ def test_migrate_exchanges_delete_simple(generic, deletion):
     assert not result[0]["exchanges"]
 
 
-def test_migrate_exchanges_delete_node_filter(generic, deletion):
+def test_migrate_exchanges_delete_empty(generic, deletion):
     result = migrate_exchanges(
-        deletion,
-        copy(generic),
+        {"delete": []},
+        generic,
         create=False,
         disaggregate=False,
         replace=False,
         update=False,
+    )
+    assert len(result[0]["exchanges"]) == 2
+
+
+def test_migrate_exchanges_delete_missing(generic, deletion):
+    result = migrate_exchanges(
+        {}, generic, create=False, disaggregate=False, replace=False, update=False
+    )
+    assert len(result[0]["exchanges"]) == 2
+
+
+def test_migrate_exchanges_delete_node_filter(generic, deletion):
+    result = migrate_exchanges(
+        deletion,
+        copy(generic),
         node_filter=lambda x: x["name"] == "n2",
     )
     assert len(result[0]["exchanges"]) == 2
     result = migrate_exchanges(
         deletion,
         copy(generic),
-        create=False,
-        disaggregate=False,
-        replace=False,
-        update=False,
         node_filter=lambda x: x["name"] == "n1",
     )
     assert not result[0]["exchanges"]
@@ -147,20 +158,12 @@ def test_migrate_exchanges_delete_exchange_filter(generic, deletion):
     result = migrate_exchanges(
         deletion,
         copy(generic),
-        create=False,
-        disaggregate=False,
-        replace=False,
-        update=False,
         exchange_filter=lambda x: x["name"] == "n1",
     )
     assert len(result[0]["exchanges"]) == 1
     result = migrate_exchanges(
         deletion,
         copy(generic),
-        create=False,
-        disaggregate=False,
-        replace=False,
-        update=False,
         exchange_filter=lambda x: x["name"] == "n2",
     )
     assert not result[0]["exchanges"]
@@ -170,13 +173,35 @@ def test_migrate_exchanges_create_simple(generic, creation):
     result = migrate_exchanges(
         creation,
         copy(generic),
-        disaggregate=False,
-        replace=False,
-        update=False,
-        delete=False,
     )
-    print(result[0]["exchanges"])
     assert len(result[0]["exchanges"]) == 4
+
+
+def test_migrate_exchanges_create_node_filter(generic, creation):
+    result = migrate_exchanges(
+        creation, copy(generic), node_filter=lambda x: x["name"] == "n2"
+    )
+    assert len(result[0]["exchanges"]) == 2
+    result = migrate_exchanges(
+        creation, copy(generic), node_filter=lambda x: x["name"] == "n1"
+    )
+    assert len(result[0]["exchanges"]) == 4
+
+
+def test_migrate_exchanges_create_empty(generic, creation):
+    result = migrate_exchanges(
+        {"create": []},
+        copy(generic),
+    )
+    assert len(result[0]["exchanges"]) == 2
+
+
+def test_migrate_exchanges_create_missing(generic, creation):
+    result = migrate_exchanges(
+        {},
+        copy(generic),
+    )
+    assert len(result[0]["exchanges"]) == 2
 
 
 # TBD
