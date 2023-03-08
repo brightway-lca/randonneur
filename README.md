@@ -56,9 +56,9 @@ If you want to add an exchange to all nodes:
 ```python
 {
     "create": [{
-        "target": {
+        "targets": [{
             # All fields needed to define an exchange
-        }
+        }]
     }]
 }
 ```
@@ -68,9 +68,9 @@ If you only want to create an exchange in one node:
 ```python
 {
     "create": [{
-        "target": {
+        "targets": [{
             # All fields needed to define an exchange
-        },
+        }],
         "node": {
             # All fields needed to identify the node
         }
@@ -138,7 +138,7 @@ Delete exchanges. Follows the same patterns as `replace` and `update`:
 
 ```python
 {
-    "update": [{
+    "delete": [{
         "source": {
             # All fields needed to identify the exchange to be deleted
         },
@@ -166,7 +166,7 @@ The data format includes a list of new exchanges for each matched source:
         "source": {
             # All fields needed to identify the exchange to be disaggregated
         },
-        "target": [{
+        "targets": [{
             # Some fields which you want to change
         }],
         # `node` is optional
