@@ -48,7 +48,7 @@ def deletion():
                     "unit": "u1",
                     "location": "l1",
                 },
-                "node": {
+                "dataset": {
                     "name": "n1",
                     "reference product": "rp1",
                     "location": "l1",
@@ -90,17 +90,17 @@ def test_migrate_exchanges_delete_missing(generic, deletion):
     assert len(result[0]["exchanges"]) == 2
 
 
-def test_migrate_exchanges_delete_node_filter(generic, deletion):
+def test_migrate_exchanges_delete_dataset_filter(generic, deletion):
     result = migrate_exchanges(
         deletion,
         copy(generic),
-        node_filter=lambda x: x["name"] == "n2",
+        dataset_filter=lambda x: x["name"] == "n2",
     )
     assert len(result[0]["exchanges"]) == 2
     result = migrate_exchanges(
         deletion,
         copy(generic),
-        node_filter=lambda x: x["name"] == "n1",
+        dataset_filter=lambda x: x["name"] == "n1",
     )
     assert not result[0]["exchanges"]
 

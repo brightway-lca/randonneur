@@ -46,7 +46,7 @@ def deletion():
                     "unit": "u1",
                     "location": "l1",
                 },
-                "node": {
+                "dataset": {
                     "name": "n1",
                     "reference product": "rp1",
                     "location": "l1",

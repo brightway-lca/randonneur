@@ -41,7 +41,7 @@ Migrating datasets works the same way, except that we operate directly on the da
 
 ### Migrating exchanges
 
-Exchanges are the consumption or production of a good or service. Exchanges link two nodes (two activities, one product and one activity, one activity and one biosphere flow, or even other node types). We support the following types of exchange changes:
+Exchanges are the consumption or production of a good or service. Exchanges link two datasets (two activities, one product and one activity, one activity and one biosphere flow, or even other dataset types). We support the following types of exchange changes:
 
 * `delete`
 * `replace`
@@ -55,11 +55,11 @@ Exchange migration is specified in a JSON file. This file should include informa
 
 #### Create
 
-Creates a new exchange in all nodes, or in one specific node.
+Creates a new exchange in all datasets, or in one specific dataset.
 
 Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
 
-If you want to add an exchange to all nodes:
+If you want to add an exchange to all datasets:
 
 ```python
 {
@@ -71,7 +71,7 @@ If you want to add an exchange to all nodes:
 }
 ```
 
-If you only want to create an exchange in one node:
+If you only want to create an exchange in one dataset:
 
 ```python
 {
@@ -79,16 +79,16 @@ If you only want to create an exchange in one node:
         "targets": [{
             # All fields needed to define an exchange
         }],
-        "node": {
-            # All fields needed to identify the node
+        "dataset": {
+            # All fields needed to identify the dataset
         }
     }]
 }
 ```
 
-`node` must be a `dict`, not a list; it can only identify one node.
+`dataset` must be a `dict`, not a list; it can only identify one dataset.
 
-Note that in the `wurst` format, `node` use the key `reference product` while exchanges use the key `product`; these are two different concepts, so have different keys.
+Note that in the `wurst` format, `dataset` use the key `reference product` while exchanges use the key `product`; these are two different concepts, so have different keys.
 
 ### Replace
 
@@ -111,9 +111,9 @@ The data format for `replace` type is:
         "target": {
             # All fields needed to define the new exchange
         },
-        # `node` is optional
-        "node": {
-            # All fields needed to identify the node to change
+        # `dataset` is optional
+        "dataset": {
+            # All fields needed to identify the dataset to change
         }
     }]
 }
@@ -132,9 +132,9 @@ The data format for `replace` type is:
         "target": {
             # Some fields which you want to change
         },
-        # `node` is optional
-        "node": {
-            # All fields needed to identify the node to change
+        # `dataset` is optional
+        "dataset": {
+            # All fields needed to identify the dataset to change
         }
     }]
 }
@@ -150,9 +150,9 @@ Delete exchanges. Follows the same patterns as `replace` and `update`:
         "source": {
             # All fields needed to identify the exchange to be deleted
         },
-        # `node` is optional
-        "node": {
-            # All fields needed to identify the node to change
+        # `dataset` is optional
+        "dataset": {
+            # All fields needed to identify the dataset to change
         }
     }]
 }
@@ -177,9 +177,9 @@ The data format includes a list of new exchanges for each matched source:
         "targets": [{
             # Some fields which you want to change
         }],
-        # `node` is optional
-        "node": {
-            # All fields needed to identify the node to change
+        # `dataset` is optional
+        "dataset": {
+            # All fields needed to identify the dataset to change
         }
     }]
 }

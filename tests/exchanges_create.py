@@ -50,7 +50,7 @@ def creation():
                         "location": "me!",
                     }
                 ],
-                "node": {
+                "dataset": {
                     "name": "n1",
                     "reference product": "rp1",
                     "location": "l1",
@@ -96,13 +96,13 @@ def test_migrate_exchanges_create_missing(generic, creation):
     assert len(result[0]["exchanges"]) == 2
 
 
-def test_migrate_exchanges_create_node_filter(generic, creation):
+def test_migrate_exchanges_create_dataset_filter(generic, creation):
     result = migrate_exchanges(
-        creation, copy(generic), node_filter=lambda x: x["name"] == "n2"
+        creation, copy(generic), dataset_filter=lambda x: x["name"] == "n2"
     )
     assert len(result[0]["exchanges"]) == 2
     result = migrate_exchanges(
-        creation, copy(generic), node_filter=lambda x: x["name"] == "n1"
+        creation, copy(generic), dataset_filter=lambda x: x["name"] == "n1"
     )
     assert len(result[0]["exchanges"]) == 4
 
