@@ -56,7 +56,7 @@ def migrate_exchanges(
     try:
         deletion_generic_mapping = {
             mapping_key(obj["source"])
-            for obj in migration_data["delete"]
+            for obj in migration_data.get("delete", [])
             if "node" not in obj
         }
         deletion_specific_mapping = {
@@ -87,13 +87,16 @@ def migrate_exchanges(
             if "node" in obj
         }
 
-        create_generic_mapping = [
-            obj["target"]
+        create_generic = [
+            obj["targets"]
             for obj in migration_data.get("create", [])
             if "node" not in obj
         ]
+        if create_generic:
+            # TBD: Check len > 1
+            create_generic = create_generic[0]
         create_specific_mapping = {
-            mapping_key(obj["node"]): obj["target"]
+            mapping_key(obj["node"]): obj["targets"]
             for obj in migration_data.get("create", [])
             if "node" in obj
         }
@@ -157,7 +160,7 @@ def migrate_exchanges(
             #         new_exchange.update(other_exchange)
 
         if create:
-            exchanges_to_add.extend(create_generic_mapping)
+            exchanges_to_add.extend(create_generic)
             try:
                 exchanges_to_add.extend(create_specific_mapping[node_key])
             except KeyError:

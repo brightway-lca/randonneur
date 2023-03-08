@@ -66,6 +66,40 @@ def deletion():
     }
 
 
+@pytest.fixture
+def creation():
+    return {
+        "create": [
+            {
+                "targets": [
+                    {
+                        "name": "hey",
+                        "product": "everybody",
+                        "unit": "look at",
+                        "location": "me!",
+                    }
+                ],
+                "node": {
+                    "name": "n1",
+                    "reference product": "rp1",
+                    "location": "l1",
+                    "unit": "u1",
+                },
+            },
+            {
+                "targets": [
+                    {
+                        "name": "1001",
+                        "product": "1002",
+                        "unit": "1003",
+                        "location": "1004",
+                    }
+                ],
+            },
+        ]
+    }
+
+
 def test_migrate_exchanges_verbose(generic, deletion):
     result = migrate_exchanges(
         deletion,
@@ -130,6 +164,19 @@ def test_migrate_exchanges_delete_exchange_filter(generic, deletion):
         exchange_filter=lambda x: x["name"] == "n2",
     )
     assert not result[0]["exchanges"]
+
+
+def test_migrate_exchanges_create_simple(generic, creation):
+    result = migrate_exchanges(
+        creation,
+        copy(generic),
+        disaggregate=False,
+        replace=False,
+        update=False,
+        delete=False,
+    )
+    print(result[0]["exchanges"])
+    assert len(result[0]["exchanges"]) == 4
 
 
 # TBD
