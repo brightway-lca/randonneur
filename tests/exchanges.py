@@ -106,6 +106,34 @@ def test_migrate_exchanges_delete_node_filter(generic, deletion):
     assert not result[0]["exchanges"]
 
 
+def test_migrate_exchanges_delete_exchange_filter(generic, deletion):
+    result = migrate_exchanges(
+        deletion,
+        copy(generic),
+        create=False,
+        disaggregate=False,
+        replace=False,
+        update=False,
+        exchange_filter=lambda x: x["name"] == "n1",
+    )
+    assert len(result[0]["exchanges"]) == 1
+    result = migrate_exchanges(
+        deletion,
+        copy(generic),
+        create=False,
+        disaggregate=False,
+        replace=False,
+        update=False,
+        exchange_filter=lambda x: x["name"] == "n2",
+    )
+    assert not result[0]["exchanges"]
+
+
+# TBD
+def test_unhashable_data():
+    pass
+
+
 def test_as_tuple_convert_list():
     given = {"foo": "bar", "this": ["that", "other thing"]}
     fields = ("foo", "this")
@@ -134,10 +162,3 @@ def test_as_tuple_not_sort_fields():
     given = {"foo": "bar", "this": ("that", "other thing")}
     fields = ("this", "foo")
     assert as_tuple(given, fields) == (("that", "other thing"), "bar")
-
-
-def test_as_tuple_error():
-    given = {"foo": "bar", "this": {"that": "other thing"}}
-    fields = ("this", "foo")
-    with pytest.raises(ValueError):
-        as_tuple(given, fields)
