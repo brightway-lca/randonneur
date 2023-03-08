@@ -43,39 +43,58 @@ def migrate_exchanges(
     else:
         progressbar = lambda x: iter(x)
 
-    deletion_generic_mapping = {
-        mapping_key(obj["target"]) for obj in migration_data["delete"] if "node" not in obj
-    }
-    deletion_specific_mapping = {
-        (mapping_key(obj["target"]), mapping_key(obj["node"]))
-        for obj in migration_data.get("delete", [])
-        if "node" in obj
-    }
+    try:
+        deletion_generic_mapping = {
+            mapping_key(obj["source"])
+            for obj in migration_data["delete"]
+            if "node" not in obj
+        }
+        deletion_specific_mapping = {
+            (mapping_key(obj["source"]), mapping_key(obj["node"]))
+            for obj in migration_data.get("delete", [])
+            if "node" in obj
+        }
 
-    replacement_generic_mapping = {
-        mapping_key(obj["source"]): obj["target"]
-        for obj in migration_data.get("replace", [])
-        if "node" not in obj
-    }
-    replacement_specific_mapping = {
-        (mapping_key(obj["source"]), mapping_key(obj["node"])): obj["target"]
-        for obj in migration_data.get("replace", [])
-        if "node" in obj
-    }
+        replacement_generic_mapping = {
+            mapping_key(obj["source"]): obj["target"]
+            for obj in migration_data.get("replace", [])
+            if "node" not in obj
+        }
+        replacement_specific_mapping = {
+            (mapping_key(obj["source"]), mapping_key(obj["node"])): obj["target"]
+            for obj in migration_data.get("replace", [])
+            if "node" in obj
+        }
 
-    update_generic_mapping = {
-        mapping_key(obj["source"]): obj["target"]
-        for obj in migration_data.get("update", [])
-        if "node" not in obj
-    }
-    update_specific_mapping = {
-        (mapping_key(obj["source"]), mapping_key(obj["node"])): obj["target"]
-        for obj in migration_data.get("update", [])
-        if "node" in obj
-    }
+        update_generic_mapping = {
+            mapping_key(obj["source"]): obj["target"]
+            for obj in migration_data.get("update", [])
+            if "node" not in obj
+        }
+        update_specific_mapping = {
+            (mapping_key(obj["source"]), mapping_key(obj["node"])): obj["target"]
+            for obj in migration_data.get("update", [])
+            if "node" in obj
+        }
 
-    # disaggregation_mapping = {}
-    # creation_mapping = {mapping_key(obj['node']): obj['exchanges'] for obj in migration_data["create"]}
+        create_generic_mapping = [
+            obj["target"]
+            for obj in migration_data.get("create", [])
+            if "node" not in obj
+        ]
+        create_specific_mapping = {
+            mapping_key(obj["node"]): obj["target"]
+            for obj in migration_data.get("create", [])
+            if "node" in obj
+        }
+
+        # disaggregation_mapping = {}
+    except TypeError as exc:
+        ERROR = (
+            "Couldn't cast input data to a hashable type, please use fields"
+            " with only strings and tuples"
+        )
+        raise ValueError(ERROR) from exc
 
     for dataset in progressbar(lci_database):
         if node_filter is not None and not node_filter(dataset):
