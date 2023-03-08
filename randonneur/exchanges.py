@@ -42,6 +42,10 @@ def migrate_exchanges(
     should be a callable, and take the complete activity dataset or a single exchange dataset as an
     input.
 
+    You can specify the fields used to test for equality between exchange and exchange, or node and
+    node. Be careful, if you specify a field missing in both the ``migration_data`` and the
+    ``lci_database``, the equality condition will match.
+
     Returns ``lci_database`` with altered content.
 
     """

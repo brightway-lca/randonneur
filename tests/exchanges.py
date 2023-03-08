@@ -23,6 +23,7 @@ def generic():
                     "product": "rp1",
                     "unit": "u1",
                     "location": "l1",
+                    "extra": "yes please",
                 },
                 {
                     "amount": 42,
@@ -30,6 +31,7 @@ def generic():
                     "product": "rp1",
                     "unit": "u1",
                     "location": "l2",
+                    "extra": "yes please",
                 },
             ],
         }
@@ -60,6 +62,7 @@ def deletion():
                     "product": "rp1",
                     "unit": "u1",
                     "location": "l2",
+                    "extra": "yes please",
                 },
             },
         ]
@@ -124,10 +127,6 @@ def test_migrate_exchanges_delete_empty(generic, deletion):
     result = migrate_exchanges(
         {"delete": []},
         generic,
-        create=False,
-        disaggregate=False,
-        replace=False,
-        update=False,
     )
     assert len(result[0]["exchanges"]) == 2
 
@@ -167,6 +166,22 @@ def test_migrate_exchanges_delete_exchange_filter(generic, deletion):
         exchange_filter=lambda x: x["name"] == "n2",
     )
     assert not result[0]["exchanges"]
+
+
+def test_migrate_exchanges_delete_custom_fields(generic, deletion):
+    assert len(generic[0]["exchanges"]) == 2
+    result = migrate_exchanges(
+        deletion, copy(generic), fields=("name", "location", "extra")
+    )
+    assert len(result[0]["exchanges"]) == 1
+
+
+def test_migrate_exchanges_delete_custom_fields_match_missing(generic, deletion):
+    assert len(generic[0]["exchanges"]) == 2
+    result = migrate_exchanges(
+        deletion, copy(generic), fields=("name", "location", "missing")
+    )
+    assert len(result[0]["exchanges"]) == 0
 
 
 def test_migrate_exchanges_create_simple(generic, creation):

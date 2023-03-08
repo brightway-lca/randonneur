@@ -177,8 +177,6 @@ The data format includes a list of new exchanges for each matched source:
 }
 ```
 
-### Migrating nodes
-
 ## Contributing
 
 Contributions are very welcome.
