@@ -103,11 +103,11 @@ $ pip install pre-commit
 It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
-[pull request]: https://github.com/brightway-lca/bw_migrate/pulls
+[pull request]: https://github.com/brightway-lca/randonneur/pulls
 [License]: https://opensource.org/licenses/BSD-3-Clause
-[Source Code]: https://github.com/brightway-lca/bw_migrate
-[Documentation]: https://bw_migrate.readthedocs.io/
-[Issue Tracker]: https://github.com/brightway-lca/bw_migrate/issues
+[Source Code]: https://github.com/brightway-lca/randonneur
+[Documentation]: https://randonneur.readthedocs.io/
+[Issue Tracker]: https://github.com/brightway-lca/randonneur/issues
 
 
 <!-- github-only -->

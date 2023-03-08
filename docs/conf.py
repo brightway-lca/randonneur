@@ -14,7 +14,7 @@ from sphinx.ext import apidoc
 __location__ = os.path.dirname(__file__)
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../bw_migrate")
+module_dir = os.path.join(__location__, "../randonneur")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -28,7 +28,7 @@ except Exception as e:
 
 # General Configuration
 
-project = "bw_migrate"
+project = "randonneur"
 author = "Chris Mutel"
 copyright = "2023, Chris Mutel"
 extensions = [
@@ -45,4 +45,4 @@ html_theme = "furo"
 
 needs_sphinx = "5.0"
 
-version = importlib.metadata.version("bw_migrate")
+version = importlib.metadata.version("randonneur")

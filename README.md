@@ -1,25 +1,25 @@
-# bw_migrate
+# randonneur
 
-[![PyPI](https://img.shields.io/pypi/v/bw_migrate.svg)][pypi status]
-[![Status](https://img.shields.io/pypi/status/bw_migrate.svg)][pypi status]
-[![Python Version](https://img.shields.io/pypi/pyversions/bw_migrate)][pypi status]
-[![License](https://img.shields.io/pypi/l/bw_migrate)][license]
+[![PyPI](https://img.shields.io/pypi/v/randonneur.svg)][pypi status]
+[![Status](https://img.shields.io/pypi/status/randonneur.svg)][pypi status]
+[![Python Version](https://img.shields.io/pypi/pyversions/randonneur)][pypi status]
+[![License](https://img.shields.io/pypi/l/randonneur)][license]
 
-[![Tests](https://github.com/brightway-lca/bw_migrate/workflows/Tests/badge.svg)][tests]
-[![Codecov](https://codecov.io/gh/brightway-lca/bw_migrate/branch/main/graph/badge.svg)][codecov]
+[![Tests](https://github.com/brightway-lca/randonneur/workflows/Tests/badge.svg)][tests]
+[![Codecov](https://codecov.io/gh/brightway-lca/randonneur/branch/main/graph/badge.svg)][codecov]
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
 
-[pypi status]: https://pypi.org/project/bw_migrate/
-[tests]: https://github.com/brightway-lca/bw_migrate/actions?workflow=Tests
-[codecov]: https://app.codecov.io/gh/brightway-lca/bw_migrate
+[pypi status]: https://pypi.org/project/randonneur/
+[tests]: https://github.com/brightway-lca/randonneur/actions?workflow=Tests
+[codecov]: https://app.codecov.io/gh/brightway-lca/randonneur
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
 ## Usage
 
-`bw_migrate` supports two migration functions, each with their own migration data format.
+`randonneur` supports two migration functions, each with their own migration data format.
 
 All input functions take data in the [`wurst` format](https://wurst.readthedocs.io/#internal-data-format).
 
@@ -80,7 +80,7 @@ Replacement substitutes an exchange one-to-one; as such, the new exchange must b
 
 If `allocation` is not given, a default value of 1.0 is used.
 
-**Note**: `bw_migrate` currently does not adjust uncertainty when rescaling.
+**Note**: `randonneur` currently does not adjust uncertainty when rescaling.
 
 Aside from the quantitative values, no other data from the original exchange is taken over to the new exchange. If you only want to change a few fields, use an `update` instead. If you don't want the exchange amount re-scaled, use a combination of `delete` and `create`.
 
@@ -179,7 +179,7 @@ To learn more, see the [Contributor Guide].
 ## License
 
 Distributed under the terms of the [BSD 3 Clause license][license],
-_bw_migrate_ is free and open source software.
+_randonneur_ is free and open source software.
 
 ## Issues
 
@@ -189,6 +189,6 @@ please [file an issue] along with a detailed description.
 
 <!-- github-only -->
 
-[command-line reference]: https://bw_migrate.readthedocs.io/en/latest/usage.html
-[license]: https://github.com/brightway-lca/bw_migrate/blob/main/LICENSE
-[contributor guide]: https://github.com/brightway-lca/bw_migrate/blob/main/CONTRIBUTING.md
+[command-line reference]: https://randonneur.readthedocs.io/en/latest/usage.html
+[license]: https://github.com/brightway-lca/randonneur/blob/main/LICENSE
+[contributor guide]: https://github.com/brightway-lca/randonneur/blob/main/CONTRIBUTING.md

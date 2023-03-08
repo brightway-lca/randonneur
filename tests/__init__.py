@@ -1,1 +1,1 @@
-"""Test suite for the bw_migrate package."""
+"""Test suite for the randonneur package."""

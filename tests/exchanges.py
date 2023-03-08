@@ -1,5 +1,5 @@
-from bw_migrate import migrate_exchanges
-from bw_migrate.exchanges import as_tuple
+from randonneur import migrate_exchanges
+from randonneur.exchanges import as_tuple
 from copy import copy
 import pytest
 

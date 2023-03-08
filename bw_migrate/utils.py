@@ -11,5 +11,5 @@ def get_version_tuple() -> tuple:
 
     return tuple(
         as_integer(v)
-        for v in importlib.metadata.version("bw_migrate").strip().split(".")
+        for v in importlib.metadata.version("randonneur").strip().split(".")
     )

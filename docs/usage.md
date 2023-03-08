@@ -1,7 +1,7 @@
 # Usage
 
 ```{eval-rst}
-.. click:: bw_migrate.cli:run
-    :prog: bw_migrate
+.. click:: randonneur.cli:run
+    :prog: randonneur
     :nested: full
 ```
