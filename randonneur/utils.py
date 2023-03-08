@@ -3,11 +3,11 @@ from typing import Union
 
 
 def get_version_tuple() -> tuple:
-    def as_integer(x: str) -> Union[int, str]:
+    def as_integer(obj: str) -> Union[int, str]:
         try:
-            return int(x)
+            return int(obj)
         except ValueError:
-            return x
+            return obj
 
     return tuple(
         as_integer(v)

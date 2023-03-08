@@ -1,9 +1,10 @@
+from copy import copy
+from functools import partial
+
 try:
     from tqdm import tqdm
 except ImportError:
     tqdm = None
-from functools import partial
-from copy import copy
 
 
 def as_tuple(obj, fields):
@@ -29,11 +30,17 @@ def migrate_exchanges(
     fields=("name", "reference product", "product", "location", "unit"),
     verbose=False,
 ):
-    """Migrate the exchanges (sometimes called exchanges) in the datasets given in ``lci_database`` using the data in ``migration_data``.
+    """Migrate the exchanges in the datasets given in ``lci_database`` using the data in
+    ``migration_data``.
 
-    The types of changes applied are controlled by the input flags ``create``, ``disaggregate``, ``replace``, and ``delete``. See the readme for more detail on these changes.
+    The types of changes applied are controlled by the input flags ``create``, ``disaggregate``,
+    ``replace``, ``update``, and ``delete``. See the README for more detail on these changes.
 
-    You can filter the nodes to be changed, and the exchanges to consider, with the filters ``node_filter`` and ``exchange_filter``. Both should be ``None`` or a callable, and take the complete activity dataset or a single exchange dataset as an input. The filters are applied **only to the original exchange data**; as such, they only apply to ``disaggregate``, ``replace``, and ``delete``.
+    You can filter the nodes to be changed, and the exchanges to consider, with the filters
+    ``node_filter`` and ``exchange_filter``. This filters control _if_ a node or exchange
+    should be modified (i.e. it is modified if the function returns ``True``). If given, they
+    should be a callable, and take the complete activity dataset or a single exchange dataset as an
+    input.
 
     Returns ``lci_database`` with altered content.
 
@@ -44,7 +51,7 @@ def migrate_exchanges(
         print("Preparing mappings from `migration_data`")
         progressbar = tqdm
     else:
-        progressbar = lambda x: iter(x)
+        progressbar = lambda x: iter(x)  # noqa: E731
 
     try:
         deletion_generic_mapping = {

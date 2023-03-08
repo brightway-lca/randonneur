@@ -1,7 +1,10 @@
+# pylint: disable-msg-cat=WCREFI
+from copy import copy
+
+import pytest
+
 from randonneur import migrate_exchanges
 from randonneur.exchanges import as_tuple
-from copy import copy
-import pytest
 
 
 @pytest.fixture
