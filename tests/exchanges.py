@@ -1,4 +1,5 @@
 from bw_migrate import migrate_exchanges
+from bw_migrate.exchanges import as_tuple
 from copy import copy
 import pytest
 
@@ -85,3 +86,40 @@ def test_migrate_exchanges_delete_node_filter(generic, deletion):
         deletion, copy(generic), create=False, disaggregate=False, replace=False, update=False, node_filter=lambda x: x['name'] == 'n1'
     )
     assert not result[0]["exchanges"]
+
+
+def test_as_tuple_convert_list():
+    given = {"foo": "bar", "this": ["that", "other thing"]}
+    fields = ("foo", "this")
+    assert as_tuple(given, fields) == ("bar", ("that", "other thing"))
+
+
+def test_as_tuple_str_tuple_set():
+    given = {"foo": "bar", "this": ("that", "other thing"), "weee": {1, 2, 3}}
+    fields = ("foo", "this", "weee")
+    assert as_tuple(given, fields) == ("bar", ("that", "other thing"), {1, 2, 3})
+
+
+def test_as_tuple_none_for_missing_fields():
+    given = {"foo": "bar", "this": ("that", "other thing")}
+    fields = ("foo", "this", "weee")
+    assert as_tuple(given, fields) == ("bar", ("that", "other thing"), None)
+
+
+def test_as_tuple_only_given_fields():
+    given = {"foo": "bar", "this": ("that", "other thing"), "weee": {1, 2, 3}}
+    fields = ("foo", "this")
+    assert as_tuple(given, fields) == ("bar", ("that", "other thing"))
+
+
+def test_as_tuple_not_sort_fields():
+    given = {"foo": "bar", "this": ("that", "other thing")}
+    fields = ("this", "foo")
+    assert as_tuple(given, fields) == (("that", "other thing"), "bar")
+
+
+def test_as_tuple_error():
+    given = {"foo": "bar", "this": {"that": "other thing"}}
+    fields = ("this", "foo")
+    with pytest.raises(ValueError):
+        as_tuple(given, fields)

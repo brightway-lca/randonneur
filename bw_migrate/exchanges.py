@@ -10,14 +10,7 @@ def as_tuple(obj, fields):
         else:
             return value
 
-    try:
-        return tuple([converter(obj.get(field)) for field in fields])
-    except TypeError as exc:
-        ERROR = (
-            "Couldn't cast input data to a hashable type, please use fields"
-            " with only strings and tuples"
-        )
-        raise ValueError(ERROR) from exc
+    return tuple([converter(obj.get(field)) for field in fields])
 
 
 def migrate_exchanges(
