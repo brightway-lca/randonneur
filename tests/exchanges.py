@@ -65,7 +65,13 @@ def deletion():
 
 def test_migrate_exchanges_verbose(generic, deletion):
     result = migrate_exchanges(
-        deletion, generic, create=False, disaggregate=False, replace=False, update=False, verbose=True
+        deletion,
+        generic,
+        create=False,
+        disaggregate=False,
+        replace=False,
+        update=False,
+        verbose=True,
     )
     assert not result[0]["exchanges"]
 
@@ -79,11 +85,23 @@ def test_migrate_exchanges_delete_simple(generic, deletion):
 
 def test_migrate_exchanges_delete_node_filter(generic, deletion):
     result = migrate_exchanges(
-        deletion, copy(generic), create=False, disaggregate=False, replace=False, update=False, node_filter=lambda x: x['name'] == 'n2'
+        deletion,
+        copy(generic),
+        create=False,
+        disaggregate=False,
+        replace=False,
+        update=False,
+        node_filter=lambda x: x["name"] == "n2",
     )
     assert len(result[0]["exchanges"]) == 2
     result = migrate_exchanges(
-        deletion, copy(generic), create=False, disaggregate=False, replace=False, update=False, node_filter=lambda x: x['name'] == 'n1'
+        deletion,
+        copy(generic),
+        create=False,
+        disaggregate=False,
+        replace=False,
+        update=False,
+        node_filter=lambda x: x["name"] == "n1",
     )
     assert not result[0]["exchanges"]
 

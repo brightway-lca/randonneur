@@ -123,7 +123,9 @@ def migrate_exchanges(
                     exchanges_to_add.append(new_exchange)
                     exchanges_to_delete.append(exchange)
                 elif (exchange_key, node_key) in replacement_specific_mapping:
-                    new_exchange = copy(replacement_specific_mapping[(exchange_key, node_key)])
+                    new_exchange = copy(
+                        replacement_specific_mapping[(exchange_key, node_key)]
+                    )
                     new_exchange["amount"] *= new_exchange.pop("allocation", 1.0)
                     exchanges_to_add.append(new_exchange)
                     exchanges_to_delete.append(exchange)
