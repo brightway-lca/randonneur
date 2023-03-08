@@ -129,7 +129,7 @@ Delete exchanges. Follows the same patterns as `replace` and `update`:
 ```python
 {
     "update": [{
-        "target": {
+        "source": {
             # All fields needed to identify the exchange to be deleted
         },
         # `node` is optional

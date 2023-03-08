@@ -37,7 +37,7 @@ def deletion():
     return {
         "delete": [
             {
-                "target": {
+                "source": {
                     "name": "n1",
                     "product": "rp1",
                     "unit": "u1",
@@ -51,7 +51,7 @@ def deletion():
                 },
             },
             {
-                "target": {
+                "source": {
                     "name": "n2",
                     "product": "rp1",
                     "unit": "u1",
