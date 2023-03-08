@@ -1,5 +1,13 @@
 # randonneur
 
+<img src="randonneur.png" alt="https://www.flickr.com/photos/jswg/35681111281/">
+
+Keep moving forward.
+
+Randonneur is a library to make broad or specific changes to life cycle inventory databases. You can use it to re-link your data to the latest version of a background database, to update existing databases with new data, or to perform other data changes. Randonneur uses JSON files to describe these changes; contrast this with [wurst](https://github.com/polca/wurst), which can do these manipulations and more, but describes its manipulations in code.
+
+Although designed to work with [Brightway](https://brightway.dev/), this library is not Brightway-specific.
+
 [![PyPI](https://img.shields.io/pypi/v/randonneur.svg)][pypi status]
 [![Status](https://img.shields.io/pypi/status/randonneur.svg)][pypi status]
 [![Python Version](https://img.shields.io/pypi/pyversions/randonneur)][pypi status]
