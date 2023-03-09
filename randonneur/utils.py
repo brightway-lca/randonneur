@@ -23,3 +23,7 @@ def as_tuple(obj, fields):
             return value
 
     return tuple([converter(obj.get(field)) for field in fields])
+
+
+def matcher(source, target):
+    return all(target.get(key) == value for key, value in source.items())
