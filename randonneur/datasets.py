@@ -35,12 +35,9 @@ def migrate_datasets(
 
     """
     if verbose and tqdm:
-        print("Preparing mappings from `migration_data`")
         progressbar = tqdm
     else:
         progressbar = lambda x: iter(x)  # noqa: E731
-
-    # TBD: Old semantics based on mappings; make nicer
 
     datasets_to_delete = []
     datasets_to_add = migration_data.get("create-datasets", []) if create else []
