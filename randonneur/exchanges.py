@@ -107,11 +107,14 @@ def migrate_exchanges(
                     and maybe_filter(possibles.get("dataset"), dataset)
                 ):
                     for possible in possibles["targets"]:
-                        new_exchange = deepcopy(possible)
-                        new_exchange["amount"] = exchange["amount"] * new_exchange.pop(
-                            "allocation", 1.0
+                        base_exchange, new_exchange = deepcopy(exchange), deepcopy(
+                            possible
                         )
-                        exchanges_to_add.append(new_exchange)
+                        base_exchange["amount"] = base_exchange[
+                            "amount"
+                        ] * new_exchange.pop("allocation", 1.0)
+                        base_exchange.update(new_exchange)
+                        exchanges_to_add.append(base_exchange)
                     exchanges_to_delete.add(frozendict(exchange))
                     found = True
 
