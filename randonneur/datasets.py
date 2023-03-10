@@ -19,17 +19,22 @@ def migrate_datasets(
 ):
     """Migrate datasets from ``lci_database`` using the data in ``migration_data``.
 
-    The types of changes applied are controlled by the input flags ``create``,
-    ``disaggregate``, ``replace``, ``update``, and ``delete``. See the README for
-    more detail on these changes.
+    ``create``, ``disaggregate``, ``replace``, ``update``, and ``delete`` changes can be applied,
+    and their activation is controlled by their respective flags. See the README for more detail
+    on the specifics of these changes, and the data formats of ``migration_data`` and
+    ``lci_database``.
 
-    You can filter the datasets to be changed with the filter ``dataset_filter``.
-    This filter controls _if_ a dataset should be modified (i.e. it is modified if
-    the function returns ``True``). This function takes the dataset as in input
-    argument.
+    You can filter the datasets to be changed with ``dataset_filter``. If given, these should be
+    callables that take a dataset as the single input argument, and return a ``True`` if changes
+    should be made.
+
+    ``verbose`` controls whether a progressbar is shown when iterating over ``lci_database``.
+
+    ``only_one_change`` determines whether more than one change (either of multiple types, or of
+    the same type if multiple changes which match the original exchange are given) is executed. Be
+    very careful with this, many changes to large databases should be carefully checked.
 
     Returns ``lci_database`` with altered content.
-
     """
     progressbar = tqdm if verbose else lambda x: iter(x)
 
