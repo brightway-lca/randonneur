@@ -1,11 +1,7 @@
 from copy import deepcopy
 
-try:
-    from tqdm import tqdm
-except ImportError:
-    tqdm = None
-
 from frozendict import frozendict
+from tqdm import tqdm
 
 from .utils import matcher, maybe_filter
 
@@ -44,10 +40,7 @@ def migrate_exchanges(
     Returns ``lci_database`` with altered content.
 
     """
-    if verbose and tqdm:
-        progressbar = tqdm
-    else:
-        progressbar = lambda x: iter(x)  # noqa: E731
+    progressbar = tqdm if verbose else lambda x: iter(x)
 
     for dataset in progressbar(lci_database):
         if dataset_filter is not None and not dataset_filter(dataset):

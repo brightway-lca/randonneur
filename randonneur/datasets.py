@@ -1,9 +1,6 @@
 from copy import deepcopy
 
-try:
-    from tqdm import tqdm
-except ImportError:
-    tqdm = None
+from tqdm import tqdm
 
 from .utils import matcher
 
@@ -34,10 +31,7 @@ def migrate_datasets(
     Returns ``lci_database`` with altered content.
 
     """
-    if verbose and tqdm:
-        progressbar = tqdm
-    else:
-        progressbar = lambda x: iter(x)  # noqa: E731
+    progressbar = tqdm if verbose else lambda x: iter(x)
 
     datasets_to_delete = []
     datasets_to_add = migration_data.get("create-datasets", []) if create else []
