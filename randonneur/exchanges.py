@@ -43,7 +43,6 @@ def migrate_exchanges(
 
     """
     if verbose and tqdm:
-        print("Preparing mappings from `migration_data`")
         progressbar = tqdm
     else:
         progressbar = lambda x: iter(x)  # noqa: E731
@@ -107,8 +106,6 @@ def migrate_exchanges(
                     and matcher(possibles["source"], exchange)
                     and maybe_filter(possibles.get("dataset"), dataset)
                 ):
-                    print("In disaggregate")
-                    print(possibles)
                     for possible in possibles["targets"]:
                         new_exchange = deepcopy(possible)
                         new_exchange["amount"] = exchange["amount"] * new_exchange.pop(
