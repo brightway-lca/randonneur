@@ -18,7 +18,7 @@ def migrate_datasets(
     delete=True,
     dataset_filter=None,
     verbose=False,
-    only_one_type=True,
+    only_one_change=True,
 ):
     """Migrate datasets from ``lci_database`` using the data in ``migration_data``.
 
@@ -43,7 +43,7 @@ def migrate_datasets(
     # TBD: Old semantics based on mappings; make nicer
 
     datasets_to_delete = []
-    datasets_to_add = migration_data.get("create", []) if create else []
+    datasets_to_add = migration_data.get("create-datasets", []) if create else []
 
     for dataset in progressbar(lci_database):
         found = False
@@ -52,23 +52,25 @@ def migrate_datasets(
             continue
 
         for possible in migration_data.get("delete", []):
-            if not (found and only_one_type) and matcher(possible, dataset):
+            if not (found and only_one_change) and matcher(possible, dataset):
                 datasets_to_delete.append(dataset)
                 found = True
 
         for possible in migration_data.get("replace", []):
-            if not (found and only_one_type) and matcher(possible["source"], dataset):
+            if not (found and only_one_change) and matcher(possible["source"], dataset):
                 datasets_to_add.append(deepcopy(possible["target"]))
                 datasets_to_delete.append(dataset)
                 found = True
 
         for possible in migration_data.get("update", []):
-            if not (found and only_one_type) and matcher(possible["source"], dataset):
+            if not (found and only_one_change) and matcher(possible["source"], dataset):
                 dataset.update(possible["target"])
                 found = True
 
         for possibles in migration_data.get("disaggregate", []):
-            if not (found and only_one_type) and matcher(possibles["source"], dataset):
+            if not (found and only_one_change) and matcher(
+                possibles["source"], dataset
+            ):
                 for new_ds in possibles["targets"]:
                     old_ds = deepcopy(dataset)
                     old_ds.update(new_ds)

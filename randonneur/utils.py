@@ -27,3 +27,10 @@ def as_tuple(obj, fields):
 
 def matcher(source, target):
     return all(target.get(key) == value for key, value in source.items())
+
+
+def maybe_filter(maybe_dict, dataset):
+    if maybe_dict is None:
+        return True
+    else:
+        return matcher(maybe_dict, dataset)
