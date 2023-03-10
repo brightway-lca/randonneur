@@ -55,7 +55,7 @@ def migrate_exchanges(
         exchanges_to_delete = set()
         exchanges_to_add = [
             obj["source"]
-            for obj in migration_data["create-exchanges"]
+            for obj in migration_data.get("create-exchanges", [])
             if matcher(obj["dataset"], dataset)
         ]
         exchanges = dataset.get("exchanges", [])
