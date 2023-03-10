@@ -15,16 +15,6 @@ def get_version_tuple() -> tuple:
     )
 
 
-def as_tuple(obj, fields):
-    def converter(value):
-        if isinstance(value, list):
-            return tuple(value)
-        else:
-            return value
-
-    return tuple([converter(obj.get(field)) for field in fields])
-
-
 def matcher(source, target):
     return all(target.get(key) == value for key, value in source.items())
 
