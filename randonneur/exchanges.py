@@ -26,18 +26,20 @@ def migrate_exchanges(
     """Migrate the exchanges in the datasets given in ``lci_database`` using the data in
     ``migration_data``.
 
-    The types of changes applied are controlled by the input flags ``create``, ``disaggregate``,
-    ``replace``, ``update``, and ``delete``. See the README for more detail on these changes.
+    ``create``, ``disaggregate``, ``replace``, ``update``, and ``delete`` changes can be applied,
+    and their activation is controlled by their respective flags. See the README for more detail
+    on the specifics of these changes, and the data formats of ``migration_data`` and
+    ``lci_database``.
 
-    You can filter the datasets to be changed, and the exchanges to consider, with the filters
-    ``dataset_filter`` and ``exchange_filter``. This filters control _if_ a dataset or exchange
-    should be modified (i.e. it is modified if the function returns ``True``). If given, they
-    should be a callable, and take the complete activity dataset or a single exchange dataset as an
-    input.
+    You can filter the datasets and exchanges to be changed with ``dataset_filter`` and
+    ``exchange_filter``. If given, these should be callables that take a dataset or exchange as
+    the single input argument, and return a ``True`` if changes should be made.
 
-    You can specify the fields used to test for equality between exchange and exchange, or dataset
-    and dataset. Be careful, if you specify a field missing in both the ``migration_data`` and the
-    ``lci_database``, the equality condition will match.
+    ``verbose`` controls whether a progressbar is shown when iterating over ``lci_database``.
+
+    ``only_one_change`` determines whether more than one change (either of multiple types, or of
+    the same type if multiple changes which match the original exchange are given) is executed. Be
+    very careful with this, many changes to large databases should be carefully checked.
 
     Returns ``lci_database`` with altered content.
 
