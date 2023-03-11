@@ -4,7 +4,7 @@
 
 Keep moving forward.
 
-Randonneur is a library to make broad or specific changes to life cycle inventory databases. You can use it to re-link your data to the latest version of a background database, to update existing databases with new data, or to perform other data changes. Randonneur uses JSON files to describe these changes; contrast this with [wurst](https://github.com/polca/wurst), which can do these manipulations and more, but describes its manipulations in code.
+Randonneur is a library to make changes to life cycle inventory databases. You can use it to re-link your data to the latest version of a background database, to update existing databases with new data, or to perform other data transformations. Randonneur uses JSON files to describe these changes; contrast this with [wurst](https://github.com/polca/wurst), which can do these manipulations and more, but documents its manipulations in code.
 
 Although designed to work with [Brightway](https://brightway.dev/), this library is not Brightway-specific.
 
@@ -27,11 +27,47 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 
 ## Usage
 
-`randonneur` supports two migration functions, each with their own migration data format.
-
-All input functions take data in the [`wurst` format](https://wurst.readthedocs.io/#internal-data-format).
-
 ### Basic pattern
+
+* Load a `randonneur` data migration file.
+* Load an inventory database in the [`wurst` format](https://wurst.readthedocs.io/#internal-data-format)
+* Do any necessary data preparation steps, e.g. nomenclature harmonization between migration and database fields
+* Decide on what data types you want to apply changes to; `exchanges`, `datasets`, or both.
+* Decide on what types of changes you want to apply: `create`, `replace`, `update`, `delete`, and `disaggregate`
+* Decide whether you want to apply the changes in the migration file to all datasets/exchanges or just a subset; build `dataset_filter` and/or `exchange_filter` functions if necessary.
+* Apply `migrate_datasets` or `migrate_exchanges`
+* Write the resulting database to disk
+
+### Data format
+
+Migration data is specified in a JSON file as a single dictionary. This file **must** include the following keys:
+
+* `name`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#name)
+* `licenses`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#licenses). Must be a list.
+
+In addition, the following properties should follow the [data package specification](https://specs.frictionlessdata.io/data-package/) if provided:
+
+* `version`
+* `description`
+* `sources`
+* `homepage`
+* `contributors`
+* `created`
+
+Finally, at least one change type should be included. The change types are:
+
+* `create-datasets`
+* `create-exchanges`
+* `replace`
+* `update`
+* `udpate`
+* `delete`
+* `disaggregate`
+
+See the directory `examples` for real-world implementations.
+
+
+
 
 For migrating exchanges: Given a database, iterate through the datasets. If a `dataset_filter` is given, ignore any datasets which don't pass the filter. In each dataset, iterate through the exchanges. If an `exchange_filter` is given, ignore any exchanges which don't pass the filter. For each exchange, look at the following possible transformations in order: `delete`, `replace`, `update`, and `disaggregate`. Only one transformation can be done to an exchange. Each transformation will change or delete the exchange under consideration, and maybe add some new exchanges to the dataset, though this addition will only happen after the original exchanges have been examined. After looking at all the exchanges, apply the `create` transformation to add more exchanges if provided.
 
@@ -48,10 +84,6 @@ Exchanges are the consumption or production of a good or service. Exchanges link
 * `update`
 * `disaggregate`
 * `create`
-
-#### Generic data format
-
-Exchange migration is specified in a JSON file. This file should include information on the data author and license (following the datapackage conventions), and at least one of the migration types: `create`, `replace`, `update`, `delete`, and `disaggregate`. None of the types are required.
 
 #### Create
 
@@ -121,7 +153,7 @@ The data format for `replace` type is:
 
 ### Update
 
-`update` differs from `replace` in that it changes attributes of the original exchange instead of creating a new object; otherwise, its behaviour is the same as `replace`. The data format is:
+`update` differs from `replace` in that it changes attributes of the original exchange instead of creating a completely new object; otherwise, its behaviour is the same as `replace`. The data format is:
 
 ```python
 {
@@ -193,7 +225,7 @@ To learn more, see the [Contributor Guide].
 ## License
 
 Distributed under the terms of the [BSD 3 Clause license][license],
-_randonneur_ is free and open source software.
+`randonneur` is free and open source software.
 
 ## Issues
 
