@@ -1,0 +1,77 @@
+{
+  "name": "ecoinvent-3.8-to-3.9-biosphere-example",
+  "licenses": [
+    {
+      "name": "CC BY 4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "version": "1.0.0",
+  "description": "Small example file showing the randoneeur data format. Extracted from the ecoinvent 3.8 to 3.9 migration.",
+  "homepage": "https://github.com/Depart-de-Sentier/happy_family",
+  "created": "2023-03-11T09:53:59.74Z",
+  "contributors": [
+    {
+      "title": "Thomas Sonderegger",
+      "path": "https://www.linkedin.com/in/thomas-sonderegger-719852191/",
+      "role": "author"
+    },
+    {
+      "title": "Chris Mutel",
+      "path": "https://chris.mutel.org/",
+      "role": "wrangler"
+    }
+  ],
+  "create-datasets": [
+    {
+      "name": "Nickel, ion",
+      "code": "e030108f-2125-4bcb-a73b-ad72130fcca3",
+      "categories": [
+        "water",
+        "ground-"
+      ],
+      "unit": "kilogram"
+    }
+  ],
+  "delete": [
+    {
+      "name": "Carbon dioxide, from soil or biomass stock",
+      "code": "5188df39-2bb8-4826-b469-fa9f86bacc09",
+      "categories": [
+        "air",
+        "indoor"
+      ],
+      "unit": "kilogram"
+    }
+  ],
+  "update": [
+    {
+      "source": {
+        "name": "2-Methyl pentane",
+        "code": "1b4da243-3412-4425-b44e-dea22e7ebd43",
+        "categories": [
+          "air",
+          "low population density, long-term"
+        ],
+        "unit": "kilogram"
+      },
+      "target": {
+        "name": "2-Methylpentane"
+      }
+    },
+    {
+      "source": {
+        "name": "o-Dichlorobenzene",
+        "code": "67070d27-426e-43e9-98e8-309952f78140",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram"
+      },
+      "target": {
+        "name": "1,2-Dichlorobenzene"
+      }
+    }
+  ]
+}
