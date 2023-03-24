@@ -1,0 +1,4328 @@
+{
+  "name": "UVEK-2022-to-ecoinvent-3.9-partial-transport",
+  "licenses": [
+    {
+      "name": "CC BY 4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "version": "1.0.0",
+  "homepage": "https://github.com/romainsacchi/carculator",
+  "description": "Partial matching of UVEK activities to ecoinvent activity/product/locations based on carculator metadata",
+  "created": "2023-03-24T10:44:58.971573",
+  "contributors": [
+    {
+      "title": "Romain Sacchi",
+      "path": "https://www.psi.ch/en/ta/people/romain-sacchi",
+      "role": "author"
+    },
+    {
+      "title": "Chris Mutel",
+      "path": "https://chris.mutel.org/",
+      "role": "wrangler"
+    }
+  ],
+  "replace": [
+    {
+      "source": {
+        "name": "Acrylic acid, at plant"
+      },
+      "target": {
+        "name": "market for acrylic acid",
+        "unit": "kilogram",
+        "reference product": "acrylic acid"
+      }
+    },
+    {
+      "source": {
+        "name": "Acrylonitrile from Sohio process, at plant"
+      },
+      "target": {
+        "name": "Sohio process",
+        "unit": "kilogram",
+        "reference product": "acrylonitrile"
+      }
+    },
+    {
+      "source": {
+        "name": "Acrylonitrile-butadiene-styrene copolymer, ABS, at plant"
+      },
+      "target": {
+        "name": "market for acrylonitrile-butadiene-styrene copolymer",
+        "unit": "kilogram",
+        "reference product": "acrylonitrile-butadiene-styrene copolymer"
+      }
+    },
+    {
+      "source": {
+        "name": "Bentonite, at processing"
+      },
+      "target": {
+        "name": "activated bentonite production",
+        "unit": "kilogram",
+        "reference product": "activated bentonite"
+      }
+    },
+    {
+      "source": {
+        "name": "Silica sand, at plant"
+      },
+      "target": {
+        "name": "activated silica production",
+        "unit": "kilogram",
+        "reference product": "activated silica"
+      }
+    },
+    {
+      "source": {
+        "name": "Air compressor, screw-type compressor, 300 kW, at plant"
+      },
+      "target": {
+        "name": "market for air compressor, screw-type compressor, 300kW",
+        "unit": "unit",
+        "reference product": "air compressor, screw-type compressor, 300kW"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium alloy, AlMg3, at plant"
+      },
+      "target": {
+        "name": "market for aluminium alloy, AlLi",
+        "unit": "kilogram",
+        "reference product": "aluminium alloy, AlLi"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium alloy, AlMg3, at plant"
+      },
+      "target": {
+        "name": "market for aluminium alloy, AlMg3",
+        "unit": "kilogram",
+        "reference product": "aluminium alloy, AlMg3"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium casting, plant"
+      },
+      "target": {
+        "name": "market for aluminium casting facility",
+        "unit": "unit",
+        "reference product": "aluminium casting facility"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium hydroxide, at plant"
+      },
+      "target": {
+        "name": "aluminium hydroxide production",
+        "unit": "kilogram",
+        "reference product": "aluminium hydroxide"
+      }
+    },
+    {
+      "source": {
+        "name": "aluminium oxide, at plant/kg"
+      },
+      "target": {
+        "name": "market for aluminium oxide, metallurgical",
+        "unit": "kilogram",
+        "reference product": "aluminium oxide, metallurgical"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium scrap, new, at plant"
+      },
+      "target": {
+        "name": "market for aluminium scrap, new",
+        "unit": "kilogram",
+        "reference product": "aluminium scrap, new"
+      }
+    },
+    {
+      "source": {
+        "name": "aluminium, production mix, cast alloy, at plant/kg"
+      },
+      "target": {
+        "name": "market for aluminium, cast alloy",
+        "unit": "kilogram",
+        "reference product": "aluminium, cast alloy"
+      }
+    },
+    {
+      "source": {
+        "name": "aluminium, production mix, at plant/kg"
+      },
+      "target": {
+        "name": "aluminium production, primary, ingot",
+        "unit": "kilogram",
+        "reference product": "aluminium, primary, ingot"
+      }
+    },
+    {
+      "source": {
+        "name": "aluminium, production mix, at plant/kg"
+      },
+      "target": {
+        "name": "aluminium production, primary, ingot",
+        "unit": "kilogram",
+        "reference product": "aluminium, primary, ingot"
+      }
+    },
+    {
+      "source": {
+        "name": "aluminium, production mix, wrought alloy, at plant/kg"
+      },
+      "target": {
+        "name": "aluminium ingot, primary, to aluminium, wrought alloy market",
+        "unit": "kilogram",
+        "reference product": "aluminium, wrought alloy"
+      }
+    },
+    {
+      "source": {
+        "name": "aluminium, production mix, wrought alloy, at plant/kg"
+      },
+      "target": {
+        "name": "market for aluminium, wrought alloy",
+        "unit": "kilogram",
+        "reference product": "aluminium, wrought alloy"
+      }
+    },
+    {
+      "source": {
+        "name": "Ammonia, liquid, at regional storehouse"
+      },
+      "target": {
+        "name": "market for ammonia, liquid",
+        "unit": "kilogram",
+        "reference product": "ammonia, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Ammonium sulphate, as N, at regional storehouse"
+      },
+      "target": {
+        "name": "market for ammonium sulfate, as N",
+        "unit": "kilogram",
+        "reference product": "ammonium sulfate, as N"
+      }
+    },
+    {
+      "source": {
+        "name": "Anode, lithium-ion battery, graphite, at plant"
+      },
+      "target": {
+        "name": "anode production, graphite, for lithium-ion battery",
+        "unit": "kilogram",
+        "reference product": "anode, graphite, for lithium-ion battery"
+      }
+    },
+    {
+      "source": {
+        "name": "Anode, lithium-ion battery, graphite, at plant"
+      },
+      "target": {
+        "name": "market for anode, graphite, for lithium-ion battery",
+        "unit": "kilogram",
+        "reference product": "anode, graphite, for lithium-ion battery"
+      }
+    },
+    {
+      "source": {
+        "name": "Anodising, aluminium sheet"
+      },
+      "target": {
+        "name": "market for anodising, aluminium sheet",
+        "unit": "square meter",
+        "reference product": "anodising, aluminium sheet"
+      }
+    },
+    {
+      "source": {
+        "name": "Argon, liquid, at plant"
+      },
+      "target": {
+        "name": "argon production, liquid",
+        "unit": "kilogram",
+        "reference product": "argon, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Barite, at plant"
+      },
+      "target": {
+        "name": "barite production",
+        "unit": "kilogram",
+        "reference product": "barite"
+      }
+    },
+    {
+      "source": {
+        "name": "Biogas, from sewage sludge, at storage"
+      },
+      "target": {
+        "name": "treatment of sewage sludge by anaerobic digestion",
+        "unit": "cubic meter",
+        "reference product": "biogas"
+      }
+    },
+    {
+      "source": {
+        "name": "Blasting"
+      },
+      "target": {
+        "name": "market for blasting",
+        "unit": "kilogram",
+        "reference product": "blasting"
+      }
+    },
+    {
+      "source": {
+        "name": "Blow moulding"
+      },
+      "target": {
+        "name": "market for blow moulding",
+        "unit": "kilogram",
+        "reference product": "blow moulding"
+      }
+    },
+    {
+      "source": {
+        "name": "brake wear emissions, passenger car"
+      },
+      "target": {
+        "name": "market for brake wear emissions, passenger car",
+        "unit": "kilogram",
+        "reference product": "brake wear emissions, passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Brass, at plant"
+      },
+      "target": {
+        "name": "market for brass",
+        "unit": "kilogram",
+        "reference product": "brass"
+      }
+    },
+    {
+      "source": {
+        "name": "Butadiene, at plant"
+      },
+      "target": {
+        "name": "market for butadiene",
+        "unit": "kilogram",
+        "reference product": "butadiene"
+      }
+    },
+    {
+      "source": {
+        "name": "Butyl acrylate, at plant"
+      },
+      "target": {
+        "name": "market for butyl acrylate",
+        "unit": "kilogram",
+        "reference product": "butyl acrylate"
+      }
+    },
+    {
+      "source": {
+        "name": "Cable, ribbon cable, 20-pin, with plugs, at plant"
+      },
+      "target": {
+        "name": "market for cable, ribbon cable, 20-pin, with plugs",
+        "unit": "kilogram",
+        "reference product": "cable, ribbon cable, 20-pin, with plugs"
+      }
+    },
+    {
+      "source": {
+        "name": "Calcium chloride, CaCl2, at plant"
+      },
+      "target": {
+        "name": "market for calcium chloride",
+        "unit": "kilogram",
+        "reference product": "calcium chloride"
+      }
+    },
+    {
+      "source": {
+        "name": "Carbon black, at plant"
+      },
+      "target": {
+        "name": "carbon black production",
+        "unit": "kilogram",
+        "reference product": "carbon black"
+      }
+    },
+    {
+      "source": {
+        "name": "Carbon black, at plant"
+      },
+      "target": {
+        "name": "market for carbon black",
+        "unit": "kilogram",
+        "reference product": "carbon black"
+      }
+    },
+    {
+      "source": {
+        "name": "Carbon monoxide, CO, at plant"
+      },
+      "target": {
+        "name": "market for carbon monoxide",
+        "unit": "kilogram",
+        "reference product": "carbon monoxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Carboxymethyl cellulose, powder, at plant"
+      },
+      "target": {
+        "name": "market for carboxymethyl cellulose, powder",
+        "unit": "kilogram",
+        "reference product": "carboxymethyl cellulose, powder"
+      }
+    },
+    {
+      "source": {
+        "name": "Cast iron, at plant"
+      },
+      "target": {
+        "name": "cast iron production",
+        "unit": "kilogram",
+        "reference product": "cast iron"
+      }
+    },
+    {
+      "source": {
+        "name": "Cast iron, at plant"
+      },
+      "target": {
+        "name": "market for cast iron",
+        "unit": "kilogram",
+        "reference product": "cast iron"
+      }
+    },
+    {
+      "source": {
+        "name": "Casting, brass"
+      },
+      "target": {
+        "name": "market for casting, brass",
+        "unit": "kilogram",
+        "reference product": "casting, brass"
+      }
+    },
+    {
+      "source": {
+        "name": "Portland cement, strength class Z 42.5, at plant"
+      },
+      "target": {
+        "name": "cement production, Portland",
+        "unit": "kilogram",
+        "reference product": "cement, Portland"
+      }
+    },
+    {
+      "source": {
+        "name": "charger, for electric passenger car"
+      },
+      "target": {
+        "name": "market for charger, electric passenger car",
+        "unit": "kilogram",
+        "reference product": "charger, electric passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Chemical plant, organics"
+      },
+      "target": {
+        "name": "market for chemical factory",
+        "unit": "kilogram",
+        "reference product": "chemical factory"
+      }
+    },
+    {
+      "source": {
+        "name": "Chemical plant, organics"
+      },
+      "target": {
+        "name": "chemical factory construction, organics",
+        "unit": "unit",
+        "reference product": "chemical factory, organics"
+      }
+    },
+    {
+      "source": {
+        "name": "Chemical plant, organics"
+      },
+      "target": {
+        "name": "chemical factory construction, organics",
+        "unit": "unit",
+        "reference product": "chemical factory, organics"
+      }
+    },
+    {
+      "source": {
+        "name": "Chemical plant, organics"
+      },
+      "target": {
+        "name": "market for chemical factory, organics",
+        "unit": "unit",
+        "reference product": "chemical factory, organics"
+      }
+    },
+    {
+      "source": {
+        "name": "Chemicals inorganic, at plant"
+      },
+      "target": {
+        "name": "market for chemicals, inorganic",
+        "unit": "kilogram",
+        "reference product": "chemical, inorganic"
+      }
+    },
+    {
+      "source": {
+        "name": "Chemicals organic, at plant"
+      },
+      "target": {
+        "name": "market for chemical, organic",
+        "unit": "kilogram",
+        "reference product": "chemical, organic"
+      }
+    },
+    {
+      "source": {
+        "name": "Chromium oxide, flakes, at plant"
+      },
+      "target": {
+        "name": "market for chromium oxide, flakes",
+        "unit": "kilogram",
+        "reference product": "chromium oxide, flakes"
+      }
+    },
+    {
+      "source": {
+        "name": "Cobalt, at plant"
+      },
+      "target": {
+        "name": "cobalt production",
+        "unit": "kilogram",
+        "reference product": "cobalt"
+      }
+    },
+    {
+      "source": {
+        "name": "Cobalt, at plant"
+      },
+      "target": {
+        "name": "market for cobalt",
+        "unit": "kilogram",
+        "reference product": "cobalt"
+      }
+    },
+    {
+      "source": {
+        "name": "Desktop computer, without screen, at plant"
+      },
+      "target": {
+        "name": "computer production, desktop, without screen",
+        "unit": "unit",
+        "reference product": "computer, desktop, without screen"
+      }
+    },
+    {
+      "source": {
+        "name": "Concrete block, at plant"
+      },
+      "target": {
+        "name": "market for concrete block",
+        "unit": "kilogram",
+        "reference product": "concrete block"
+      }
+    },
+    {
+      "source": {
+        "name": "Concrete, exacting, at plant"
+      },
+      "target": {
+        "name": "market for concrete, high exacting requirements",
+        "unit": "cubic meter",
+        "reference product": "concrete, high exacting requirements"
+      }
+    },
+    {
+      "source": {
+        "name": "Concrete, normal, at plant"
+      },
+      "target": {
+        "name": "market for concrete, normal",
+        "unit": "cubic meter",
+        "reference product": "concrete, normal"
+      }
+    },
+    {
+      "source": {
+        "name": "Concrete, normal, at plant"
+      },
+      "target": {
+        "name": "market for concrete, normal",
+        "unit": "cubic meter",
+        "reference product": "concrete, normal"
+      }
+    },
+    {
+      "source": {
+        "name": "converter, for electric passenger car"
+      },
+      "target": {
+        "name": "market for converter, for electric passenger car",
+        "unit": "kilogram",
+        "reference product": "converter, for electric passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper, primary, at refinery"
+      },
+      "target": {
+        "name": "market for copper",
+        "unit": "kilogram",
+        "reference product": "copper"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper oxide, at plant"
+      },
+      "target": {
+        "name": "market for copper oxide",
+        "unit": "kilogram",
+        "reference product": "copper oxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper, blister-copper, at primary smelter"
+      },
+      "target": {
+        "name": "copper production, blister-copper",
+        "unit": "kilogram",
+        "reference product": "copper, blister-copper"
+      }
+    },
+    {
+      "source": {
+        "name": "Corrugated board base paper, kraftliner, at plant"
+      },
+      "target": {
+        "name": "market for corrugated board box",
+        "unit": "kilogram",
+        "reference product": "corrugated board box"
+      }
+    },
+    {
+      "source": {
+        "name": "Cyclohexane, at plant"
+      },
+      "target": {
+        "name": "market for cyclohexane",
+        "unit": "kilogram",
+        "reference product": "cyclohexane"
+      }
+    },
+    {
+      "source": {
+        "name": "Diesel, at regional storage"
+      },
+      "target": {
+        "name": "market for diesel",
+        "unit": "kilogram",
+        "reference product": "diesel"
+      }
+    },
+    {
+      "source": {
+        "name": "Diesel, at regional storage"
+      },
+      "target": {
+        "name": "market group for diesel",
+        "unit": "kilogram",
+        "reference product": "diesel"
+      }
+    },
+    {
+      "source": {
+        "name": "diesel, burned in building machine, average/MJ"
+      },
+      "target": {
+        "name": "diesel, burned in building machine",
+        "unit": "megajoule",
+        "reference product": "diesel, burned in building machine"
+      }
+    },
+    {
+      "source": {
+        "name": "diesel, burned in building machine, average/MJ"
+      },
+      "target": {
+        "name": "market for diesel, burned in building machine",
+        "unit": "megajoule",
+        "reference product": "diesel, burned in building machine"
+      }
+    },
+    {
+      "source": {
+        "name": "Diesel, burned in diesel-electric generating set"
+      },
+      "target": {
+        "name": "diesel, burned in diesel-electric generating set, 18.5kW",
+        "unit": "megajoule",
+        "reference product": "diesel, burned in diesel-electric generating set, 18.5kW"
+      }
+    },
+    {
+      "source": {
+        "name": "Diethanolamine, at plant"
+      },
+      "target": {
+        "name": "market for diethanolamine",
+        "unit": "kilogram",
+        "reference product": "diethanolamine"
+      }
+    },
+    {
+      "source": {
+        "name": "LCD flat screen, 17 inches, at plant"
+      },
+      "target": {
+        "name": "market for display, liquid crystal, 17 inches",
+        "unit": "unit",
+        "reference product": "display, liquid crystal, 17 inches"
+      }
+    },
+    {
+      "source": {
+        "name": "distribution network, electricity, low voltage/km"
+      },
+      "target": {
+        "name": "distribution network construction, electricity, low voltage",
+        "unit": "kilometer",
+        "reference product": "distribution network, electricity, low voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Dolomite, at plant"
+      },
+      "target": {
+        "name": "market for dolomite",
+        "unit": "kilogram",
+        "reference product": "dolomite"
+      }
+    },
+    {
+      "source": {
+        "name": "Drawing of pipes, steel"
+      },
+      "target": {
+        "name": "drawing of pipe, steel",
+        "unit": "kilogram",
+        "reference product": "drawing of pipe, steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, drilling waste, 71.5% water, to landfarming"
+      },
+      "target": {
+        "name": "treatment of drilling waste, landfarming",
+        "unit": "kilogram",
+        "reference product": "drilling waste"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, drilling waste, 71.5% water, to residual material landfill"
+      },
+      "target": {
+        "name": "treatment of drilling waste, residual material landfill",
+        "unit": "kilogram",
+        "reference product": "drilling waste"
+      }
+    },
+    {
+      "source": {
+        "name": "Connector, clamp connection, at plant"
+      },
+      "target": {
+        "name": "market for electric connector, wire clamp",
+        "unit": "kilogram",
+        "reference product": "electric connector, wire clamp"
+      }
+    },
+    {
+      "source": {
+        "name": "electric motor, for electric passenger car"
+      },
+      "target": {
+        "name": "market for electric motor, electric passenger car",
+        "unit": "kilogram",
+        "reference product": "electric motor, electric passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity from waste, at municipal waste incineration plant"
+      },
+      "target": {
+        "name": "treatment of municipal solid waste, incineration",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, for reuse in municipal waste incineration only"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity, hard coal, at power plant"
+      },
+      "target": {
+        "name": "electricity production, hard coal",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, high voltage, production from hydro power, at grid"
+      },
+      "target": {
+        "name": "electricity production, hydro, run-of-river",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity, natural gas, at power plant"
+      },
+      "target": {
+        "name": "electricity production, natural gas, conventional power plant",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity, nuclear, at power plant pressure water reactor"
+      },
+      "target": {
+        "name": "electricity production, nuclear, pressure water reactor",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity, at wind power plant"
+      },
+      "target": {
+        "name": "electricity production, wind, 1-3MW turbine, onshore",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity, oil, at power plant"
+      },
+      "target": {
+        "name": "electricity production, oil",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Electricity, at cogen 6400kWth, wood, allocation heat"
+      },
+      "target": {
+        "name": "heat and power co-generation, wood chips, 6667 kW, state-of-the-art 2014",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, high voltage, production ENTSO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, PV, at 3kWp facade installation, multi-Si, panel, mounted/kWh"
+      },
+      "target": {
+        "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, low voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, low voltage, production ENTSO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, low voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, low voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, low voltage, production GLO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, low voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, low voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, medium voltage, production JP, at grid/kWh"
+      },
+      "target": {
+        "name": "market for electricity, medium voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, medium voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, medium voltage, production ENTSO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, medium voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, medium voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, medium voltage, production GLO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, medium voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, medium voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "Electronic component production plant"
+      },
+      "target": {
+        "name": "market for electronic component factory",
+        "unit": "unit",
+        "reference product": "electronic component factory"
+      }
+    },
+    {
+      "source": {
+        "name": "Electronic component, passive, unspecified, at plant"
+      },
+      "target": {
+        "name": "market for electronic component, passive, unspecified",
+        "unit": "kilogram",
+        "reference product": "electronic component, passive, unspecified"
+      }
+    },
+    {
+      "source": {
+        "name": "Electronics for control units"
+      },
+      "target": {
+        "name": "electronics production, for control units",
+        "unit": "kilogram",
+        "reference product": "electronics, for control units"
+      }
+    },
+    {
+      "source": {
+        "name": "Electronics for control units"
+      },
+      "target": {
+        "name": "electronics production, for control units",
+        "unit": "kilogram",
+        "reference product": "electronics, for control units"
+      }
+    },
+    {
+      "source": {
+        "name": "Epichlorohydrin, from hypochlorination of allyl chloride, at plant"
+      },
+      "target": {
+        "name": "epichlorohydrin production from allyl chloride",
+        "unit": "kilogram",
+        "reference product": "epichlorohydrin"
+      }
+    },
+    {
+      "source": {
+        "name": "Epoxy resin, liquid, at plant"
+      },
+      "target": {
+        "name": "epoxy resin production, liquid",
+        "unit": "kilogram",
+        "reference product": "epoxy resin, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Epoxy resin, liquid, at plant"
+      },
+      "target": {
+        "name": "epoxy resin production, liquid",
+        "unit": "kilogram",
+        "reference product": "epoxy resin, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Ethanol, 99.7% in H2O, from biomass, at distillation"
+      },
+      "target": {
+        "name": "market for ethanol, without water, in 99.7% solution state, from ethylene",
+        "unit": "kilogram",
+        "reference product": "ethanol, without water, in 99.7% solution state, from ethylene"
+      }
+    },
+    {
+      "source": {
+        "name": "Ethylene carbonate, at plant"
+      },
+      "target": {
+        "name": "market for ethylene carbonate",
+        "unit": "kilogram",
+        "reference product": "ethylene carbonate"
+      }
+    },
+    {
+      "source": {
+        "name": "Ethylene glycol, at plant"
+      },
+      "target": {
+        "name": "ethylene glycol production",
+        "unit": "kilogram",
+        "reference product": "ethylene glycol"
+      }
+    },
+    {
+      "source": {
+        "name": "Ethylene glycol, at plant"
+      },
+      "target": {
+        "name": "ethylene glycol production",
+        "unit": "kilogram",
+        "reference product": "ethylene glycol"
+      }
+    },
+    {
+      "source": {
+        "name": "Ethylene glycol, at plant"
+      },
+      "target": {
+        "name": "market for ethylene glycol",
+        "unit": "kilogram",
+        "reference product": "ethylene glycol"
+      }
+    },
+    {
+      "source": {
+        "name": "Extrusion, plastic film"
+      },
+      "target": {
+        "name": "market for extrusion, plastic film",
+        "unit": "kilogram",
+        "reference product": "extrusion, plastic film"
+      }
+    },
+    {
+      "source": {
+        "name": "Flat glass, coated, at plant"
+      },
+      "target": {
+        "name": "market for flat glass, coated",
+        "unit": "kilogram",
+        "reference product": "flat glass, coated"
+      }
+    },
+    {
+      "source": {
+        "name": "Flat glass, uncoated, at plant"
+      },
+      "target": {
+        "name": "market for flat glass, uncoated",
+        "unit": "kilogram",
+        "reference product": "flat glass, uncoated"
+      }
+    },
+    {
+      "source": {
+        "name": "Gas motor 206kW"
+      },
+      "target": {
+        "name": "gas motor production, 206kW",
+        "unit": "unit",
+        "reference product": "gas motor, 206kW"
+      }
+    },
+    {
+      "source": {
+        "name": "Gas turbine, 10MWe, at production plant"
+      },
+      "target": {
+        "name": "market for gas turbine, 10MW electrical",
+        "unit": "unit",
+        "reference product": "gas turbine, 10MW electrical"
+      }
+    },
+    {
+      "source": {
+        "name": "Glass fibre, at plant"
+      },
+      "target": {
+        "name": "market for glass fibre",
+        "unit": "kilogram",
+        "reference product": "glass fibre"
+      }
+    },
+    {
+      "source": {
+        "name": "Glass fibre reinforced plastic, polyamide, injection moulding, at plant"
+      },
+      "target": {
+        "name": "glass fibre reinforced plastic production, polyamide, injection moulded",
+        "unit": "kilogram",
+        "reference product": "glass fibre reinforced plastic, polyamide, injection moulded"
+      }
+    },
+    {
+      "source": {
+        "name": "Glass fibre reinforced plastic, polyamide, injection moulding, at plant"
+      },
+      "target": {
+        "name": "glass fibre reinforced plastic production, polyamide, injection moulded",
+        "unit": "kilogram",
+        "reference product": "glass fibre reinforced plastic, polyamide, injection moulded"
+      }
+    },
+    {
+      "source": {
+        "name": "Glass fibre reinforced plastic, polyester resin, hand lay-up, at plant"
+      },
+      "target": {
+        "name": "glass fibre reinforced plastic production, polyester resin, hand lay-up",
+        "unit": "kilogram",
+        "reference product": "glass fibre reinforced plastic, polyester resin, hand lay-up"
+      }
+    },
+    {
+      "source": {
+        "name": "glider, for passenger car"
+      },
+      "target": {
+        "name": "market for glider, passenger car",
+        "unit": "kilogram",
+        "reference product": "glider, passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Graphite, at plant"
+      },
+      "target": {
+        "name": "graphite production",
+        "unit": "kilogram",
+        "reference product": "graphite"
+      }
+    },
+    {
+      "source": {
+        "name": "Graphite, at plant"
+      },
+      "target": {
+        "name": "market for graphite",
+        "unit": "kilogram",
+        "reference product": "graphite"
+      }
+    },
+    {
+      "source": {
+        "name": "Gravel, crushed, at mine"
+      },
+      "target": {
+        "name": "gravel production, crushed",
+        "unit": "kilogram",
+        "reference product": "gravel, crushed"
+      }
+    },
+    {
+      "source": {
+        "name": "Gypsum fibre board, at plant"
+      },
+      "target": {
+        "name": "market for gypsum fibreboard",
+        "unit": "kilogram",
+        "reference product": "gypsum fibreboard"
+      }
+    },
+    {
+      "source": {
+        "name": "Hard coal, at regional storage"
+      },
+      "target": {
+        "name": "market for hard coal",
+        "unit": "kilogram",
+        "reference product": "hard coal"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, hard coal ash from stove, 0% water, to sanitary landfill"
+      },
+      "target": {
+        "name": "treatment of hard coal ash, residual material landfill",
+        "unit": "kilogram",
+        "reference product": "hard coal ash"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, hazardous waste, 25% water, to hazardous waste incineration"
+      },
+      "target": {
+        "name": "treatment of hazardous waste, hazardous waste incineration",
+        "unit": "kilogram",
+        "reference product": "hazardous waste, for incineration"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, hazardous waste, 25% water, to hazardous waste incineration"
+      },
+      "target": {
+        "name": "treatment of hazardous waste, hazardous waste incineration",
+        "unit": "kilogram",
+        "reference product": "hazardous waste, for incineration"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at boiler condensing modulating >100kW"
+      },
+      "target": {
+        "name": "market group for heat, central or small-scale, natural gas",
+        "unit": "megajoule",
+        "reference product": "heat, central or small-scale, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at boiler condensing modulating >100kW"
+      },
+      "target": {
+        "name": "heat production, natural gas, at boiler condensing modulating >100kW",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at industrial furnace >100kW"
+      },
+      "target": {
+        "name": "heat production, natural gas, at industrial furnace >100kW",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at industrial furnace low-NOx >100kW"
+      },
+      "target": {
+        "name": "heat production, natural gas, at industrial furnace low-NOx >100kW",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at industrial furnace low-NOx >100kW"
+      },
+      "target": {
+        "name": "heat production, natural gas, at industrial furnace low-NOx >100kW",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at industrial furnace >100kW"
+      },
+      "target": {
+        "name": "market for heat, district or industrial, natural gas",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, at industrial furnace >100kW"
+      },
+      "target": {
+        "name": "market for heat, district or industrial, natural gas",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, heavy fuel oil, at industrial furnace 1MW"
+      },
+      "target": {
+        "name": "heat production, heavy fuel oil, at industrial furnace 1MW",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, other than natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, heavy fuel oil, at industrial furnace 1MW"
+      },
+      "target": {
+        "name": "market for heat, district or industrial, other than natural gas",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, other than natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Steam, for chemical processes, at plant"
+      },
+      "target": {
+        "name": "market for heat, from steam, in chemical industry",
+        "unit": "megajoule",
+        "reference product": "heat, from steam, in chemical industry"
+      }
+    },
+    {
+      "source": {
+        "name": "Steam, for chemical processes, at plant"
+      },
+      "target": {
+        "name": "market for heat, from steam, in chemical industry",
+        "unit": "megajoule",
+        "reference product": "heat, from steam, in chemical industry"
+      }
+    },
+    {
+      "source": {
+        "name": "Steam, for chemical processes, at plant"
+      },
+      "target": {
+        "name": "steam production, as energy carrier, in chemical industry",
+        "unit": "megajoule",
+        "reference product": "heat, from steam, in chemical industry"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, natural gas, allocation exergy, at PEM fuel cell 2kWe, future"
+      },
+      "target": {
+        "name": "market for heat, future",
+        "unit": "megajoule",
+        "reference product": "heat, future"
+      }
+    },
+    {
+      "source": {
+        "name": "Hexane, at plant"
+      },
+      "target": {
+        "name": "market for hexane",
+        "unit": "kilogram",
+        "reference product": "hexane"
+      }
+    },
+    {
+      "source": {
+        "name": "Hydrogen peroxide, 50% in H2O, at plant"
+      },
+      "target": {
+        "name": "hydrogen peroxide production, product in 50% solution state",
+        "unit": "kilogram",
+        "reference product": "hydrogen peroxide, without water, in 50% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "Hydrogen, liquid, at plant"
+      },
+      "target": {
+        "name": "market for hydrogen, liquid",
+        "unit": "kilogram",
+        "reference product": "hydrogen, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, inert waste, 5% water, to inert material landfill"
+      },
+      "target": {
+        "name": "treatment of inert waste, inert material landfill",
+        "unit": "kilogram",
+        "reference product": "inert waste, for final disposal"
+      }
+    },
+    {
+      "source": {
+        "name": "Injection moulding"
+      },
+      "target": {
+        "name": "injection moulding",
+        "unit": "kilogram",
+        "reference product": "injection moulding"
+      }
+    },
+    {
+      "source": {
+        "name": "Injection moulding"
+      },
+      "target": {
+        "name": "market for injection moulding",
+        "unit": "kilogram",
+        "reference product": "injection moulding"
+      }
+    },
+    {
+      "source": {
+        "name": "Integrated circuit, IC, logic type, at plant"
+      },
+      "target": {
+        "name": "market for integrated circuit, logic type",
+        "unit": "kilogram",
+        "reference product": "integrated circuit, logic type"
+      }
+    },
+    {
+      "source": {
+        "name": "internal combustion engine, for passenger car"
+      },
+      "target": {
+        "name": "market for internal combustion engine, passenger car",
+        "unit": "kilogram",
+        "reference product": "internal combustion engine, for passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "inverter, for electric passenger car"
+      },
+      "target": {
+        "name": "market for inverter, for electric passenger car",
+        "unit": "kilogram",
+        "reference product": "inverter, for electric passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Iron sulphate, at plant"
+      },
+      "target": {
+        "name": "market for iron sulfate",
+        "unit": "kilogram",
+        "reference product": "iron sulfate"
+      }
+    },
+    {
+      "source": {
+        "name": "Kraft paper, bleached, at plant"
+      },
+      "target": {
+        "name": "kraft paper production, bleached",
+        "unit": "kilogram",
+        "reference product": "kraft paper, bleached"
+      }
+    },
+    {
+      "source": {
+        "name": "Light fuel oil, at regional storage"
+      },
+      "target": {
+        "name": "market for light fuel oil",
+        "unit": "kilogram",
+        "reference product": "light fuel oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Light fuel oil, at regional storage"
+      },
+      "target": {
+        "name": "market group for light fuel oil",
+        "unit": "kilogram",
+        "reference product": "light fuel oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Lignite, at mine"
+      },
+      "target": {
+        "name": "lignite mine operation",
+        "unit": "kilogram",
+        "reference product": "lignite"
+      }
+    },
+    {
+      "source": {
+        "name": "Lime, hydrated, packed, at plant"
+      },
+      "target": {
+        "name": "lime production, milled, packed",
+        "unit": "kilogram",
+        "reference product": "lime, packed"
+      }
+    },
+    {
+      "source": {
+        "name": "Liquid storage tank, chemicals, organics"
+      },
+      "target": {
+        "name": "liquid storage tank production, chemicals, organics",
+        "unit": "unit",
+        "reference product": "liquid storage tank, chemicals, organics"
+      }
+    },
+    {
+      "source": {
+        "name": "Liquid storage tank, chemicals, organics"
+      },
+      "target": {
+        "name": "market for liquid storage tank, chemicals, organics",
+        "unit": "unit",
+        "reference product": "liquid storage tank, chemicals, organics"
+      }
+    },
+    {
+      "source": {
+        "name": "Lithium hexafluorophosphate, at plant"
+      },
+      "target": {
+        "name": "market for lithium hexafluorophosphate",
+        "unit": "kilogram",
+        "reference product": "lithium hexafluorophosphate"
+      }
+    },
+    {
+      "source": {
+        "name": "Lithium hydroxide, at plant"
+      },
+      "target": {
+        "name": "lithium hydroxide production",
+        "unit": "kilogram",
+        "reference product": "lithium hydroxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Lithium hydroxide, at plant"
+      },
+      "target": {
+        "name": "market for lithium hydroxide",
+        "unit": "kilogram",
+        "reference product": "lithium hydroxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Lubricating oil, at plant"
+      },
+      "target": {
+        "name": "lubricating oil production",
+        "unit": "kilogram",
+        "reference product": "lubricating oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Lubricating oil, at plant"
+      },
+      "target": {
+        "name": "market for lubricating oil",
+        "unit": "kilogram",
+        "reference product": "lubricating oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Lubricating oil, at plant"
+      },
+      "target": {
+        "name": "market for lubricating oil",
+        "unit": "kilogram",
+        "reference product": "lubricating oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Magnesium oxide, at plant"
+      },
+      "target": {
+        "name": "market for magnesium oxide",
+        "unit": "kilogram",
+        "reference product": "magnesium oxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Magnesium sulphate, at plant"
+      },
+      "target": {
+        "name": "market for magnesium sulfate",
+        "unit": "kilogram",
+        "reference product": "magnesium sulfate"
+      }
+    },
+    {
+      "source": {
+        "name": "maize seed organic, at regional storehouse/kg"
+      },
+      "target": {
+        "name": "market for maize seed, for sowing",
+        "unit": "kilogram",
+        "reference product": "maize seed, for sowing"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, powertrain, for electric passenger car"
+      },
+      "target": {
+        "name": "market for manual dismantling of used electric passenger car",
+        "unit": "unit",
+        "reference product": "manual dismantling of used electric passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, passenger car"
+      },
+      "target": {
+        "name": "market for manual dismantling of used passenger car with internal combustion engine",
+        "unit": "unit",
+        "reference product": "manual dismantling of used passenger car with internal combustion engine"
+      }
+    },
+    {
+      "source": {
+        "name": "Metal coating plant"
+      },
+      "target": {
+        "name": "metal coating facility construction",
+        "unit": "unit",
+        "reference product": "metal coating facility"
+      }
+    },
+    {
+      "source": {
+        "name": "Metal working factory"
+      },
+      "target": {
+        "name": "market for metal working factory",
+        "unit": "unit",
+        "reference product": "metal working factory"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "market for metal working, average for aluminium product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for aluminium product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "metal working, average for aluminium product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for aluminium product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Aluminium product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "metal working, average for aluminium product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for aluminium product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Chromium steel product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "metal working, average for chromium steel product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for chromium steel product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Chromium steel product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "metal working, average for chromium steel product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for chromium steel product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "market for metal working, average for copper product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for copper product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Metal product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "market for metal working, average for metal product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for metal product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "market for metal working, average for steel product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for steel product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Methanol, at regional storage"
+      },
+      "target": {
+        "name": "market for methanol",
+        "unit": "kilogram",
+        "reference product": "methanol"
+      }
+    },
+    {
+      "source": {
+        "name": "Monoethanolamine, at plant"
+      },
+      "target": {
+        "name": "market for monoethanolamine",
+        "unit": "kilogram",
+        "reference product": "monoethanolamine"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, municipal solid waste, 22.9% water, to municipal incineration/kg"
+      },
+      "target": {
+        "name": "market for municipal solid waste",
+        "unit": "kilogram",
+        "reference product": "municipal solid waste"
+      }
+    },
+    {
+      "source": {
+        "name": "Natural gas, from high pressure network (1-5 bar), at service station"
+      },
+      "target": {
+        "name": "market for natural gas, from high pressure network (1-5 bar), at service station",
+        "unit": "kilogram",
+        "reference product": "natural gas, from high pressure network (1-5 bar), at service station"
+      }
+    },
+    {
+      "source": {
+        "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station"
+      },
+      "target": {
+        "name": "market for natural gas, from medium pressure network (0.1-1 bar), at service station",
+        "unit": "kilogram",
+        "reference product": "natural gas, from medium pressure network (0.1-1 bar), at service station"
+      }
+    },
+    {
+      "source": {
+        "name": "Natural gas, from high pressure network (1-5 bar), at service station"
+      },
+      "target": {
+        "name": "market group for natural gas, high pressure",
+        "unit": "cubic meter",
+        "reference product": "natural gas, high pressure"
+      }
+    },
+    {
+      "source": {
+        "name": "Nickel, 99.5%, at plant"
+      },
+      "target": {
+        "name": "market for nickel, 99.5%",
+        "unit": "kilogram",
+        "reference product": "nickel, 99.5%"
+      }
+    },
+    {
+      "source": {
+        "name": "Nickel, 99.5%, at plant"
+      },
+      "target": {
+        "name": "nickel mine operation, sulfidic ore",
+        "unit": "kilogram",
+        "reference product": "nickel, 99.5%"
+      }
+    },
+    {
+      "source": {
+        "name": "Nitric acid, 50% in H2O, at plant"
+      },
+      "target": {
+        "name": "nitric acid production, product in 50% solution state",
+        "unit": "kilogram",
+        "reference product": "nitric acid, without water, in 50% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "nitro-compounds, at regional storehouse/kg"
+      },
+      "target": {
+        "name": "market for nitrogen fertiliser, as N",
+        "unit": "kilogram",
+        "reference product": "nitrogen fertiliser, as N"
+      }
+    },
+    {
+      "source": {
+        "name": "Nitrogen, liquid, at plant"
+      },
+      "target": {
+        "name": "market for nitrogen, liquid",
+        "unit": "kilogram",
+        "reference product": "nitrogen, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "N-methyl-2-pyrrolidone, at plant"
+      },
+      "target": {
+        "name": "market for N-methyl-2-pyrrolidone",
+        "unit": "kilogram",
+        "reference product": "N-methyl-2-pyrrolidone"
+      }
+    },
+    {
+      "source": {
+        "name": "Nylon 6, at plant"
+      },
+      "target": {
+        "name": "market for nylon 6",
+        "unit": "kilogram",
+        "reference product": "nylon 6"
+      }
+    },
+    {
+      "source": {
+        "name": "Nylon 66, glass-filled, at plant"
+      },
+      "target": {
+        "name": "market for nylon 6-6, glass-filled",
+        "unit": "kilogram",
+        "reference product": "nylon 6-6, glass-filled"
+      }
+    },
+    {
+      "source": {
+        "name": "Use, computer, desktop with LCD monitor, active mode"
+      },
+      "target": {
+        "name": "operation, computer, desktop, with liquid crystal display, active mode",
+        "unit": "hour",
+        "reference product": "operation, computer, desktop, with liquid crystal display, active mode"
+      }
+    },
+    {
+      "source": {
+        "name": "Oxygen, liquid, at plant"
+      },
+      "target": {
+        "name": "air separation, cryogenic",
+        "unit": "kilogram",
+        "reference product": "oxygen, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Packaging box production unit"
+      },
+      "target": {
+        "name": "packaging box factory construction",
+        "unit": "unit",
+        "reference product": "packaging box factory"
+      }
+    },
+    {
+      "source": {
+        "name": "Packaging film, LDPE, at plant"
+      },
+      "target": {
+        "name": "market for packaging film, low density polyethylene",
+        "unit": "kilogram",
+        "reference product": "packaging film, low density polyethylene"
+      }
+    },
+    {
+      "source": {
+        "name": "Maintenance, passenger car"
+      },
+      "target": {
+        "name": "maintenance, passenger car",
+        "unit": "unit",
+        "reference product": "passenger car maintenance"
+      }
+    },
+    {
+      "source": {
+        "name": "pesticide unspecified, at regional storehouse/kg"
+      },
+      "target": {
+        "name": "market for pesticide, unspecified",
+        "unit": "kilogram",
+        "reference product": "pesticide, unspecified"
+      }
+    },
+    {
+      "source": {
+        "name": "Petrol, low-sulphur, at refinery"
+      },
+      "target": {
+        "name": "market for petrol, low-sulfur",
+        "unit": "kilogram",
+        "reference product": "petrol, low-sulfur"
+      }
+    },
+    {
+      "source": {
+        "name": "Phenolic resin, at plant"
+      },
+      "target": {
+        "name": "phenolic resin production",
+        "unit": "kilogram",
+        "reference product": "phenolic resin"
+      }
+    },
+    {
+      "source": {
+        "name": "Ammonium nitrate phosphate, as P2O5, at regional storehouse"
+      },
+      "target": {
+        "name": "market for phosphate fertiliser, as P2O5",
+        "unit": "kilogram",
+        "reference product": "phosphate fertiliser, as P2O5"
+      }
+    },
+    {
+      "source": {
+        "name": "Phosphoric acid, industrial grade, 85% in H2O, at plant"
+      },
+      "target": {
+        "name": "market for phosphoric acid, industrial grade, without water, in 85% solution state",
+        "unit": "kilogram",
+        "reference product": "phosphoric acid, industrial grade, without water, in 85% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "Plastics processing factory"
+      },
+      "target": {
+        "name": "market for plastic processing factory",
+        "unit": "unit",
+        "reference product": "plastic processing factory"
+      }
+    },
+    {
+      "source": {
+        "name": "Platinum, at regional storage"
+      },
+      "target": {
+        "name": "market for platinum",
+        "unit": "kilogram",
+        "reference product": "platinum"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyethylene terephthalate, granulate, amorphous, at plant"
+      },
+      "target": {
+        "name": "market for polyethylene terephthalate, granulate, amorphous",
+        "unit": "kilogram",
+        "reference product": "polyethylene terephthalate, granulate, amorphous"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyethylene, HDPE, granulate, at plant"
+      },
+      "target": {
+        "name": "market for polyethylene, high density, granulate",
+        "unit": "kilogram",
+        "reference product": "polyethylene, high density, granulate"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyethylene, HDPE, granulate, at plant"
+      },
+      "target": {
+        "name": "polyethylene production, high density, granulate",
+        "unit": "kilogram",
+        "reference product": "polyethylene, high density, granulate"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyethylene, LDPE, granulate, at plant"
+      },
+      "target": {
+        "name": "market for polyethylene, low density, granulate",
+        "unit": "kilogram",
+        "reference product": "polyethylene, low density, granulate"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyethylene, LDPE, granulate, at plant"
+      },
+      "target": {
+        "name": "polyethylene production, low density, granulate",
+        "unit": "kilogram",
+        "reference product": "polyethylene, low density, granulate"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyphenylene sulfide, at plant"
+      },
+      "target": {
+        "name": "market for polyphenylene sulfide",
+        "unit": "kilogram",
+        "reference product": "polyphenylene sulfide"
+      }
+    },
+    {
+      "source": {
+        "name": "Polypropylene, granulate, at plant"
+      },
+      "target": {
+        "name": "market for polypropylene, granulate",
+        "unit": "kilogram",
+        "reference product": "polypropylene, granulate"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyurethane, flexible foam, at plant"
+      },
+      "target": {
+        "name": "market for polyurethane, flexible foam",
+        "unit": "kilogram",
+        "reference product": "polyurethane, flexible foam"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyvinylchloride, bulk polymerised, at plant"
+      },
+      "target": {
+        "name": "polyvinylchloride production, bulk polymerisation",
+        "unit": "kilogram",
+        "reference product": "polyvinylchloride, bulk polymerised"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyvinylchloride, suspension polymerised, at plant"
+      },
+      "target": {
+        "name": "market for polyvinylchloride, suspension polymerised",
+        "unit": "kilogram",
+        "reference product": "polyvinylchloride, suspension polymerised"
+      }
+    },
+    {
+      "source": {
+        "name": "polyvinylfluoride, at plant/kg"
+      },
+      "target": {
+        "name": "market for polyvinylfluoride",
+        "unit": "kilogram",
+        "reference product": "polyvinylfluoride"
+      }
+    },
+    {
+      "source": {
+        "name": "Portafer, at plant"
+      },
+      "target": {
+        "name": "market for portafer",
+        "unit": "kilogram",
+        "reference product": "portafer"
+      }
+    },
+    {
+      "source": {
+        "name": "Potassium nitrate, as K2O, at regional storehouse"
+      },
+      "target": {
+        "name": "market for potassium fertiliser, as K2O",
+        "unit": "kilogram",
+        "reference product": "potassium fertiliser, as K2O"
+      }
+    },
+    {
+      "source": {
+        "name": "Potassium hydroxide, at regional storage"
+      },
+      "target": {
+        "name": "market for potassium hydroxide",
+        "unit": "kilogram",
+        "reference product": "potassium hydroxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Potassium sulphate, as K2O, at regional storehouse"
+      },
+      "target": {
+        "name": "market for potassium sulfate, as K2O",
+        "unit": "kilogram",
+        "reference product": "potassium sulfate, as K2O"
+      }
+    },
+    {
+      "source": {
+        "name": "power distribution unit, for electric passenger car"
+      },
+      "target": {
+        "name": "market for power distribution unit, for electric passenger car",
+        "unit": "kilogram",
+        "reference product": "power distribution unit, for electric passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Facilities precious metal refinery"
+      },
+      "target": {
+        "name": "market for precious metal refinery",
+        "unit": "unit",
+        "reference product": "precious metal refinery"
+      }
+    },
+    {
+      "source": {
+        "name": "Printed wiring board, through-hole mounted, unspec., Pb free, at plant"
+      },
+      "target": {
+        "name": "market for printed wiring board, through-hole mounted, unspecified, Pb free",
+        "unit": "kilogram",
+        "reference product": "printed wiring board, through-hole mounted, unspecified, Pb free"
+      }
+    },
+    {
+      "source": {
+        "name": "Pump 40W, at plant"
+      },
+      "target": {
+        "name": "market for pump, 40W",
+        "unit": "unit",
+        "reference product": "pump, 40W"
+      }
+    },
+    {
+      "source": {
+        "name": "Pump 40W, at plant"
+      },
+      "target": {
+        "name": "pump production, 40W",
+        "unit": "unit",
+        "reference product": "pump, 40W"
+      }
+    },
+    {
+      "source": {
+        "name": "Quicklime, milled, packed, at plant"
+      },
+      "target": {
+        "name": "market for quicklime, milled, packed",
+        "unit": "kilogram",
+        "reference product": "quicklime, milled, packed"
+      }
+    },
+    {
+      "source": {
+        "name": "Reinforcing steel, at plant"
+      },
+      "target": {
+        "name": "market for reinforcing steel",
+        "unit": "kilogram",
+        "reference product": "reinforcing steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Reinforcing steel, at plant"
+      },
+      "target": {
+        "name": "reinforcing steel production",
+        "unit": "kilogram",
+        "reference product": "reinforcing steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Reinforcing steel, at plant"
+      },
+      "target": {
+        "name": "reinforcing steel production",
+        "unit": "kilogram",
+        "reference product": "reinforcing steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Road"
+      },
+      "target": {
+        "name": "market for road",
+        "unit": "meter-year",
+        "reference product": "road"
+      }
+    },
+    {
+      "source": {
+        "name": "road wear emissions, passenger car"
+      },
+      "target": {
+        "name": "market for road wear emissions, passenger car",
+        "unit": "kilogram",
+        "reference product": "road wear emissions, passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Router, IP network, at server"
+      },
+      "target": {
+        "name": "router, internet",
+        "unit": "unit",
+        "reference product": "router, internet"
+      }
+    },
+    {
+      "source": {
+        "name": "Sand, at mine"
+      },
+      "target": {
+        "name": "gravel and sand quarry operation",
+        "unit": "kilogram",
+        "reference product": "sand"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, steel, 0% water, to inert material landfill"
+      },
+      "target": {
+        "name": "treatment of scrap steel, inert material landfill",
+        "unit": "kilogram",
+        "reference product": "scrap steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, aluminium"
+      },
+      "target": {
+        "name": "market for sheet rolling, aluminium",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, aluminium"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, aluminium"
+      },
+      "target": {
+        "name": "sheet rolling, aluminium",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, aluminium"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, chromium steel"
+      },
+      "target": {
+        "name": "market for sheet rolling, chromium steel",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, chromium steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, chromium steel"
+      },
+      "target": {
+        "name": "sheet rolling, chromium steel",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, chromium steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, chromium steel"
+      },
+      "target": {
+        "name": "market for sheet rolling, copper",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, copper"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, copper"
+      },
+      "target": {
+        "name": "market for sheet rolling, steel",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, steel"
+      },
+      "target": {
+        "name": "sheet rolling, steel",
+        "unit": "kilogram",
+        "reference product": "sheet rolling, steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, steel"
+      },
+      "target": {
+        "name": "market for silica sand",
+        "unit": "kilogram",
+        "reference product": "silica sand"
+      }
+    },
+    {
+      "source": {
+        "name": "silicon, electronic grade, at plant/kg"
+      },
+      "target": {
+        "name": "market for silicon, electronics grade",
+        "unit": "kilogram",
+        "reference product": "silicon, electronics grade"
+      }
+    },
+    {
+      "source": {
+        "name": "Soap, at plant"
+      },
+      "target": {
+        "name": "market for soap",
+        "unit": "kilogram",
+        "reference product": "soap"
+      }
+    },
+    {
+      "source": {
+        "name": "Sodium chloride, powder, at plant"
+      },
+      "target": {
+        "name": "market for sodium chloride, powder",
+        "unit": "kilogram",
+        "reference product": "sodium chloride, powder"
+      }
+    },
+    {
+      "source": {
+        "name": "Sodium hydroxide, 50% in H2O, production mix, at plant"
+      },
+      "target": {
+        "name": "market for sodium hydroxide, without water, in 50% solution state",
+        "unit": "kilogram",
+        "reference product": "sodium hydroxide, without water, in 50% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "Sodium persulfate, at plant"
+      },
+      "target": {
+        "name": "market for sodium persulfate",
+        "unit": "kilogram",
+        "reference product": "sodium persulfate"
+      }
+    },
+    {
+      "source": {
+        "name": "Limestone, at mine"
+      },
+      "target": {
+        "name": "market for soil pH raising agent, as CaCO3",
+        "unit": "kilogram",
+        "reference product": "soil pH raising agent, as CaCO3"
+      }
+    },
+    {
+      "source": {
+        "name": "Chromium steel 18/8, at plant"
+      },
+      "target": {
+        "name": "market for steel, chromium steel 18/8",
+        "unit": "kilogram",
+        "reference product": "steel, chromium steel 18/8"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, chromium steel"
+      },
+      "target": {
+        "name": "market for steel, chromium steel 18/8, hot rolled",
+        "unit": "kilogram",
+        "reference product": "steel, chromium steel 18/8, hot rolled"
+      }
+    },
+    {
+      "source": {
+        "name": "Sheet rolling, chromium steel"
+      },
+      "target": {
+        "name": "steel production, chromium steel 18/8, hot rolled",
+        "unit": "kilogram",
+        "reference product": "steel, chromium steel 18/8, hot rolled"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel, low-alloyed, at plant"
+      },
+      "target": {
+        "name": "market for steel, low-alloyed",
+        "unit": "kilogram",
+        "reference product": "steel, low-alloyed"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel, low-alloyed, at plant"
+      },
+      "target": {
+        "name": "steel production, converter, low-alloyed",
+        "unit": "kilogram",
+        "reference product": "steel, low-alloyed"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel, low-alloyed, at plant"
+      },
+      "target": {
+        "name": "steel production, electric, low-alloyed",
+        "unit": "kilogram",
+        "reference product": "steel, low-alloyed"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel, low-alloyed, at plant"
+      },
+      "target": {
+        "name": "market for steel, low-alloyed, hot rolled",
+        "unit": "kilogram",
+        "reference product": "steel, low-alloyed, hot rolled"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel, converter, unalloyed, at plant"
+      },
+      "target": {
+        "name": "market for steel, unalloyed",
+        "unit": "kilogram",
+        "reference product": "steel, unalloyed"
+      }
+    },
+    {
+      "source": {
+        "name": "Glass wool mat, at plant"
+      },
+      "target": {
+        "name": "market for stone wool, packed",
+        "unit": "kilogram",
+        "reference product": "stone wool, packed"
+      }
+    },
+    {
+      "source": {
+        "name": "Styrene, at plant"
+      },
+      "target": {
+        "name": "market for styrene",
+        "unit": "kilogram",
+        "reference product": "styrene"
+      }
+    },
+    {
+      "source": {
+        "name": "Sugar beet seed IP, at regional storehouse"
+      },
+      "target": {
+        "name": "market for sugar beet seed, for sowing",
+        "unit": "kilogram",
+        "reference product": "sugar beet seed, for sowing"
+      }
+    },
+    {
+      "source": {
+        "name": "Sulphur dioxide, liquid, at plant"
+      },
+      "target": {
+        "name": "market for sulfur dioxide, liquid",
+        "unit": "kilogram",
+        "reference product": "sulfur dioxide, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Sulphur hexafluoride, liquid, at plant"
+      },
+      "target": {
+        "name": "market for sulfur hexafluoride, liquid",
+        "unit": "kilogram",
+        "reference product": "sulfur hexafluoride, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Sulphuric acid, liquid, at plant"
+      },
+      "target": {
+        "name": "market for sulfuric acid",
+        "unit": "kilogram",
+        "reference product": "sulfuric acid"
+      }
+    },
+    {
+      "source": {
+        "name": "Sulphuric acid, liquid, at plant"
+      },
+      "target": {
+        "name": "sulfuric acid production",
+        "unit": "kilogram",
+        "reference product": "sulfuric acid"
+      }
+    },
+    {
+      "source": {
+        "name": "Synthetic rubber, at plant"
+      },
+      "target": {
+        "name": "market for synthetic rubber",
+        "unit": "kilogram",
+        "reference product": "synthetic rubber"
+      }
+    },
+    {
+      "source": {
+        "name": "Synthetic rubber, at plant"
+      },
+      "target": {
+        "name": "synthetic rubber production",
+        "unit": "kilogram",
+        "reference product": "synthetic rubber"
+      }
+    },
+    {
+      "source": {
+        "name": "tap water, at user/kg"
+      },
+      "target": {
+        "name": "market for tap water",
+        "unit": "kilogram",
+        "reference product": "tap water"
+      }
+    },
+    {
+      "source": {
+        "name": "tap water, at user/kg"
+      },
+      "target": {
+        "name": "market for tap water",
+        "unit": "kilogram",
+        "reference product": "tap water"
+      }
+    },
+    {
+      "source": {
+        "name": "tap water, at user/kg"
+      },
+      "target": {
+        "name": "market for tap water",
+        "unit": "kilogram",
+        "reference product": "tap water"
+      }
+    },
+    {
+      "source": {
+        "name": "tetrafluoroethylene, at plant/kg"
+      },
+      "target": {
+        "name": "tetrafluoroethylene production",
+        "unit": "kilogram",
+        "reference product": "tetrafluoroethylene"
+      }
+    },
+    {
+      "source": {
+        "name": "Thermoforming, with calendering"
+      },
+      "target": {
+        "name": "market for thermoforming, with calendering",
+        "unit": "kilogram",
+        "reference product": "thermoforming, with calendering"
+      }
+    },
+    {
+      "source": {
+        "name": "Tin, at regional storage"
+      },
+      "target": {
+        "name": "market for tin",
+        "unit": "kilogram",
+        "reference product": "tin"
+      }
+    },
+    {
+      "source": {
+        "name": "Tin, at regional storage"
+      },
+      "target": {
+        "name": "tin production",
+        "unit": "kilogram",
+        "reference product": "tin"
+      }
+    },
+    {
+      "source": {
+        "name": "Titanium dioxide, production mix, at plant"
+      },
+      "target": {
+        "name": "market for titanium dioxide",
+        "unit": "kilogram",
+        "reference product": "titanium dioxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Transformer, high voltage use, at plant"
+      },
+      "target": {
+        "name": "market for transformer, high voltage use",
+        "unit": "kilogram",
+        "reference product": "transformer, high voltage use"
+      }
+    },
+    {
+      "source": {
+        "name": "transmission network, electricity, high voltage/km"
+      },
+      "target": {
+        "name": "transmission network construction, electricity, high voltage",
+        "unit": "kilometer",
+        "reference product": "transmission network, electricity, high voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "transmission network, electricity, medium voltage/km"
+      },
+      "target": {
+        "name": "transmission network construction, electricity, medium voltage",
+        "unit": "kilometer",
+        "reference product": "transmission network, electricity, medium voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "transmission network, long-distance/km"
+      },
+      "target": {
+        "name": "transmission network construction, long-distance",
+        "unit": "kilometer",
+        "reference product": "transmission network, long-distance"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, rail/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight train",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight train"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, rail/tkm"
+      },
+      "target": {
+        "name": "transport, freight train, diesel, with particle filter",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight train"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, barge tanker/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, inland waterways, barge",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, inland waterways, barge"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, barge tanker/tkm"
+      },
+      "target": {
+        "name": "transport, freight, inland waterways, barge",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, inland waterways, barge"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 3/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry >32 metric ton, EURO3",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry >32 metric ton, EURO3"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 6/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry >32 metric ton, EURO6",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry >32 metric ton, EURO6"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 3/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry 16-32 metric ton, EURO3",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry 16-32 metric ton, EURO3"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 5/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry 16-32 metric ton, EURO5",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry 16-32 metric ton, EURO5"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 5/tkm"
+      },
+      "target": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO5",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry 16-32 metric ton, EURO5"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 5/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry, unspecified",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry, unspecified"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, transoceanic tanker/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, sea, tanker for liquid goods other than petroleum and liquefied natural gas",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, sea, tanker for liquid goods other than petroleum and liquefied natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, transoceanic tanker/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, sea, tanker for petroleum",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, sea, tanker for petroleum"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight helicopter, single-engine/hr"
+      },
+      "target": {
+        "name": "transport, helicopter",
+        "unit": "hour",
+        "reference product": "transport, helicopter"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, helicopter, single-engine, LTO cycle/p"
+      },
+      "target": {
+        "name": "transport, helicopter, LTO cycle",
+        "unit": "unit",
+        "reference product": "transport, helicopter, LTO cycle"
+      }
+    },
+    {
+      "source": {
+        "name": "Tube insulation, elastomere, at plant"
+      },
+      "target": {
+        "name": "tube insulation production, elastomere",
+        "unit": "kilogram",
+        "reference product": "tube insulation, elastomere"
+      }
+    },
+    {
+      "source": {
+        "name": "tyre wear emissions, passenger car"
+      },
+      "target": {
+        "name": "market for tyre wear emissions, passenger car",
+        "unit": "kilogram",
+        "reference product": "tyre wear emissions, passenger car"
+      }
+    },
+    {
+      "source": {
+        "name": "Urea, as N, at regional storehouse"
+      },
+      "target": {
+        "name": "market for urea, as N",
+        "unit": "kilogram",
+        "reference product": "urea, as N"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, powertrain, for electric passenger car"
+      },
+      "target": {
+        "name": "market for used powertrain from electric passenger car, manual dismantling",
+        "unit": "kilogram",
+        "reference product": "used powertrain from electric passenger car, manual dismantling"
+      }
+    },
+    {
+      "source": {
+        "name": "Vegetable oil, from waste cooking oil, at plant"
+      },
+      "target": {
+        "name": "market for used vegetable cooking oil",
+        "unit": "kilogram",
+        "reference product": "used vegetable cooking oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, asphalt, 0.1% water, to sanitary landfill"
+      },
+      "target": {
+        "name": "treatment of waste asphalt, sanitary landfill",
+        "unit": "kilogram",
+        "reference product": "waste asphalt"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, gypsum, 19.4% water, to inert material landfill"
+      },
+      "target": {
+        "name": "treatment of waste gypsum, inert material landfill",
+        "unit": "kilogram",
+        "reference product": "waste gypsum"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, bilge oil, 90% water, to hazardous waste incineration"
+      },
+      "target": {
+        "name": "treatment of waste mineral oil, hazardous waste incineration",
+        "unit": "kilogram",
+        "reference product": "waste mineral oil"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, building, mineral wool, to final disposal"
+      },
+      "target": {
+        "name": "treatment of waste mineral wool, inert material landfill",
+        "unit": "kilogram",
+        "reference product": "waste mineral wool, for final disposal"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, plastic, industr. electronics, 15.3% water, to municipal incineration/kg"
+      },
+      "target": {
+        "name": "market for waste plastic, industrial electronics",
+        "unit": "kilogram",
+        "reference product": "waste plastic, industrial electronics"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, plastics, mixture, 15.3% water, to sanitary landfill"
+      },
+      "target": {
+        "name": "treatment of waste plastic, mixture, sanitary landfill",
+        "unit": "kilogram",
+        "reference product": "waste plastic, mixture"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, rubber, unspecified, 0% water, to municipal incineration/kg"
+      },
+      "target": {
+        "name": "market for waste rubber, unspecified",
+        "unit": "kilogram",
+        "reference product": "waste rubber, unspecified"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, sewage, from residence, to wastewater treatment, class 2"
+      },
+      "target": {
+        "name": "treatment of wastewater, average, capacity 1E9l/year",
+        "unit": "cubic meter",
+        "reference product": "wastewater, average"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, sewage, from residence, to wastewater treatment, class 2"
+      },
+      "target": {
+        "name": "treatment of wastewater, average, capacity 1.1E10l/year",
+        "unit": "cubic meter",
+        "reference product": "wastewater, average"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, sewage, from residence, to wastewater treatment, class 2"
+      },
+      "target": {
+        "name": "treatment of wastewater from lorry production, capacity 4.7E10l/year",
+        "unit": "cubic meter",
+        "reference product": "wastewater from lorry production"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, sewage, from residence, to wastewater treatment, class 2"
+      },
+      "target": {
+        "name": "treatment of wastewater, from residence, capacity 1.1E10l/year",
+        "unit": "cubic meter",
+        "reference product": "wastewater, from residence"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, sewage, unpolluted, from residence, to wastewater treatment, class 2"
+      },
+      "target": {
+        "name": "treatment of wastewater, unpolluted, capacity 5E9l/year",
+        "unit": "cubic meter",
+        "reference product": "wastewater, unpolluted"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, completely softened, at plant"
+      },
+      "target": {
+        "name": "market for water, completely softened",
+        "unit": "kilogram",
+        "reference product": "water, completely softened"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, decarbonised, at plant"
+      },
+      "target": {
+        "name": "market for water, decarbonised",
+        "unit": "kilogram",
+        "reference product": "water, decarbonised"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, decarbonised, at plant"
+      },
+      "target": {
+        "name": "market for water, decarbonised",
+        "unit": "kilogram",
+        "reference product": "water, decarbonised"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, deionised, at plant"
+      },
+      "target": {
+        "name": "market for water, deionised",
+        "unit": "kilogram",
+        "reference product": "water, deionised"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, deionised, at plant"
+      },
+      "target": {
+        "name": "market for water, deionised",
+        "unit": "kilogram",
+        "reference product": "water, deionised"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, deionised, at plant"
+      },
+      "target": {
+        "name": "market for water, deionised",
+        "unit": "kilogram",
+        "reference product": "water, deionised"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, deionised, at plant"
+      },
+      "target": {
+        "name": "water production, deionised",
+        "unit": "kilogram",
+        "reference product": "water, deionised"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, ultrapure, at plant"
+      },
+      "target": {
+        "name": "market for water, ultrapure",
+        "unit": "kilogram",
+        "reference product": "water, ultrapure"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, ultrapure, at plant"
+      },
+      "target": {
+        "name": "market for water, ultrapure",
+        "unit": "kilogram",
+        "reference product": "water, ultrapure"
+      }
+    },
+    {
+      "source": {
+        "name": "Welding, arc, steel"
+      },
+      "target": {
+        "name": "market for welding, arc, steel",
+        "unit": "meter",
+        "reference product": "welding, arc, steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Welding, arc, steel"
+      },
+      "target": {
+        "name": "welding, arc, steel",
+        "unit": "meter",
+        "reference product": "welding, arc, steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Wire drawing, copper"
+      },
+      "target": {
+        "name": "wire drawing, copper",
+        "unit": "kilogram",
+        "reference product": "wire drawing, copper"
+      }
+    },
+    {
+      "source": {
+        "name": "Zeolite, powder, at plant"
+      },
+      "target": {
+        "name": "market for zeolite, powder",
+        "unit": "kilogram",
+        "reference product": "zeolite, powder"
+      }
+    },
+    {
+      "source": {
+        "name": "Zinc oxide, at plant"
+      },
+      "target": {
+        "name": "market for zinc oxide",
+        "unit": "kilogram",
+        "reference product": "zinc oxide"
+      }
+    },
+    {
+      "source": {
+        "name": "skidding/hr"
+      },
+      "target": {
+        "name": "skidding, skidder",
+        "unit": "hour",
+        "reference product": "skidding, skidder"
+      }
+    },
+    {
+      "source": {
+        "name": "cable yarding, mobile cable yarder on trailer/hr"
+      },
+      "target": {
+        "name": "yarding, mobile cable yarder on trailer",
+        "unit": "hour",
+        "reference product": "cable yarding"
+      }
+    },
+    {
+      "source": {
+        "name": "cable yarding and processing, mobile cable yarder on truck/hr"
+      },
+      "target": {
+        "name": "yarding and processing, mobile cable yarder on truck",
+        "unit": "hour",
+        "reference product": "cable yarding"
+      }
+    },
+    {
+      "source": {
+        "name": "cable yarding, sled yarder/hr"
+      },
+      "target": {
+        "name": "yarding, sled yarder",
+        "unit": "hour",
+        "reference product": "cable yarding"
+      }
+    },
+    {
+      "source": {
+        "name": "power sawing, without catalytic converter/hr"
+      },
+      "target": {
+        "name": "power sawing, without catalytic converter",
+        "unit": "hour",
+        "reference product": "power sawing, without catalytic converter"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight helicopter, single-engine/hr"
+      },
+      "target": {
+        "name": "market for transport, helicopter",
+        "unit": "hour",
+        "reference product": "transport, helicopter"
+      }
+    },
+    {
+      "source": {
+        "name": "Gravel, crushed, at mine"
+      },
+      "target": {
+        "name": "market for gravel, crushed",
+        "unit": "kilogram",
+        "reference product": "gravel, crushed"
+      }
+    },
+    {
+      "source": {
+        "name": "Gravel, crushed, at mine"
+      },
+      "target": {
+        "name": "market for gravel, crushed",
+        "unit": "kilogram",
+        "reference product": "gravel, crushed"
+      }
+    },
+    {
+      "source": {
+        "name": "wood chipping, chipper, mobile, diesel, at forest road/hr"
+      },
+      "target": {
+        "name": "wood chipping, mobile chipper, at forest road",
+        "unit": "hour",
+        "reference product": "wood chipping, chipper, mobile, diesel, at forest road"
+      }
+    },
+    {
+      "source": {
+        "name": "wood chipping, forwarder with terrain chipper, in forest/hr"
+      },
+      "target": {
+        "name": "wood chipping, terrain chipper, diesel",
+        "unit": "hour",
+        "reference product": "wood chipping, forwarder with terrain chipper, in forest"
+      }
+    },
+    {
+      "source": {
+        "name": "harvesting, forestry harvester/hr"
+      },
+      "target": {
+        "name": "harvesting, forestry harvester",
+        "unit": "hour",
+        "reference product": "harvesting, forestry harvester"
+      }
+    },
+    {
+      "source": {
+        "name": "delimbing/sorting, excavator-based processor/hr"
+      },
+      "target": {
+        "name": "delimbing, with excavator-based processor",
+        "unit": "hour",
+        "reference product": "delimbing/sorting, excavator-based processor"
+      }
+    },
+    {
+      "source": {
+        "name": "forwarding, forwarder/hr"
+      },
+      "target": {
+        "name": "forwarding, forwarder",
+        "unit": "hour",
+        "reference product": "forwarding, forwarder"
+      }
+    },
+    {
+      "source": {
+        "name": "Ceramic tiles, at regional storage"
+      },
+      "target": {
+        "name": "market for ceramic tile",
+        "unit": "kilogram",
+        "reference product": "ceramic tile"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "metal working, average for steel product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for steel product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Nickel, 99.5%, at plant"
+      },
+      "target": {
+        "name": "market for nickel, class 1",
+        "unit": "kilogram",
+        "reference product": "nickel, class 1"
+      }
+    },
+    {
+      "source": {
+        "name": "Nickel, 99.5%, at plant"
+      },
+      "target": {
+        "name": "nickel mine operation and benefication to nickel concentrate, 7% Ni",
+        "unit": "kilogram",
+        "reference product": "nickel concentrate, 7% Ni"
+      }
+    },
+    {
+      "source": {
+        "name": "Nickel, 99.5%, at plant"
+      },
+      "target": {
+        "name": "market for nickel sulfate",
+        "unit": "kilogram",
+        "reference product": "nickel sulfate"
+      }
+    },
+    {
+      "source": {
+        "name": "Steel, low-alloyed, at plant"
+      },
+      "target": {
+        "name": "steel production, electric, low-alloyed",
+        "unit": "kilogram",
+        "reference product": "steel, low-alloyed"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat from waste, at municipal waste incineration plant"
+      },
+      "target": {
+        "name": "heat, from municipal waste incineration to generic market for heat district or industrial, other than natural gas",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, other than natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "tree seedling, from unheated greenhouse, 1000 units, at tree nursery/p"
+      },
+      "target": {
+        "name": "tree seedling production, in unheated greenhouse",
+        "unit": "unit",
+        "reference product": "tree seedling, for planting"
+      }
+    },
+    {
+      "source": {
+        "name": "Synthetic gas plant"
+      },
+      "target": {
+        "name": "synthetic gas factory construction",
+        "unit": "unit",
+        "reference product": "synthetic gas factory"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper, primary, at refinery"
+      },
+      "target": {
+        "name": "market for copper, anode",
+        "unit": "kilogram",
+        "reference product": "copper, anode"
+      }
+    },
+    {
+      "source": {
+        "name": "Reinforcing steel, at plant"
+      },
+      "target": {
+        "name": "reinforcing steel production",
+        "unit": "kilogram",
+        "reference product": "reinforcing steel"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper product manufacturing, average metal working"
+      },
+      "target": {
+        "name": "metal working, average for copper product manufacturing",
+        "unit": "kilogram",
+        "reference product": "metal working, average for copper product manufacturing"
+      }
+    },
+    {
+      "source": {
+        "name": "Phenolic resin, at plant"
+      },
+      "target": {
+        "name": "market for phenolic resin",
+        "unit": "kilogram",
+        "reference product": "phenolic resin"
+      }
+    },
+    {
+      "source": {
+        "name": "Copper, primary, at refinery"
+      },
+      "target": {
+        "name": "smelting of copper concentrate, sulfide ore",
+        "unit": "kilogram",
+        "reference product": "copper, anode"
+      }
+    },
+    {
+      "source": {
+        "name": "nitro-compounds, at regional storehouse/kg"
+      },
+      "target": {
+        "name": "market group for inorganic nitrogen fertiliser, as N",
+        "unit": "kilogram",
+        "reference product": "inorganic nitrogen fertiliser, as N"
+      }
+    },
+    {
+      "source": {
+        "name": "Compost, at plant"
+      },
+      "target": {
+        "name": "market for compost",
+        "unit": "kilogram",
+        "reference product": "compost"
+      }
+    },
+    {
+      "source": {
+        "name": "Ammonium nitrate phosphate, as P2O5, at regional storehouse"
+      },
+      "target": {
+        "name": "market group for inorganic phosphorus fertiliser, as P2O5",
+        "unit": "kilogram",
+        "reference product": "inorganic phosphorus fertiliser, as P2O5"
+      }
+    },
+    {
+      "source": {
+        "name": "Potassium nitrate, as K2O, at regional storehouse"
+      },
+      "target": {
+        "name": "market group for inorganic potassium fertiliser, as K2O",
+        "unit": "kilogram",
+        "reference product": "inorganic potassium fertiliser, as K2O"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, at cogen 1MWe lean burn, allocation heat"
+      },
+      "target": {
+        "name": "heat and power co-generation, natural gas, 1MW electrical, lean burn",
+        "unit": "megajoule",
+        "reference product": "heat, district or industrial, natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Acrylonitrile from Sohio process, at plant"
+      },
+      "target": {
+        "name": "market for acrylonitrile",
+        "unit": "kilogram",
+        "reference product": "acrylonitrile"
+      }
+    },
+    {
+      "source": {
+        "name": "Natural gas, from high pressure network (1-5 bar), at service station"
+      },
+      "target": {
+        "name": "market for natural gas, high pressure",
+        "unit": "cubic meter",
+        "reference product": "natural gas, high pressure"
+      }
+    },
+    {
+      "source": {
+        "name": "Oxygen, liquid, at plant"
+      },
+      "target": {
+        "name": "air separation, cryogenic",
+        "unit": "kilogram",
+        "reference product": "oxygen, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Acetylene, at regional storehouse"
+      },
+      "target": {
+        "name": "market for acetylene",
+        "unit": "kilogram",
+        "reference product": "acetylene"
+      }
+    },
+    {
+      "source": {
+        "name": "Carbon dioxide liquid, at plant"
+      },
+      "target": {
+        "name": "market for carbon dioxide, liquid",
+        "unit": "kilogram",
+        "reference product": "carbon dioxide, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Hydrochloric acid, 30% in H2O, at plant"
+      },
+      "target": {
+        "name": "market for hydrochloric acid, without water, in 30% solution state",
+        "unit": "kilogram",
+        "reference product": "hydrochloric acid, without water, in 30% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "Sodium methoxide, at plant"
+      },
+      "target": {
+        "name": "market for sodium methoxide",
+        "unit": "kilogram",
+        "reference product": "sodium methoxide"
+      }
+    },
+    {
+      "source": {
+        "name": "Welding, arc, aluminium"
+      },
+      "target": {
+        "name": "welding, arc, aluminium",
+        "unit": "meter",
+        "reference product": "welding, arc, aluminium"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 6/tkm"
+      },
+      "target": {
+        "name": "transport, freight, lorry >32 metric ton, EURO6",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry >32 metric ton, EURO6"
+      }
+    },
+    {
+      "source": {
+        "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station"
+      },
+      "target": {
+        "name": "market for natural gas, medium pressure, vehicle grade",
+        "unit": "kilogram",
+        "reference product": "natural gas, medium pressure, vehicle grade"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 7.5-16 metric ton, EURO 6/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry 7.5-16 metric ton, EURO6",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry 7.5-16 metric ton, EURO6"
+      }
+    },
+    {
+      "source": {
+        "name": "Ammonia, liquid, at regional storehouse"
+      },
+      "target": {
+        "name": "market for ammonia, anhydrous, liquid",
+        "unit": "kilogram",
+        "reference product": "ammonia, anhydrous, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Urea, as N, at regional storehouse"
+      },
+      "target": {
+        "name": "market for urea",
+        "unit": "kilogram",
+        "reference product": "urea"
+      }
+    },
+    {
+      "source": {
+        "name": "Water, decarbonised, at plant"
+      },
+      "target": {
+        "name": "market for water, decarbonised",
+        "unit": "kilogram",
+        "reference product": "water, decarbonised"
+      }
+    },
+    {
+      "source": {
+        "name": "Kraft paper, unbleached, at plant"
+      },
+      "target": {
+        "name": "kraft paper production",
+        "unit": "kilogram",
+        "reference product": "kraft paper"
+      }
+    },
+    {
+      "source": {
+        "name": "wheat seed organic, at regional storehouse/kg"
+      },
+      "target": {
+        "name": "market for wheat seed, for sowing",
+        "unit": "kilogram",
+        "reference product": "wheat seed, for sowing"
+      }
+    },
+    {
+      "source": {
+        "name": "Pipeline, crude oil, onshore"
+      },
+      "target": {
+        "name": "market for transport, pipeline, onshore, petroleum",
+        "unit": "ton kilometer",
+        "reference product": "transport, pipeline, onshore, petroleum"
+      }
+    },
+    {
+      "source": {
+        "name": "Potassium sulphate, as K2O, at regional storehouse"
+      },
+      "target": {
+        "name": "market for potassium sulfate",
+        "unit": "kilogram",
+        "reference product": "potassium sulfate"
+      }
+    },
+    {
+      "source": {
+        "name": "tree seedling, from heated greenhouse, 1000 units, at tree nursery/p"
+      },
+      "target": {
+        "name": "tree seedling production, in heated greenhouse",
+        "unit": "unit",
+        "reference product": "tree seedling, for planting"
+      }
+    },
+    {
+      "source": {
+        "name": "Antimony, at refinery"
+      },
+      "target": {
+        "name": "market for antimony",
+        "unit": "kilogram",
+        "reference product": "antimony"
+      }
+    },
+    {
+      "source": {
+        "name": "Liquefied petroleum gas, at service station"
+      },
+      "target": {
+        "name": "market for liquefied petroleum gas",
+        "unit": "kilogram",
+        "reference product": "liquefied petroleum gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyethylene, HDPE, granulate, at plant"
+      },
+      "target": {
+        "name": "market for polyethylene, high density, granulate, recycled",
+        "unit": "kilogram",
+        "reference product": "polyethylene, high density, granulate, recycled"
+      }
+    },
+    {
+      "source": {
+        "name": "Arsine, at plant"
+      },
+      "target": {
+        "name": "arsine production",
+        "unit": "kilogram",
+        "reference product": "arsine"
+      }
+    },
+    {
+      "source": {
+        "name": "Lead, at regional storage"
+      },
+      "target": {
+        "name": "market for lead",
+        "unit": "kilogram",
+        "reference product": "lead"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 5/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry >32 metric ton, EURO5",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry >32 metric ton, EURO5"
+      }
+    },
+    {
+      "source": {
+        "name": "Magnesium, at plant"
+      },
+      "target": {
+        "name": "magnesium production, electrolysis",
+        "unit": "kilogram",
+        "reference product": "magnesium"
+      }
+    },
+    {
+      "source": {
+        "name": "Nitrogen, liquid, at plant"
+      },
+      "target": {
+        "name": "market for nitrogen, liquid",
+        "unit": "kilogram",
+        "reference product": "nitrogen, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Zinc concentrate, at beneficiation"
+      },
+      "target": {
+        "name": "market for zinc",
+        "unit": "kilogram",
+        "reference product": "zinc"
+      }
+    },
+    {
+      "source": {
+        "name": "Alkyd paint, white, 60% in H2O, at plant"
+      },
+      "target": {
+        "name": "market for electrostatic paint",
+        "unit": "kilogram",
+        "reference product": "electrostatic paint"
+      }
+    },
+    {
+      "source": {
+        "name": "soft solder, Sn97Cu3, at plant"
+      },
+      "target": {
+        "name": "market for soft solder, Sn97Cu3",
+        "unit": "kilogram",
+        "reference product": "soft solder, Sn97Cu3"
+      }
+    },
+    {
+      "source": {
+        "name": "Casting, brass"
+      },
+      "target": {
+        "name": "casting, brass",
+        "unit": "kilogram",
+        "reference product": "casting, brass"
+      }
+    },
+    {
+      "source": {
+        "name": "Isopropanol, at plant"
+      },
+      "target": {
+        "name": "market for isopropanol",
+        "unit": "kilogram",
+        "reference product": "isopropanol"
+      }
+    },
+    {
+      "source": {
+        "name": "Laminating, foil, with acrylic binder"
+      },
+      "target": {
+        "name": "laminating service, foil, with acrylic binder",
+        "unit": "square meter",
+        "reference product": "laminating service, foil, with acrylic binder"
+      }
+    },
+    {
+      "source": {
+        "name": "Nitric acid, 50% in H2O, at plant"
+      },
+      "target": {
+        "name": "market for nitric acid, without water, in 50% solution state",
+        "unit": "kilogram",
+        "reference product": "nitric acid, without water, in 50% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "Nitrogen, liquid, at plant"
+      },
+      "target": {
+        "name": "market for nitrogen, liquid",
+        "unit": "kilogram",
+        "reference product": "nitrogen, liquid"
+      }
+    },
+    {
+      "source": {
+        "name": "Silicone product, at plant"
+      },
+      "target": {
+        "name": "market for silicone product",
+        "unit": "kilogram",
+        "reference product": "silicone product"
+      }
+    },
+    {
+      "source": {
+        "name": "Polycarbonate, at plant"
+      },
+      "target": {
+        "name": "market for polycarbonate",
+        "unit": "kilogram",
+        "reference product": "polycarbonate"
+      }
+    },
+    {
+      "source": {
+        "name": "Zinc concentrate, at beneficiation"
+      },
+      "target": {
+        "name": "market for zinc",
+        "unit": "kilogram",
+        "reference product": "zinc"
+      }
+    },
+    {
+      "source": {
+        "name": "Gold, at regional storage"
+      },
+      "target": {
+        "name": "market for gold",
+        "unit": "kilogram",
+        "reference product": "gold"
+      }
+    },
+    {
+      "source": {
+        "name": "Potassium carbonate, at plant"
+      },
+      "target": {
+        "name": "market for potassium carbonate",
+        "unit": "kilogram",
+        "reference product": "potassium carbonate"
+      }
+    },
+    {
+      "source": {
+        "name": "Nylon 66, glass-filled, at plant"
+      },
+      "target": {
+        "name": "market for nylon 6-6, glass-filled",
+        "unit": "kilogram",
+        "reference product": "nylon 6-6, glass-filled"
+      }
+    },
+    {
+      "source": {
+        "name": "Polyurethane, rigid foam, at plant"
+      },
+      "target": {
+        "name": "market for polyurethane, rigid foam",
+        "unit": "kilogram",
+        "reference product": "polyurethane, rigid foam"
+      }
+    },
+    {
+      "source": {
+        "name": "Nitric acid, 50% in H2O, at plant"
+      },
+      "target": {
+        "name": "nitric acid production, product in 50% solution state",
+        "unit": "kilogram",
+        "reference product": "nitric acid, without water, in 50% solution state"
+      }
+    },
+    {
+      "source": {
+        "name": "Ammonium sulphate, as N, at regional storehouse"
+      },
+      "target": {
+        "name": "market for ammonium sulfate",
+        "unit": "kilogram",
+        "reference product": "ammonium sulfate"
+      }
+    },
+    {
+      "source": {
+        "name": "rape seed conventional, at farm/kg"
+      },
+      "target": {
+        "name": "market for rape seed",
+        "unit": "kilogram",
+        "reference product": "rape seed"
+      }
+    },
+    {
+      "source": {
+        "name": "tree seedling, from unheated greenhouse, 1000 units, at tree nursery/p"
+      },
+      "target": {
+        "name": "tree seedling production, in heated greenhouse",
+        "unit": "unit",
+        "reference product": "tree seedling, for planting"
+      }
+    },
+    {
+      "source": {
+        "name": "natural gas, high pressure, at consumer/MJ"
+      },
+      "target": {
+        "name": "market for natural gas, high pressure, vehicle grade",
+        "unit": "kilogram",
+        "reference product": "natural gas, high pressure, vehicle grade"
+      }
+    },
+    {
+      "source": {
+        "name": "Refrigerant R134a, at plant"
+      },
+      "target": {
+        "name": "market for refrigerant R134a",
+        "unit": "kilogram",
+        "reference product": "refrigerant R134a"
+      }
+    },
+    {
+      "source": {
+        "name": "Operation, maintenance, road"
+      },
+      "target": {
+        "name": "market for road maintenance",
+        "unit": "meter-year",
+        "reference product": "road maintenance"
+      }
+    },
+    {
+      "source": {
+        "name": "Maintenance, lorry 16t"
+      },
+      "target": {
+        "name": "maintenance, lorry 16 metric ton",
+        "unit": "unit",
+        "reference product": "maintenance, lorry 16 metric ton"
+      }
+    },
+    {
+      "source": {
+        "name": "Maintenance, lorry 28t"
+      },
+      "target": {
+        "name": "maintenance, lorry 28 metric ton",
+        "unit": "unit",
+        "reference product": "maintenance, lorry 28 metric ton"
+      }
+    },
+    {
+      "source": {
+        "name": "Maintenance, lorry 40t"
+      },
+      "target": {
+        "name": "maintenance, lorry 40 metric ton",
+        "unit": "unit",
+        "reference product": "maintenance, lorry 40 metric ton"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, wood ash mixture, pure, 0% water, to municipal incineration/kg"
+      },
+      "target": {
+        "name": "treatment of wood ash mixture, pure, municipal incineration with fly ash extraction",
+        "unit": "kilogram",
+        "reference product": "wood ash mixture, pure"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, anion exchange resin f. water, 50% water, to municipal incineration/kg"
+      },
+      "target": {
+        "name": "treatment of spent anion exchange resin from potable water production, municipal incineration",
+        "unit": "kilogram",
+        "reference product": "spent anion exchange resin from potable water production"
+      }
+    },
+    {
+      "source": {
+        "name": "brake wear emissions, lorry"
+      },
+      "target": {
+        "name": "treatment of brake wear emissions, lorry",
+        "unit": "kilogram",
+        "reference product": "brake wear emissions, lorry"
+      }
+    },
+    {
+      "source": {
+        "name": "tyre wear emissions, lorry"
+      },
+      "target": {
+        "name": "treatment of tyre wear emissions, lorry",
+        "unit": "kilogram",
+        "reference product": "tyre wear emissions, lorry"
+      }
+    },
+    {
+      "source": {
+        "name": "road wear emissions, lorry"
+      },
+      "target": {
+        "name": "treatment of road wear emissions, lorry",
+        "unit": "kilogram",
+        "reference product": "road wear emissions, lorry"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, lorry 16t"
+      },
+      "target": {
+        "name": "treatment of used lorry, 16 metric ton",
+        "unit": "unit",
+        "reference product": "used lorry, 16 metric ton"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, lorry 28t"
+      },
+      "target": {
+        "name": "treatment of used lorry, 28 metric ton",
+        "unit": "unit",
+        "reference product": "used lorry, 28 metric ton"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, lorry 40t"
+      },
+      "target": {
+        "name": "treatment of used lorry, 40 metric ton",
+        "unit": "unit",
+        "reference product": "used lorry, 40 metric ton"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, building, reinforced concrete, to final disposal"
+      },
+      "target": {
+        "name": "treatment of waste reinforced concrete, collection for final disposal",
+        "unit": "kilogram",
+        "reference product": "waste reinforced concrete"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, building, bulk iron (excluding reinforcement), to sorting plant"
+      },
+      "target": {
+        "name": "treatment of waste bulk iron, excluding reinforcement, sorting plant",
+        "unit": "kilogram",
+        "reference product": "waste bulk iron, excluding reinforcement"
+      }
+    },
+    {
+      "source": {
+        "name": "Heat, heavy fuel oil, at industrial furnace 1MW"
+      },
+      "target": {
+        "name": "market for heat, central or small-scale, other than natural gas",
+        "unit": "megajoule",
+        "reference product": "heat, central or small-scale, other than natural gas"
+      }
+    },
+    {
+      "source": {
+        "name": "Regional distribution, oil products/RER/I U"
+      },
+      "target": {
+        "name": "infrastructure construction, for regional distribution of oil product",
+        "unit": "unit",
+        "reference product": "infrastructure, for regional distribution of oil product"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, rainwater mineral oil storage, to wastewater treatment, class 2/CH U"
+      },
+      "target": {
+        "name": "market for rainwater mineral oil storage",
+        "unit": "cubic meter",
+        "reference product": "rainwater mineral oil storage"
+      }
+    },
+    {
+      "source": {
+        "name": "Treatment, sewage, from residence, to wastewater treatment, class 2"
+      },
+      "target": {
+        "name": "treatment of wastewater, average, capacity 1E9l/year",
+        "unit": "cubic meter",
+        "reference product": "wastewater, average"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, municipal solid waste, 22.9% water, to municipal incineration/kg"
+      },
+      "target": {
+        "name": "market for municipal solid waste",
+        "unit": "kilogram",
+        "reference product": "municipal solid waste"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 4/tkm"
+      },
+      "target": {
+        "name": "market for transport, freight, lorry >32 metric ton, EURO4",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry >32 metric ton, EURO4"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO 6/tkm"
+      },
+      "target": {
+        "name": "transport, freight, lorry 16-32 metric ton, EURO6",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight, lorry 16-32 metric ton, EURO6"
+      }
+    },
+    {
+      "source": {
+        "name": "transport, freight, rail, electricity with shunting/tkm/CH U"
+      },
+      "target": {
+        "name": "market for transport, freight train",
+        "unit": "ton kilometer",
+        "reference product": "transport, freight train"
+      }
+    },
+    {
+      "source": {
+        "name": "Pipeline, natural gas, high pressure distribution network/RER/I U"
+      },
+      "target": {
+        "name": "pipeline construction, natural gas, high pressure distribution network",
+        "unit": "kilometer",
+        "reference product": "pipeline, natural gas, high pressure distribution network"
+      }
+    },
+    {
+      "source": {
+        "name": "Pipeline, natural gas, high pressure distribution network/RER/I U"
+      },
+      "target": {
+        "name": "pipeline construction, natural gas, high pressure distribution network",
+        "unit": "kilometer",
+        "reference product": "pipeline, natural gas, high pressure distribution network"
+      }
+    },
+    {
+      "source": {
+        "name": "heat, biogas from sugar beet, at cogen/CH U"
+      },
+      "target": {
+        "name": "market for heat, central or small-scale, biomethane",
+        "unit": "megajoule",
+        "reference product": "heat, central or small-scale, biomethane"
+      }
+    },
+    {
+      "source": {
+        "name": "Natural gas service station/CH/I U"
+      },
+      "target": {
+        "name": "market for natural gas service station",
+        "unit": "unit",
+        "reference product": "natural gas service station"
+      }
+    },
+    {
+      "source": {
+        "name": "Concrete, sole plate and foundation, at plant/CH U"
+      },
+      "target": {
+        "name": "market for concrete, sole plate and foundation",
+        "unit": "cubic meter",
+        "reference product": "concrete, sole plate and foundation"
+      }
+    },
+    {
+      "source": {
+        "name": "heat, biogas from sugar beet, at cogen/CH U"
+      },
+      "target": {
+        "name": "market for heat, central or small-scale, biomethane",
+        "unit": "megajoule",
+        "reference product": "heat, central or small-scale, biomethane"
+      }
+    },
+    {
+      "source": {
+        "name": "Diesel, at regional storage"
+      },
+      "target": {
+        "name": "market group for diesel, low-sulfur",
+        "unit": "kilogram",
+        "reference product": "diesel, low-sulfur"
+      }
+    },
+    {
+      "source": {
+        "name": "Disposal, Li-ions batteries, mixed technology/GLO U"
+      },
+      "target": {
+        "name": "market for used Li-ion battery",
+        "unit": "kilogram",
+        "reference product": "used Li-ion battery"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, medium voltage, production ENTSO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, medium voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, medium voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "electricity, low voltage, production ENTSO, at grid/kWh"
+      },
+      "target": {
+        "name": "market group for electricity, low voltage",
+        "unit": "kilowatt hour",
+        "reference product": "electricity, low voltage"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, wood ash mixture, pure, 0% water, to municipal incineration/kg/CH U"
+      },
+      "target": {
+        "name": "treatment of wood ash mixture, pure, municipal incineration",
+        "unit": "kilogram",
+        "reference product": "wood ash mixture, pure"
+      }
+    },
+    {
+      "source": {
+        "name": "disposal, wood ash mixture, pure, 0% water, to municipal incineration/kg/CH U"
+      },
+      "target": {
+        "name": "treatment of wood ash mixture, pure, municipal incineration",
+        "unit": "kilogram",
+        "reference product": "wood ash mixture, pure"
+      }
+    },
+    {
+      "source": {
+        "name": "Synthetic gas plant/CH/I U"
+      },
+      "target": {
+        "name": "synthetic gas factory construction",
+        "unit": "unit",
+        "reference product": "synthetic gas factory"
+      }
+    }
+  ]
+}
