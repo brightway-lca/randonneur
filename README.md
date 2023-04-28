@@ -60,7 +60,6 @@ Finally, at least one change type should be included. The change types are:
 * `create-exchanges`
 * `replace`
 * `update`
-* `udpate`
 * `delete`
 * `disaggregate`
 
