@@ -15,7 +15,6 @@ hidden:
 maxdepth: 1
 ---
 
-Usage <usage>
 Reference <api/modules>
 contributing
 Code of Conduct <codeofconduct>
