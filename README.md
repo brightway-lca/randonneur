@@ -234,6 +234,5 @@ please [file an issue](https://github.com/cmutel/randonneur/issues/new/choose) a
 
 <!-- github-only -->
 
-[command-line reference]: https://randonneur.readthedocs.io/en/latest/usage.html
 [license]: https://github.com/brightway-lca/randonneur/blob/main/LICENSE
 [contributor guide]: https://github.com/brightway-lca/randonneur/blob/main/CONTRIBUTING.md
