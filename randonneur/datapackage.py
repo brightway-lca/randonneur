@@ -1,13 +1,13 @@
-import os
-from typing import Optional
-from pathlib import Path
 import json
+import os
 from datetime import datetime, timezone
+from pathlib import Path
+from pprint import pformat
+from typing import Optional
 
 from .errors import UnmappedData, ValidationError
 
-
-CONTRIBUTORS_REQUIRED_FIELDS = {'title', 'role', 'path'}
+CONTRIBUTORS_REQUIRED_FIELDS = {"title", "role", "path"}
 VERBS = {"create", "replace", "update", "delete", "disaggregate"}
 CC_BY = [
     {
@@ -19,10 +19,26 @@ CC_BY = [
 
 
 class Datapackage:
-    def __init__(self, name: str, description: str, contributors: list, mapping_source: dict, mapping_target: dict, created: Optional[datetime] = None, version: str = "1.0.0", licenses: Optional[list] = None):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        contributors: list,
+        source_id: str,
+        target_id: str,
+        mapping_source: dict,
+        mapping_target: dict,
+        homepage: Optional[str] = None,
+        created: Optional[datetime] = None,
+        version: str = "1.0.0",
+        licenses: Optional[list] = None,
+    ):
         self.name = name
         self.description = description
         self.contributors = contributors
+        self.source_id = source_id
+        self.target_id = target_id
+        self.homepage = homepage
         self.created = created or datetime.now(timezone.utc).isoformat()
         self.mapping = {"source": mapping_source, "target": mapping_target}
         self.licenses = licenses or CC_BY
@@ -31,19 +47,32 @@ class Datapackage:
 
         if not self.contributors:
             raise ValidationError("Must provide at least one contributor")
-        if not all(contributor.get(field) for contributor in self.contributors for field in CONTRIBUTORS_REQUIRED_FIELDS):
-            raise ValidationError(f"Contributors must all have all of the following fields: {CONTRIBUTORS_REQUIRED_FIELDS}")
+        if not all(
+            contributor.get(field)
+            for contributor in self.contributors
+            for field in CONTRIBUTORS_REQUIRED_FIELDS
+        ):
+            raise ValidationError(
+                f"Contributors must all have all of the following fields: {CONTRIBUTORS_REQUIRED_FIELDS}"
+            )
 
     def metadata(self) -> dict:
-        return {
+        data = {
             "name": self.name,
             "description": self.description,
             "contributors": self.contributors,
-            "created": self.created.isoformat() if isinstance(self.created, datetime) else self.created,
+            "created": self.created.isoformat()
+            if isinstance(self.created, datetime)
+            else self.created,
             "version": self.version,
             "licenses": self.licenses,
-            "mapping": self.mapping
+            "mapping": self.mapping,
+            "source_id": self.source_id,
+            "target_id": self.target_id,
         }
+        if self.homepage:
+            data["homepage"] = self.homepage
+        return data
 
     def add_data(self, verb: str, data: list) -> None:
         if verb not in VERBS:
@@ -51,7 +80,43 @@ class Datapackage:
         if verb not in self.data:
             self.data[verb] = []
 
-        # TBD: Check that keys are in mapping
+        all_source_keys = set(self.mapping["source"]["labels"])
+        all_target_keys = set(self.mapping["target"]["labels"])
+
+        for element in data:
+            missing = set(element["source"]).difference(all_source_keys)
+            if missing:
+                raise UnmappedData(
+                    f"""
+    One of more `source` data attributes is not found in given mapping:
+    Mapping has the following fields:
+{all_source_keys}
+    However, the given data also includes:
+{missing}
+    In the data object:
+{pformat(element)}
+    """
+                )
+            if verb == "disaggregate":
+                missing = (
+                    set.union(*[set(obj) for obj in element["targets"]])
+                    .difference(all_target_keys)
+                    .difference({"allocation"})
+                )
+            else:
+                missing = set(element["target"]).difference(all_target_keys)
+            if missing:
+                raise UnmappedData(
+                    f"""
+    One of more `target` data attributes is not found in given mapping:
+    Mapping has the following fields:
+{all_source_keys}
+    However, the given data also includes:
+{missing}
+    In the data object:
+{pformat(element)}
+    """
+                )
         self.data[verb].extend(data)
 
     def to_json(self, filepath: Path) -> Path:
