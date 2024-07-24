@@ -32,6 +32,7 @@ class Datapackage:
         created: Optional[datetime] = None,
         version: str = "1.0.0",
         licenses: Optional[list] = None,
+        graph_context: Optional[list] = None,
     ):
         self.name = name
         self.description = description
@@ -44,6 +45,7 @@ class Datapackage:
         self.licenses = licenses or CC_BY
         self.version = version
         self.data = {}
+        self.graph_context = graph_context or ["edges"]
 
         if not self.contributors:
             raise ValidationError("Must provide at least one contributor")
@@ -66,6 +68,7 @@ class Datapackage:
             else self.created,
             "version": self.version,
             "licenses": self.licenses,
+            "graph_context": self.graph_context,
             "mapping": self.mapping,
             "source_id": self.source_id,
             "target_id": self.target_id,
