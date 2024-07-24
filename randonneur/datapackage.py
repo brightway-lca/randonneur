@@ -106,6 +106,9 @@ class Datapackage:
                     .difference(all_target_keys)
                     .difference({"allocation"})
                 )
+            elif verb == "delete":
+                # No target element
+                missing = None
             else:
                 missing = set(element["target"]).difference(all_target_keys)
             if missing:
