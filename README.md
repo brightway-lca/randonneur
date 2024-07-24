@@ -27,46 +27,63 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 
 ## Usage
 
-### Basic pattern
+### Generic usage pattern
 
-* Load a `randonneur` data migration file.
-* Load an inventory database in the [`wurst` format](https://wurst.readthedocs.io/#internal-data-format)
-* Do any necessary data preparation steps, e.g. nomenclature harmonization between migration and database fields
-* Decide on what data types you want to apply changes to; `exchanges`, `datasets`, or both.
-* Decide on what types of changes you want to apply: `create`, `replace`, `update`, `delete`, and `disaggregate`
-* Decide whether you want to apply the changes in the migration file to all datasets/exchanges or just a subset; build `dataset_filter` and/or `exchange_filter` functions if necessary.
-* Apply `migrate_datasets` or `migrate_exchanges`
-* Write the resulting database to disk
+* Load a `randonneur` data migration file, normally from [randonneur_data](https://github.com/brightway-lca/randonneur_data) using `randonneur_data.Registry.get_file()`
+* Load an inventory database, normally in the [common Brightway inventory format](https://github.com/brightway-lca/bw_interface_schemas)
+* Apply the data transformation using either `migrate_edges` or `migrate_nodes`, optionally specifying the fields used for matching the transformation data, any mappings necessary to make the transformation data schema fit into your data schema, what filters should be applied to the input data (if any), and which verbs (`create`, `replace`, `update`, `delete`, or `disaggregate`) you want to apply
+* Save the modified data
 
 ### Data format
 
 Migration data is specified in a JSON file as a single dictionary. This file **must** include the following keys:
 
-* `name`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#name)
+* `name`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#name).
 * `licenses`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#licenses). Must be a list.
+* `version`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#version). Must be a string.
+* `contributors`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#contributors). Must be a list.
+* `mapping`: A dictionary mapping the labels used in the transformation
+* `graph_context`: A list with either the string 'nodes', 'edges', or both.
 
 In addition, the following properties should follow the [data package specification](https://specs.frictionlessdata.io/data-package/) if provided:
 
-* `version`
 * `description`
 * `sources`
 * `homepage`
-* `contributors`
 * `created`
+
+You can specify the following optional attributes:
+
+* `source_id`: An identifier for the source dataset following the [common identifier standard](#common-database-release-identifier-spec). Useful if the source data is specific. Should follow the
 
 Finally, at least one change type should be included. The change types are:
 
-* `create-datasets`
-* `create-exchanges`
+* `create`
 * `replace`
 * `update`
 * `delete`
 * `disaggregate`
 
-See the directory `examples` for real-world implementations.
+Here are two examples:
+```json
+```
 
+See the directory `examples` for more real-world implementations.
 
+### Common database release identifier standard
 
+At Brightcon 2022 we developed the following simple format for common database release identifiers:
+
+`<database name>-<version>-<optional modifier>`
+
+Here are some examples:
+
+* `agribalyse-3.1.1`
+* `forwast-1`
+* `ecoinvent-3.10-cutoff`
+* `SimaPro-9-biosphere`
+
+## Theory
 
 For migrating exchanges: Given a database, iterate through the datasets. If a `dataset_filter` is given, ignore any datasets which don't pass the filter. In each dataset, iterate through the exchanges. If an `exchange_filter` is given, ignore any exchanges which don't pass the filter. For each exchange, look at the following possible transformations in order: `delete`, `replace`, `update`, and `disaggregate`. Only one transformation can be done to an exchange. Each transformation will change or delete the exchange under consideration, and maybe add some new exchanges to the dataset, though this addition will only happen after the original exchanges have been examined. After looking at all the exchanges, apply the `create` transformation to add more exchanges if provided.
 
