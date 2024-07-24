@@ -1,6 +1,6 @@
 import pytest
 
-from randonneur import migrate_exchanges
+from randonneur import migrate_edges
 
 
 @pytest.fixture
@@ -11,7 +11,7 @@ def generic():
             "reference product": "rp",
             "unit": "u",
             "location": "l",
-            "exchanges": [
+            "edges": [
                 {"name": "babur"},
                 {
                     "name": "akbar",
@@ -33,13 +33,13 @@ def generic():
 @pytest.fixture
 def migrate_all():
     return {
-        "delete": [{"name": "babur"}],
-        "create-exchanges": [
-            {
-                "dataset": {"name": "n"},
-                "source": {"name": "humayun"},
-            }
-        ],
+        # "delete": [{"name": "babur"}],
+        # "create-exchanges": [
+        #     {
+        #         "dataset": {"name": "n"},
+        #         "source": {"name": "humayun"},
+        #     }
+        # ],
         "replace": [
             {
                 "source": {"name": "akbar"},
@@ -71,7 +71,7 @@ def test_migrate_exchanges_integration(generic, migrate_all):
             "reference product": "rp",
             "unit": "u",
             "location": "l",
-            "exchanges": [
+            "edges": [
                 {
                     "name": "alamgir",
                     "amount": 10,
@@ -83,14 +83,16 @@ def test_migrate_exchanges_integration(generic, migrate_all):
                 },
                 {
                     "name": "bahadur shah",
-                    "amount": 25,
+                    "amount": 25.,
+                    'allocation': 0.25,
                 },
                 {
                     "name": "jahandar shah",
-                    "amount": 75,
+                    "amount": 75.,
+                    'allocation': 0.75,
                 },
             ],
         }
     ]
-    result = migrate_exchanges(migrate_all, generic)
+    result = migrate_edges(graph=generic, migrations=migrate_all)
     assert result == expected

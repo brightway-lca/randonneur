@@ -1,8 +1,6 @@
-from copy import deepcopy
 from pathlib import Path
 from typing import Callable, List, Optional
 
-from frozendict import frozendict
 from loguru import logger
 from randonneur_data import Registry
 from tqdm import tqdm
@@ -14,8 +12,7 @@ from .edge_functions import (
     migrate_edges_replace,
     migrate_edges_update,
 )
-from .utils import SAFE_VERBS, apply_mapping, matcher
-
+from .utils import SAFE_VERBS, apply_mapping
 
 verb_dispatch = {
     "create": migrate_edges_create,
@@ -134,10 +131,10 @@ def migrate_edges(
 This is almost never the desired behaviour, consider removing `create` from the `verb` input."""
             )
 
-        for verb in filter(lambda x: x in verb_dispatch, verbs):
+        for verb in filter(lambda x: x in verb_dispatch and x in migrations, verbs):
             verb_dispatch[verb](
                 node=node,
-                migrations=migrations,
+                migrations=migrations[verb],
                 edge_filter=edge_filter,
                 fields=fields,
                 edges_label=edges_label,
@@ -145,84 +142,6 @@ This is almost never the desired behaviour, consider removing `create` from the 
             )
 
     return graph
-
-    #     exchanges_to_delete = set()
-    #     exchanges_to_add = [
-    #         obj["source"]
-    #         for obj in migration_data.get("create-exchanges", [])
-    #         if matcher(obj["dataset"], dataset)
-    #     ]
-    #     exchanges = dataset.get("exchanges", [])
-
-    #     for exchange in exchanges:
-    #         found = False
-
-    #         if exchange_filter is not None and not exchange_filter(exchange):
-    #             continue
-
-    #         for possible in migration_data.get("delete", []):
-    #             if (
-    #                 not (found and only_one_change)
-    #                 and matcher(possible, exchange)
-    #                 and maybe_filter(possible.get("dataset"), dataset)
-    #             ):
-    #                 exchanges_to_delete.add(frozendict(exchange))
-    #                 found = True
-
-    #         for possible in migration_data.get("replace", []):
-    #             if (
-    #                 not (found and only_one_change)
-    #                 and matcher(possible["source"], exchange)
-    #                 and maybe_filter(possible.get("dataset"), dataset)
-    #             ):
-    #                 new_exchange = deepcopy(possible["target"])
-    #                 # TBD: rescale uncertainty
-    #                 new_exchange["amount"] = exchange["amount"] * new_exchange.pop(
-    #                     "allocation", 1.0
-    #                 )
-    #                 exchanges_to_add.append(new_exchange)
-    #                 exchanges_to_delete.add(frozendict(exchange))
-    #                 found = True
-
-    #         for possible in migration_data.get("update", []):
-    #             if (
-    #                 not (found and only_one_change)
-    #                 and matcher(possible["source"], exchange)
-    #                 and maybe_filter(possible.get("dataset"), dataset)
-    #             ):
-    #                 new_values = deepcopy(possible["target"])
-    #                 exchange["amount"] *= new_values.pop("allocation", 1.0)
-    #                 exchange.update(new_values)
-    #                 found = True
-
-    #         for possibles in migration_data.get("disaggregate", []):
-    #             if (
-    #                 not (found and only_one_change)
-    #                 and matcher(possibles["source"], exchange)
-    #                 and maybe_filter(possibles.get("dataset"), dataset)
-    #             ):
-    #                 for possible in possibles["targets"]:
-    #                     base_exchange, new_exchange = deepcopy(exchange), deepcopy(
-    #                         possible
-    #                     )
-    #                     base_exchange["amount"] = base_exchange[
-    #                         "amount"
-    #                     ] * new_exchange.pop("allocation", 1.0)
-    #                     base_exchange.update(new_exchange)
-    #                     exchanges_to_add.append(base_exchange)
-    #                 exchanges_to_delete.add(frozendict(exchange))
-    #                 found = True
-
-    #     if exchanges_to_delete:
-    #         exchanges = [
-    #             exchange
-    #             for exchange in exchanges
-    #             if frozendict(exchange) not in exchanges_to_delete
-    #         ]
-    #     if exchanges_to_add:
-    #         exchanges.extend(exchanges_to_add)
-    #     dataset["exchanges"] = exchanges
-    # return graph
 
 
 def stored_migration_edges(
