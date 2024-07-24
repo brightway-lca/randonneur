@@ -29,7 +29,7 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 
 ### Generic usage pattern
 
-* Load a `randonneur` data migration file, normally from [randonneur_data](https://github.com/brightway-lca/randonneur_data) using `randonneur_data.Registry.get_file()`
+* Load a `randonneur` data migration file, normally from [randonneur_data](https://github.com/brightway-lca/randonneur_data) using `randonneur_data.Registry().get_file()`
 * Load an inventory database, normally in the [common Brightway inventory format](https://github.com/brightway-lca/bw_interface_schemas)
 * Apply the data transformation using either `migrate_edges` or `migrate_nodes`, optionally specifying the fields used for matching the transformation data, any mappings necessary to make the transformation data schema fit into your data schema, what filters should be applied to the input data (if any), and which verbs (`create`, `replace`, `update`, `delete`, or `disaggregate`) you want to apply
 * Save the modified data
