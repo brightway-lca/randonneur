@@ -1,43 +1,111 @@
 from copy import deepcopy
+from typing import Callable, List, Optional
 
 from frozendict import frozendict
 from tqdm import tqdm
 
-from .utils import matcher, maybe_filter
+from .utils import SAFE_VERBS, matcher, maybe_filter
 
 
-def migrate_exchanges(
-    migration_data,
-    lci_database,
-    create=True,
-    disaggregate=True,
-    replace=True,
-    update=True,
-    delete=True,
-    dataset_filter=None,
-    exchange_filter=None,
-    verbose=False,
-    only_one_change=True,
-):
-    """Migrate the exchanges in the datasets given in ``lci_database`` using the data in
-    ``migration_data``.
+def migrate_edges(
+    graph: List[dict],
+    migrations: dict,
+    mapping: Optional[dict] = None,
+    node_filter: Optional[Callable] = None,
+    edge_filter: Optional[Callable] = None,
+    fields: Optional[list] = None,
+    verbose: bool = False,
+    edges_label: str = "edges",
+    verbs: List[str] = SAFE_VERBS,
+) -> List[dict]:
+    """Migrate the edges in the nodes given in ``graph`` using the transformations in
+    ``migrations``.
 
-    ``create``, ``disaggregate``, ``replace``, ``update``, and ``delete`` changes can be applied,
-    and their activation is controlled by their respective flags. See the README for more detail
-    on the specifics of these changes, and the data formats of ``migration_data`` and
-    ``lci_database``.
+    For each edge in each node in ``data``, check each transformation in ``migrations``. For each
+    transformation for which there is a match, make the given changes to the edge. Matching means
+    all of the following are fulfilled:
 
-    You can filter the datasets and exchanges to be changed with ``dataset_filter`` and
-    ``exchange_filter``. If given, these should be callables that take a dataset or exchange as
-    the single input argument, and return a ``True`` if changes should be made.
+    * `node_filter(dataset)` returns `True` if `node_filter` is given
+    * `edge_filter(edge)` returns `True` if `edge_filter` is given
+    * The edge values of the fields in the transformation are equal to those of the transformation
 
-    ``verbose`` controls whether a progressbar is shown when iterating over ``lci_database``.
+    Here is an example:
 
-    ``only_one_change`` determines whether more than one change (either of multiple types, or of
-    the same type if multiple changes which match the original exchange are given) is executed. Be
-    very careful with this, many changes to large databases should be carefully checked.
+    ```python
+    migrate_edges(
+        graph=[{"edges": [{"name": "foo"}]}],
+        migrations={"update": [{"source": {"name": "foo"}, "target": {"location": "bar"}}]},
+    )
+    >>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+    ```
 
-    Returns ``lci_database`` with altered content.
+    The changes can be customized with the additional input arguments:
+
+    `mapping`: Change the labels in `migrations` to match your data schema. `mapping` needs to be a
+    dict with `source` and/or `target` keys, each value should be a dictionary with
+    `{old_label: new_label}` pairs.
+
+    ```python
+    migrate_edges(
+        graph=[{"edges": [{"name": "foo"}]}],
+        migrations={"update": [{"source": {"not-name": "foo"}, "target": {"location": "bar"}}]},
+        mapping={"source": {"not-name": "name"}}
+    )
+    >>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+    ```
+
+    `node_filter`: A callable which determines if edges in that node should be modified. Returns
+    `True` if the node *should be* modified.
+
+    ```python
+    migrate_edges(
+        graph=[{"edges": [{"name": "foo"}]}],
+        migrations={"update": [{"source": {"name": "foo"}, "target": {"location": "bar"}}]},
+        node_filter=lambda node: node.get("sport") == "🏄‍♀️"
+    )
+    >>> [{"edges": [{"name": "foo"}]}]
+    ```
+
+    `edge_filter`: A callable which determines if a specific edge should be modified. Returns
+    `True` if the edge *should be* modified.
+
+    `fields`: A list of strings used when checking if the given transformation matches the edge
+    under consideration. In other words, only use the fields in `fields` when checking the `source`
+    values in each transformation for a match. Each field in `fields` doesn't have to be in each
+    transformation.
+
+    ```python
+    migrate_edges(
+        graph=[{"edges": [{"name": "foo"}]}],
+        migrations={"update": [{"source": {"name": "foo", "missing": "🔍"}, "target": {"location": "bar"}}]},
+        fields=["name"],
+    )
+    >>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+    ```
+
+    `verbose`: Display progress bars and more logging messages.
+
+    `edges_label`: The label used for edges in the nodes of the `graph`. Defaults to `edges`.
+
+    ```python
+    migrate_edges(
+        graph=[{"e": [{"name": "foo"}]}],
+        migrations={"update": [{"source": {"name": "foo"}, "target": {"location": "bar"}}]},
+        edges_label="e",
+    )
+    >>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+    ```
+
+    `verbs`: The list of transformation types from `migrations` to apply. Transformations are run
+    in the order as given in `verbs`, and in some complicated cases you may want to keep the same
+    verbs but change their order to get the desired output state. In general, such complicated
+    transformations should be broken down to smaller discrete and independent transformations
+    whenever possible, and logs checked carefully after their application.
+
+    Only the verbs `create`, `disaggregate`, `replace`, `update`, and `delete` are used in this
+    function, regardless of what is given in `verbs`, as we don't know how to handle custom verbs.
+
+    Returns `graph` with altered content.
 
     """
     progressbar = tqdm if verbose else lambda x: iter(x)
