@@ -28,16 +28,23 @@ repos:
 #       --remove-unused-variables,
 #     ]
 
+# https://github.com/PyCQA/flake8/issues/234
+- repo: https://github.com/john-hen/Flake8-pyproject
+  rev: 1.2.3
+  hooks:
+    - id: Flake8-pyproject
+
 - repo: https://github.com/pycqa/isort
-  rev: 5.12.0
+  rev: 5.13.2
   hooks:
   - id: isort
+    args: [--settings-path=pyproject.toml]
 
 - repo: https://github.com/psf/black
-  rev: 23.10.0
+  rev: 24.1.1
   hooks:
   - id: black
-    language_version: python3
+    args: [--config=pyproject.toml]
 
 ## If like to embrace black styles even in the docs:
 # - repo: https://github.com/asottile/blacken-docs
@@ -47,8 +54,22 @@ repos:
 #     additional_dependencies: [black]
 
 - repo: https://github.com/PyCQA/flake8
-  rev: 6.1.0
+  rev: 7.0.0
   hooks:
   - id: flake8
-  ## You can add flake8 plugins via `additional_dependencies`:
+    additional_dependencies: [Flake8-pyproject]
+  # You can add flake8 plugins via `additional_dependencies`:
   #  additional_dependencies: [flake8-bugbear]
+
+# - repo: local
+#   hooks:
+#     - id: pylint
+#       name: pylint
+#       entry: pylint
+#       language: system
+#       types: [python]
+#       args:
+#         [
+#           "-rn", # Only display messages
+#           "-sn", # Don't display the score
+#         ]

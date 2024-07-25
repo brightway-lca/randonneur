@@ -1,23 +1,21 @@
-```{include} ../README.md
----
-end-before: <!-- github-only -->
----
-```
+# randonneur
 
-[license]: license
-[contributor guide]: contributing
-[command-line reference]: usage
-[changelog]: changelog
+```{button-link} https://docs.brightway.dev
+:color: info
+:expand:
+{octicon}`light-bulb;1em` randonneur is a specialized package of the Brightway Software Framework
+```
 
 ```{toctree}
 ---
 hidden:
 maxdepth: 1
 ---
-
-Reference <api/modules>
-contributing
-Code of Conduct <codeofconduct>
-License <license>
-Changelog <changelog>
+self
+content/usage
+content/api/index
+content/codeofconduct
+content/contributing
+content/license
+content/changelog
 ```

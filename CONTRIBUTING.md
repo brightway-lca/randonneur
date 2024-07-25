@@ -1,20 +1,24 @@
 # Contributor Guide
 
 Thank you for your interest in improving this project.
-This project is open-source under the [BSD 3 Clause license] and
+This project is open-source under the [MIT][License] and
 welcomes contributions in the form of bug reports, feature requests, and pull requests.
 
 Here is a list of important resources for contributors:
 
-- [Code of Conduct]
-- [License]
-- [Source Code]
-- [Documentation]
-- [Issue Tracker]
+- [Source Code][Source Code]
+- [Documentation][Documentation]
+- [Issue Tracker][Issue Tracker]
+- [Code of Conduct][Code of Conduct]
+
+[License]: https://opensource.org/licenses/MIT
+[Source Code]: https://github.com/brightway-lca/randonneur
+[Documentation]: https://randonneur.readthedocs.io/
+[Issue Tracker]: https://github.com/brightway-lca/randonneur/issues
 
 ## How to report a bug
 
-Report bugs on the [Issue Tracker].
+Report bugs on the [Issue Tracker][Issue Tracker].
 
 When filing an issue, make sure to answer these questions:
 
@@ -29,7 +33,7 @@ and/or steps to reproduce the issue.
 
 ## How to request a feature
 
-Request features on the [Issue Tracker].
+Request features on the [Issue Tracker][Issue Tracker].
 
 ## How to set up your development environment
 
@@ -72,7 +76,7 @@ $ pytest
 
 
 Unit tests are located in the _tests_ directory,
-and are written using the [pytest] testing framework.
+and are written using the [pytest][pytest] testing framework.
 
 [pytest]: https://pytest.readthedocs.io/
 
@@ -103,13 +107,5 @@ $ pip install pre-commit
 It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
+[pytest]: https://pytest.readthedocs.io/
 [pull request]: https://github.com/brightway-lca/randonneur/pulls
-[License]: https://opensource.org/licenses/BSD-3-Clause
-[Source Code]: https://github.com/brightway-lca/randonneur
-[Documentation]: https://randonneur.readthedocs.io/
-[Issue Tracker]: https://github.com/brightway-lca/randonneur/issues
-
-
-<!-- github-only -->
-
-[Code of Conduct]: CODE_OF_CONDUCT.md

@@ -1,3 +1,0 @@
-furo
-myst_parser==3.0.1
-sphinx==7.2.6

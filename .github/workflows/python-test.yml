@@ -32,8 +32,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        py-version: ["3.8", "3.9", "3.10", "3.11"]
+        os: [ubuntu-latest, windows-latest, macos-13, ubuntu-20.04, macos-latest, windows-2019]
+        py-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
@@ -57,3 +57,6 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
