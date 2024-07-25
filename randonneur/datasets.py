@@ -64,9 +64,7 @@ def migrate_datasets(
                 found = True
 
         for possibles in migration_data.get("disaggregate", []):
-            if not (found and only_one_change) and matcher(
-                possibles["source"], dataset
-            ):
+            if not (found and only_one_change) and matcher(possibles["source"], dataset):
                 for new_ds in possibles["targets"]:
                     old_ds = deepcopy(dataset)
                     old_ds.update(new_ds)
@@ -75,9 +73,7 @@ def migrate_datasets(
                 found = True
 
     if datasets_to_delete:
-        lci_database = [
-            dataset for dataset in lci_database if dataset not in datasets_to_delete
-        ]
+        lci_database = [dataset for dataset in lci_database if dataset not in datasets_to_delete]
     if datasets_to_add:
         lci_database.extend(datasets_to_add)
 

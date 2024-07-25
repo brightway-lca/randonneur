@@ -1,3 +1,4 @@
+from functools import partial
 from pathlib import Path
 from typing import Callable, List, Optional
 
@@ -13,7 +14,7 @@ from .edge_functions import (
     migrate_edges_update,
 )
 from .errors import WrongGraphContext
-from .utils import SAFE_VERBS, apply_mapping
+from .utils import SAFE_VERBS, FlexibleLookupDict, apply_mapping
 
 verb_dispatch = {
     "create": migrate_edges_create,
@@ -122,36 +123,44 @@ def migrate_edges(
     Returns `graph` with altered content.
 
     """
-    progressbar = tqdm if verbose else lambda x: iter(x)
+    progressbar = partial(tqdm, desc="Transforming graph nodes") if verbose else lambda x: iter(x)
 
     if mapping:
         migrations = apply_mapping(migrations=migrations, mapping=mapping, verbs=verbs)
+
+    verbs = list(filter(lambda x: x in verb_dispatch and x in migrations, verbs))
+    logger.info("Can apply the following transformation verbs: {v}", v=verbs)
+
+    flds = {
+        verb: FlexibleLookupDict(
+            input_data=migrations[verb], fields_filter=fields, case_sensitive=case_sensitive
+        )
+        for verb in verbs
+    }
+
+    if "create" in migrations and "create" in verbs:
+        logger.warning(
+            """`migrations` has `create` section - this will add exchanges to all nodes.
+This is almost never the desired behaviour, consider removing `create` from the `verb` input."""
+        )
 
     for node in progressbar(graph):
         if node_filter and not node_filter(node):
             continue
 
-        if "create" in migrations and "create" in verbs:
-            logger.warning(
-                """`migrations` has `create` section - this will add exchanges to all nodes.
-This is almost never the desired behaviour, consider removing `create` from the `verb` input."""
-            )
-
-        for verb in filter(lambda x: x in verb_dispatch and x in migrations, verbs):
+        for verb in verbs:
             verb_dispatch[verb](
                 node=node,
-                migrations=migrations[verb],
+                migration_fld=flds[verb],
                 edge_filter=edge_filter,
-                fields=fields,
                 edges_label=edges_label,
                 verbose=verbose,
-                case_sensitive=case_sensitive,
             )
 
     return graph
 
 
-def stored_migration_edges(
+def migrate_edges_with_stored_data(
     graph: List[dict],
     label: str,
     data_registry_path: Optional[Path] = None,
@@ -166,12 +175,14 @@ def stored_migration_edges(
 ) -> List[dict]:
     """A simple wrapper to load from a `randonneur_data.Registry` with some basic sanity checks."""
     try:
-        migrations = Registry(data_registry_path)[label]
-        logger.info(f"Loaded transformation data {label} from registry")
-    except KeyError:
-        raise KeyError(
-            f"Transformation {label} not found in given transformation registry"
+        migrations = Registry(data_registry_path).get_file(label)
+        logger.info(
+            "Loaded transformation data {l} from registry with following verbs: {v}",
+            l=label,
+            v=[k for k in migrations if k in verb_dispatch],
         )
+    except KeyError:
+        raise KeyError(f"Transformation {label} not found in given transformation registry")
 
     if "edges" not in migrations.get("graph_context", []):
         raise WrongGraphContext(f"{label} migration can't be used on edges")

@@ -1,12 +1,15 @@
 import importlib.metadata
 import math
+from collections.abc import Iterable, Mapping
 from numbers import Number
-from typing import Any, List, Optional, Union
+from typing import Any, List, Optional, Tuple, Union
 
 try:
     import stats_arrays as sa
 except ImportError:
     sa = None
+
+from .errors import MultipleTransformations
 
 ALL_VERBS = ["create", "delete", "replace", "update", "disaggregate"]
 SAFE_VERBS = ["update", "replace", "disaggregate"]
@@ -19,10 +22,7 @@ def get_version_tuple() -> tuple:
         except ValueError:
             return obj
 
-    return tuple(
-        as_integer(v)
-        for v in importlib.metadata.version("randonneur").strip().split(".")
-    )
+    return tuple(as_integer(v) for v in importlib.metadata.version("randonneur").strip().split("."))
 
 
 def comparison(a: Any, b: Any, case_sensitive: bool) -> bool:
@@ -32,23 +32,6 @@ def comparison(a: Any, b: Any, case_sensitive: bool) -> bool:
         return a == b
 
 
-def matcher(
-    source: dict, target: dict, fields: Optional[List[str]], case_sensitive: bool = True
-) -> bool:
-    return all(
-        comparison(target.get(key), value, case_sensitive)
-        for key, value in source.items()
-        if (not fields or key in fields) and key != "allocation"
-    )
-
-
-def maybe_filter(maybe_dict, dataset):
-    if maybe_dict is None:
-        return True
-    else:
-        return matcher(maybe_dict, dataset)
-
-
 def apply_mapping(migrations: dict, mapping: dict, verbs: List[str]) -> dict:
     """Apply the label changes in `mapping` to the transformations in `migrations`."""
     if "source" in mapping:
@@ -56,9 +39,7 @@ def apply_mapping(migrations: dict, mapping: dict, verbs: List[str]) -> dict:
             for transformation in migrations.get(verb, []):
                 for key, value in mapping["source"].items():
                     if key in transformation["source"]:
-                        transformation["source"][value] = transformation["source"].pop(
-                            key
-                        )
+                        transformation["source"][value] = transformation["source"].pop(key)
     if "target" in mapping:
         for verb in verbs:
             if verb == "disaggregate":
@@ -73,9 +54,7 @@ def apply_mapping(migrations: dict, mapping: dict, verbs: List[str]) -> dict:
                 for transformation in migrations.get(verb, []):
                     for key, value in mapping["target"].items():
                         if key in transformation["target"]:
-                            transformation["target"][value] = transformation[
-                                "target"
-                            ].pop(key)
+                            transformation["target"][value] = transformation["target"].pop(key)
     return migrations
 
 
@@ -132,3 +111,83 @@ def rescale_edge(edge: dict, factor: Number) -> dict:
     else:
         raise ValueError(f"Edge can't be automatically rescaled:\n\t{edge}")
     return edge
+
+
+# def migrations_as_dict(
+#     migrations: dict,
+#     fields: Optional[List[str]],
+#     case_sensitive: bool,
+# ) -> dict:
+#     """Transform the migrations data format from a list of dictionaries to a dictionary.
+
+#     Needed for much faster lookups of possible transformations."""
+#     for verb in filter(lambda x: x in migrations, ALL_VERBS):
+#         temp = {}
+#         for obj in migrations[verb]:
+
+
+def right_case(value: Any, case_sensitive: bool) -> Any:
+    if isinstance(value, str) and not case_sensitive:
+        return value.lower()
+    else:
+        return value
+
+
+class FlexibleLookupDict(Mapping):
+    def __init__(
+        self, input_data: Iterable[dict], fields_filter: Optional[List[str]], case_sensitive: bool
+    ):
+        """A dictionary that allow for more flexible matching of dictionaries against other dicts.
+
+        We need to match a dictionary against another dictionary, but the other dictionary doesn't
+        have a fixed set of keys - they can vary across all the possibilities. We therefore allow
+        matching based on each unique combination of keys present.
+
+        If `fields_filter` is given, then only consider keys present in that list.
+
+        If `case_sensitive`, then do case-sensitive matching when comparing strings."""
+        self._case_sensitive = case_sensitive
+        self._field_combinations = set()
+        self._dict = {}
+
+        if fields_filter:
+            fields_filter = set(fields_filter)
+
+        for obj in input_data:
+            fields = set(obj["source"]).difference({"allocation"})
+            if fields_filter:
+                fields = fields.intersection(fields_filter)
+            self._field_combinations.add(tuple(sorted(fields)))
+            key = tuple(
+                [right_case(obj["source"][field], case_sensitive) for field in sorted(fields)]
+            )
+            if key in self._dict:
+                raise MultipleTransformations(
+                    f"Found multiple transformations for following field inputs: {key}"
+                )
+            self._dict[key] = obj
+
+    def __getitem__(self, obj: dict) -> dict:
+        if not isinstance(obj, dict):
+            raise ValueError
+
+        for field_combination in self._field_combinations:
+            try:
+                return self._dict[
+                    tuple(
+                        [
+                            right_case(obj.get(field), self._case_sensitive)
+                            for field in field_combination
+                        ]
+                    )
+                ]
+            except KeyError:
+                continue
+
+        raise KeyError
+
+    def __len__(self) -> int:
+        return len(self._dict)
+
+    def __iter__(self) -> Iterable:
+        return iter(self._dict)

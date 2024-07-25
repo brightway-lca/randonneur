@@ -112,9 +112,7 @@ class Datapackage:
                 missing = None
             else:
                 missing = (
-                    set(element["target"])
-                    .difference(all_target_keys)
-                    .difference({"allocation"})
+                    set(element["target"]).difference(all_target_keys).difference({"allocation"})
                 )
             if missing:
                 raise UnmappedData(
