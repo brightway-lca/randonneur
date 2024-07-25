@@ -1,8 +1,7 @@
-import importlib.metadata
 import math
 from collections.abc import Iterable, Mapping
 from numbers import Number
-from typing import Any, List, Optional, Tuple, Union
+from typing import Any, List, Optional
 
 try:
     import stats_arrays as sa
@@ -13,23 +12,6 @@ from .errors import MultipleTransformations
 
 ALL_VERBS = ["create", "delete", "replace", "update", "disaggregate"]
 SAFE_VERBS = ["update", "replace", "disaggregate"]
-
-
-def get_version_tuple() -> tuple:
-    def as_integer(obj: str) -> Union[int, str]:
-        try:
-            return int(obj)
-        except ValueError:
-            return obj
-
-    return tuple(as_integer(v) for v in importlib.metadata.version("randonneur").strip().split("."))
-
-
-def comparison(a: Any, b: Any, case_sensitive: bool) -> bool:
-    if isinstance(a, str) and isinstance(b, str) and not case_sensitive:
-        return a.lower() == b.lower()
-    else:
-        return a == b
 
 
 def apply_mapping(migrations: dict, mapping: dict, verbs: List[str]) -> dict:
@@ -111,19 +93,6 @@ def rescale_edge(edge: dict, factor: Number) -> dict:
     else:
         raise ValueError(f"Edge can't be automatically rescaled:\n\t{edge}")
     return edge
-
-
-# def migrations_as_dict(
-#     migrations: dict,
-#     fields: Optional[List[str]],
-#     case_sensitive: bool,
-# ) -> dict:
-#     """Transform the migrations data format from a list of dictionaries to a dictionary.
-
-#     Needed for much faster lookups of possible transformations."""
-#     for verb in filter(lambda x: x in migrations, ALL_VERBS):
-#         temp = {}
-#         for obj in migrations[verb]:
 
 
 def right_case(value: Any, case_sensitive: bool) -> Any:
