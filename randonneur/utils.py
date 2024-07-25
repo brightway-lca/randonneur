@@ -1,7 +1,7 @@
 import importlib.metadata
 import math
 from numbers import Number
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Union
 
 try:
     import stats_arrays as sa
@@ -25,12 +25,20 @@ def get_version_tuple() -> tuple:
     )
 
 
-def matcher(source: dict, target: dict, fields: Optional[List[str]]) -> bool:
+def comparison(a: Any, b: Any, case_sensitive: bool) -> bool:
+    if isinstance(a, str) and isinstance(b, str) and not case_sensitive:
+        return a.lower() == b.lower()
+    else:
+        return a == b
+
+
+def matcher(
+    source: dict, target: dict, fields: Optional[List[str]], case_sensitive: bool = True
+) -> bool:
     return all(
-        target.get(key) == value
+        comparison(target.get(key), value, case_sensitive)
         for key, value in source.items()
-        if (not fields or key in fields)
-        and key != "allocation"
+        if (not fields or key in fields) and key != "allocation"
     )
 
 

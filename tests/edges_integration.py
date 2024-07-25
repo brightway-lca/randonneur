@@ -72,24 +72,18 @@ def test_migrate_exchanges_integration(generic, migrate_all):
             "unit": "u",
             "location": "l",
             "edges": [
-                {
-                    "name": "alamgir",
-                    "amount": 10,
-                },
-                {"name": "humayun"},
-                {
-                    "name": "jahangir",
-                    "amount": 5,
-                },
+                {"name": "babur"},
+                {"allocation": 0.5, "amount": 5.0, "name": "jahangir"},
+                {"name": "alamgir", "amount": 10},
                 {
                     "name": "bahadur shah",
-                    "amount": 25.,
-                    'allocation': 0.25,
+                    "amount": 25.0,
+                    "allocation": 0.25,
                 },
                 {
                     "name": "jahandar shah",
-                    "amount": 75.,
-                    'allocation': 0.75,
+                    "amount": 75.0,
+                    "allocation": 0.75,
                 },
             ],
         }

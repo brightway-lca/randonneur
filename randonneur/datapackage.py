@@ -21,13 +21,14 @@ CC_BY = [
 class Datapackage:
     def __init__(
         self,
+        *,
         name: str,
         description: str,
         contributors: list,
-        source_id: str,
-        target_id: str,
         mapping_source: dict,
         mapping_target: dict,
+        source_id: Optional[str] = None,
+        target_id: Optional[str] = None,
         homepage: Optional[str] = None,
         created: Optional[datetime] = None,
         version: str = "1.0.0",
@@ -110,7 +111,11 @@ class Datapackage:
                 # No target element
                 missing = None
             else:
-                missing = set(element["target"]).difference(all_target_keys)
+                missing = (
+                    set(element["target"])
+                    .difference(all_target_keys)
+                    .difference({"allocation"})
+                )
             if missing:
                 raise UnmappedData(
                     f"""

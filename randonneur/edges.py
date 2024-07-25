@@ -12,6 +12,7 @@ from .edge_functions import (
     migrate_edges_replace,
     migrate_edges_update,
 )
+from .errors import WrongGraphContext
 from .utils import SAFE_VERBS, apply_mapping
 
 verb_dispatch = {
@@ -33,6 +34,7 @@ def migrate_edges(
     verbose: bool = False,
     edges_label: str = "edges",
     verbs: List[str] = SAFE_VERBS,
+    case_sensitive: bool = False,
 ) -> List[dict]:
     """For each edge in each node in ``data``, check each transformation in ``migrations``. For each
     transformation for which there is a match, make the given changes to the edge.
@@ -113,6 +115,10 @@ def migrate_edges(
     Only the verbs `create`, `disaggregate`, `replace`, `update`, and `delete` are used in this
     function, regardless of what is given in `verbs`, as we don't know how to handle custom verbs.
 
+    `case_sensitive`: Flag indicating whether to do case sensitive matching of transformations to
+    nodes or edges in the graph. Default is false, as practical experience has shown us that cases
+    get commonly changed by software developers or users.
+
     Returns `graph` with altered content.
 
     """
@@ -139,6 +145,7 @@ This is almost never the desired behaviour, consider removing `create` from the 
                 fields=fields,
                 edges_label=edges_label,
                 verbose=verbose,
+                case_sensitive=case_sensitive,
             )
 
     return graph
@@ -155,8 +162,9 @@ def stored_migration_edges(
     verbose: bool = False,
     edges_label: str = "edges",
     verbs: List[str] = SAFE_VERBS,
+    case_sensitive: bool = False,
 ) -> List[dict]:
-    """A simple wrapper to load from `randonneur_data.Registry` with some basic sanity checks."""
+    """A simple wrapper to load from a `randonneur_data.Registry` with some basic sanity checks."""
     try:
         migrations = Registry(data_registry_path)[label]
         logger.info(f"Loaded transformation data {label} from registry")
@@ -164,6 +172,9 @@ def stored_migration_edges(
         raise KeyError(
             f"Transformation {label} not found in given transformation registry"
         )
+
+    if "edges" not in migrations.get("graph_context", []):
+        raise WrongGraphContext(f"{label} migration can't be used on edges")
 
     return migrate_edges(
         graph=graph,
@@ -175,4 +186,5 @@ def stored_migration_edges(
         verbose=verbose,
         edges_label=edges_label,
         verbs=verbs,
+        case_sensitive=case_sensitive,
     )

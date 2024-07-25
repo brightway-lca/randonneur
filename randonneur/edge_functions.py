@@ -13,6 +13,7 @@ def migrate_edges_create(
     verbose: bool,
     fields: Optional[List[str]] = None,
     edge_filter: Optional[Callable] = None,
+    case_sensitive: bool = False,
 ) -> dict:
     pass
 
@@ -24,6 +25,7 @@ def migrate_edges_delete(
     verbose: bool,
     fields: Optional[List[str]] = None,
     edge_filter: Optional[Callable] = None,
+    case_sensitive: bool = False,
 ) -> dict:
     pass
 
@@ -35,6 +37,7 @@ def migrate_edges_disaggregate(
     verbose: bool,
     fields: Optional[List[str]] = None,
     edge_filter: Optional[Callable] = None,
+    case_sensitive: bool = False,
 ) -> dict:
     edges_to_add, edges_to_remove = [], set()
 
@@ -42,7 +45,12 @@ def migrate_edges_disaggregate(
         if edge_filter and not edge_filter(edge):
             continue
         for migration in migrations:
-            if matcher(source=migration["source"], target=edge, fields=fields):
+            if matcher(
+                source=migration["source"],
+                target=edge,
+                fields=fields,
+                case_sensitive=case_sensitive,
+            ):
                 for allocated in migration["targets"]:
                     new_edge = rescale_edge(deepcopy(edge), allocated["allocation"])
                     new_edge.update(allocated)
@@ -65,12 +73,18 @@ def migrate_edges_replace(
     verbose: bool,
     fields: Optional[List[str]] = None,
     edge_filter: Optional[Callable] = None,
+    case_sensitive: bool = False,
 ) -> dict:
     for edge in node.get(edges_label, []):
         if edge_filter and not edge_filter(edge):
             continue
         for migration in migrations:
-            if matcher(source=migration["source"], target=edge, fields=fields):
+            if matcher(
+                source=migration["source"],
+                target=edge,
+                fields=fields,
+                case_sensitive=case_sensitive,
+            ):
                 if "allocation" in migration["target"]:
                     rescale_edge(edge, migration["target"]["allocation"])
                 edge.update(migration["target"])
@@ -85,6 +99,7 @@ def migrate_edges_update(
     verbose: bool,
     fields: Optional[List[str]] = None,
     edge_filter: Optional[Callable] = None,
+    case_sensitive: bool = False,
 ) -> dict:
     """Difference is in intent of data developer, not in implementation."""
     return migrate_edges_replace(
@@ -94,4 +109,5 @@ def migrate_edges_update(
         edges_label=edges_label,
         verbose=verbose,
         edge_filter=edge_filter,
+        case_sensitive=case_sensitive,
     )
