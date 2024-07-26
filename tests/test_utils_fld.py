@@ -1,6 +1,7 @@
 import pytest
-from randonneur.utils import FlexibleLookupDict
+
 from randonneur.errors import MultipleTransformations
+from randonneur.utils import FlexibleLookupDict
 
 
 def test_flexible_lookup_dict_basic():
@@ -10,7 +11,7 @@ def test_flexible_lookup_dict_basic():
             {"source": {"foo": "b"}},
         ],
         fields_filter=None,
-        case_sensitive=True
+        case_sensitive=True,
     )
     assert fld[{"foo": "b"}] == {"source": {"foo": "b"}}
     assert fld[{"foo": "a", "bar": "b"}] == {"source": {"foo": "a", "bar": "b"}}
@@ -27,7 +28,7 @@ def test_flexible_lookup_dict_case_insensitive():
             {"source": {"foo": "b"}},
         ],
         fields_filter=None,
-        case_sensitive=False
+        case_sensitive=False,
     )
     assert fld[{"foo": "b"}] == {"source": {"foo": "b"}}
     assert fld[{"foo": "B"}] == {"source": {"foo": "b"}}
@@ -41,7 +42,7 @@ def test_flexible_lookup_dict_field_filter():
             {"source": {"foo": "b"}},
         ],
         fields_filter=["foo"],
-        case_sensitive=False
+        case_sensitive=False,
     )
     assert fld[{"foo": "b"}] == {"source": {"foo": "b"}}
     assert fld[{"foo": "B"}] == {"source": {"foo": "b"}}
@@ -58,7 +59,7 @@ def test_flexible_lookup_dict_ignore_allocated():
             {"source": {"foo": "b"}},
         ],
         fields_filter=None,
-        case_sensitive=True
+        case_sensitive=True,
     )
     assert fld[{"foo": "a", "bar": "b"}] == {"source": {"foo": "a", "bar": "b", "allocation": 0.5}}
     assert {("foo",), ("bar", "foo")} == fld._field_combinations
@@ -72,5 +73,5 @@ def test_flexible_lookup_dict_multiple_transformations():
                 {"source": {"foo": "a"}},
             ],
             fields_filter=["foo"],
-            case_sensitive=False
+            case_sensitive=False,
         )
