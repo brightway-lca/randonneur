@@ -5,6 +5,12 @@ class MappingConstants:
             "identifier": 'Process[*]."Process identifier".text',
             "name": "Process[*].Products[*].text[0]",
             "platform_id": 'Process[*]."Platform Identifier"',
+            "context": [
+                '["Emissions to air/", Process[*]."Emissions to air".[1]]',
+                '["Emissions to soil/", Process[*]."Emissions to soil".[1]]',
+                '["Emissions to water/", Process[*]."Emissions to water".[1]]',
+                '["Resources/", Process[*]."Resources".[1]]',
+            ],
         },
     }
     ECOSPOLD2 = {
@@ -23,5 +29,9 @@ class MappingConstants:
             "name": "//*:elementaryExchange/*:name/text()",
             "unit": "//*:elementaryExchange/*:unitName/text()",
             "uuid": "//*:elementaryExchange/@elementaryExchangeId",
+            "context": [
+                "//*:elementaryExchange/*:compartment/*:compartment/text()",
+                "//*:elementaryExchange/*:compartment/*:subcompartment/text()",
+            ],
         },
     }
