@@ -13,10 +13,7 @@ def generic():
             "location": "l",
             "edges": [
                 {"name": "babur"},
-                {
-                    "name": "akbar",
-                    "amount": 10,
-                },
+                {"name": "akbar", "amount": 10, "foo": {"bar": True}},
                 {
                     "name": "shah jahan",
                     "amount": 10,
@@ -73,7 +70,7 @@ def test_migrate_exchanges_integration(generic, migrate_all):
             "location": "l",
             "edges": [
                 {"name": "babur"},
-                {"allocation": 0.5, "amount": 5.0, "name": "jahangir"},
+                {"allocation": 0.5, "amount": 5.0, "name": "jahangir", "foo": {"bar": True}},
                 {"name": "alamgir", "amount": 10},
                 {
                     "name": "bahadur shah",

@@ -1,3 +1,5 @@
+from typing import List
+
 from randonneur.utils import apply_mapping
 
 

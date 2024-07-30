@@ -45,12 +45,12 @@ def migrate_edges_disaggregate(
                 new_edge = rescale_edge(deepcopy(edge), allocated["allocation"])
                 new_edge.update(allocated)
                 edges_to_add.append(new_edge)
-            edges_to_remove.add(frozendict(edge))
+            edges_to_remove.add(id(edge))
         except KeyError:
             continue
     if edges_to_remove:
         node[edges_label] = [
-            edge for edge in node[edges_label] if frozendict(edge) not in edges_to_remove
+            edge for edge in node[edges_label] if id(edge) not in edges_to_remove
         ] + edges_to_add
 
     return node
