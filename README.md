@@ -43,7 +43,7 @@ Migration data is specified in a JSON file as a single dictionary. This file **m
 * `version`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#version). Must be a string.
 * `contributors`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#contributors). Must be a list.
 * `mapping`: A dictionary mapping the labels used in the transformation
-* `graph_context`: A list with either the string 'nodes', 'edges', or both.
+* `graph_context`: A list with either the string 'nodes', 'edges', or both. The context in which these transformations should be used.
 
 In addition, the following properties should follow the [data package specification](https://specs.frictionlessdata.io/data-package/) if provided:
 
@@ -65,7 +65,7 @@ Finally, at least one change type should be included. The change types are:
 * `delete`
 * `disaggregate`
 
-Here are two examples:
+Here are some examples:
 ```json
 {
   "name": "ecoinvent-3.9.1-biosphere-ecoinvent-3.10-biosphere",
@@ -201,9 +201,43 @@ Here are two examples:
 }
 ```
 
+```json
+{
+    "name": "generic-brightway-units-normalization",
+    "description": "Standard units normalization used in most Brightway projects",
+    "contributors": [
+        {"title": "Chris Mutel", "path": "https://chris.mutel.org/", "role": "author"}
+    ],
+    "created": "2024-07-25T06:47:10.575370+00:00",
+    "version": "1.0.0",
+    "licenses": [
+        {
+            "name": "CC BY 4.0",
+            "path": "https://creativecommons.org/licenses/by/4.0/",
+            "title": "Creative Commons Attribution 4.0 International",
+        }
+    ],
+    "graph_context": ["nodes", "edges"],
+    "mapping": {
+        "source": {"expression language": "JSONPath", "labels": {"unit": "Node.unit"}},
+        "target": {"expression language": "JSONPath", "labels": {"unit": "Node.unit"}},
+    },
+    "source_id": "bw_interfaces_schemas-1",
+    "target_id": "bw_interfaces_schemas-1",
+    "homepage": "https://github.com/brightway-lca/bw_interface_schemas",
+    "replace": [
+        {"source": {"unit": "a"}, "target": {"unit": "year"}},
+        {"source": {"unit": "h"}, "target": {"unit": "hour"}},
+        {"source": {"unit": "ha"}, "target": {"unit": "hectare"}},
+        {"source": {"unit": "hr"}, "target": {"unit": "hour"}},
+        {"source": {"unit": "kg"}, "target": {"unit": "kilogram"}},
+    ],
+}
+```
+
 You can use `randonneur.Datapackage` to ensure correct formatting and serialization.
 
-See the directory `examples` for more real-world implementations.
+See the [randonneur_data](https://github.com/brightway-lca/randonneur_data) repo for more real-world implementations.
 
 ### Common database release identifier standard
 
@@ -220,25 +254,52 @@ Here are some examples:
 
 ## Theory
 
-For migrating exchanges: Given a database, iterate through the datasets. If a `dataset_filter` is given, ignore any datasets which don't pass the filter. In each dataset, iterate through the exchanges. If an `exchange_filter` is given, ignore any exchanges which don't pass the filter. For each exchange, look at the following possible transformations in order: `delete`, `replace`, `update`, and `disaggregate`. Only one transformation can be done to an exchange. Each transformation will change or delete the exchange under consideration, and maybe add some new exchanges to the dataset, though this addition will only happen after the original exchanges have been examined. After looking at all the exchanges, apply the `create` transformation to add more exchanges if provided.
+In normal life cycle assessment practice, we work with a large variety of software and database applications, and often need to harmonize data across these heterogeneous systems. Because many of these systems do not use simple unique identifiers, we often need to link across systems based on attibutes. For example, if the name, location, and unit of an input are the same in system `A` and `B`, then we can infer that these refer to the same underlying concept.
 
-For each exchange and transformation, we need to decide if that transformation should be applied. We do this based on the attributes of the dataset and exchange, and the attributes given in the transformation data. We compare the attribute values for a given set of fields, and these attributes must match exactly. The default fields are `name`, `reference product`, `product`, `location`, `unit`; you can specify your own fields.
+In the real world nothing is so simple. Each player in the LCA data world is trying to give their users a positive experience, but over time this has led to many different terms for the same concept. Some legacy systems restrictions also prevent complete imports, and cause data transformations that are difficult to reverse engineer.
 
-Migrating datasets works the same way, except that we operate directly on the datasets instead of the exchanges.
+This library defines both a specification for transformation data files which allow different systems to be linked together by harmonizing the matching attributes, and a software-agnostic implementation of functions needed to use that format.
 
-### Migrating exchanges
+## Foot-guns
 
-Exchanges are the consumption or production of a good or service. Exchanges link two datasets (two activities, one product and one activity, one activity and one biosphere flow, or even other dataset types). We support the following types of exchange changes:
 
-* `delete`
-* `replace`
-* `update`
-* `disaggregate`
-* `create`
+
+## Transformations
+
+### Replace
+
+Replacement substitutes an exchange one-to-one; as such, the new exchange must be completely defined. **However**, the `amount` should not be specified; rather, an `allocation` factor should be given, and the `amount` of the original exchange will be multiplied by `allocation`.
+
+If `allocation` is not given, a default value of 1.0 is used.
+
+Aside from the quantitative values, no other data from the original exchange is taken over to the new exchange. If you only want to change a few fields, use an `update` instead. If you don't want the exchange amount re-scaled, use a combination of `delete` and `create`.
+
+The data format for `replace` type is:
+
+```python
+{
+    "replace": [{
+        "source": {
+            # All fields needed to identify the exchange to be replaced
+        },
+        "target": {
+            # All fields needed to define the new exchange
+        },
+        # `dataset` is optional
+        "dataset": {
+            # All fields needed to identify the dataset to change
+        }
+    }]
+}
+```
+
+### Update
+
+`update` changes attributes the same way that `replace` does - the only difference is that `replace` shows the intent to refer to a new object instead of an existing object with different attributes. Given the messiness of real-world data, there is no real bright line between these concepts, and their code implementation is identical.
 
 #### Create
 
-Creates a new exchange in all datasets, or in one specific dataset.
+Creates a new edge or node.
 
 Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
 
@@ -272,56 +333,6 @@ If you only want to create an exchange in one dataset:
 `dataset` must be a `dict`, not a list; it can only identify one dataset.
 
 Note that in the `wurst` format, `dataset` use the key `reference product` while exchanges use the key `product`; these are two different concepts, so have different keys.
-
-### Replace
-
-Replacement substitutes an exchange one-to-one; as such, the new exchange must be completely defined. **However**, the `amount` should not be specified; rather, an `allocation` factor should be given, and the `amount` of the original exchange will be multiplied by `allocation`.
-
-If `allocation` is not given, a default value of 1.0 is used.
-
-**Note**: `randonneur` currently does not adjust uncertainty when rescaling.
-
-Aside from the quantitative values, no other data from the original exchange is taken over to the new exchange. If you only want to change a few fields, use an `update` instead. If you don't want the exchange amount re-scaled, use a combination of `delete` and `create`.
-
-The data format for `replace` type is:
-
-```python
-{
-    "replace": [{
-        "source": {
-            # All fields needed to identify the exchange to be replaced
-        },
-        "target": {
-            # All fields needed to define the new exchange
-        },
-        # `dataset` is optional
-        "dataset": {
-            # All fields needed to identify the dataset to change
-        }
-    }]
-}
-```
-
-### Update
-
-`update` differs from `replace` in that it changes attributes of the original exchange instead of creating a completely new object; otherwise, its behaviour is the same as `replace`. The data format is:
-
-```python
-{
-    "update": [{
-        "source": {
-            # All fields needed to identify the exchange to be modified
-        },
-        "target": {
-            # Some fields which you want to change
-        },
-        # `dataset` is optional
-        "dataset": {
-            # All fields needed to identify the dataset to change
-        }
-    }]
-}
-```
 
 ### Delete
 
