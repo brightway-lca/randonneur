@@ -52,3 +52,16 @@ class MappingConstants:
             ],
         },
     }
+    ECOSPOLD2_BIO_FLOWMAPPER = {
+        "expression language": "XPath",
+        "labels": {
+            "name": "//*:elementaryExchange/*:name/text()",
+            "CAS number": "//*:elementaryExchange/@casNumber",
+            "unit": "//*:elementaryExchange/*:unitName/text()",
+            "identifier": "//*:elementaryExchange/@elementaryExchangeId",
+            "context": [
+                "//*:elementaryExchange/*:compartment/*:compartment/text()",
+                "//*:elementaryExchange/*:compartment/*:subcompartment/text()",
+            ],
+        },
+    }
