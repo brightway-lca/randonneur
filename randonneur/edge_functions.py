@@ -70,7 +70,9 @@ def migrate_edges_replace(
             continue
         try:
             migration = migration_fld[edge]
-            if "allocation" in migration["target"]:
+            if "conversion_factor" in migration["target"]:
+                rescale_edge(edge, migration["target"]["conversion_factor"])
+            elif "allocation" in migration["target"]:
                 rescale_edge(edge, migration["target"]["allocation"])
             edge.update(migration["target"])
         except KeyError:
