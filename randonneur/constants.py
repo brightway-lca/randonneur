@@ -29,6 +29,17 @@ class MappingConstants:
             "unit": "//*:intermediateExchange[*:outputGroup = '0' and @amount > 0]/*:unitName/text()",
         },
     }
+    ECOSPOLD1_BIO = {
+        "expression language": "XPath",
+        "labels": {
+            "name": "//*:exchange[*:outputGroup = '4' or *:outputGroup = '5']/@name",
+            "unit": "//*:exchange[*:outputGroup = '4' or *:outputGroup = '5']/@unit",
+            "context": [
+                "//*:exchange[*:outputGroup = '4' or *:outputGroup = '5']/@category",
+                "//*:exchange[*:outputGroup = '4' or *:outputGroup = '5']/@subCategory",
+            ],
+        },
+    }
     ECOSPOLD2_BIO = {
         "expression language": "XPath",
         "labels": {
