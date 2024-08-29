@@ -5,6 +5,12 @@ class MappingConstants:
             "identifier": 'Process[*]."Process identifier".text',
             "name": "Process[*].Products[*].text[0]",
             "platform_id": 'Process[*]."Platform Identifier"',
+            "unit": [
+                '["Emissions to air/", Process[*]."Emissions to air".[2]]',
+                '["Emissions to soil/", Process[*]."Emissions to soil".[2]]',
+                '["Emissions to water/", Process[*]."Emissions to water".[2]]',
+                '["Resources/", Process[*]."Resources".[2]]',
+            ],
             "context": [
                 '["Emissions to air/", Process[*]."Emissions to air".[1]]',
                 '["Emissions to soil/", Process[*]."Emissions to soil".[1]]',
