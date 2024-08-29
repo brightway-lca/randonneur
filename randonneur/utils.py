@@ -98,6 +98,10 @@ def rescale_edge(edge: dict, factor: Number) -> dict:
 def right_case(value: Any, case_sensitive: bool) -> Any:
     if isinstance(value, str) and not case_sensitive:
         return value.lower()
+    elif isinstance(value, (tuple, list)) and not case_sensitive:
+        return tuple([v.lower() if isinstance(v, str) else v for v in value])
+    elif isinstance(value, (tuple, list)) and not case_sensitive:
+        return tuple(value)
     else:
         return value
 
