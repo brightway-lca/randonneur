@@ -119,7 +119,7 @@ class Datapackage:
                     f"""
     One of more `target` data attributes is not found in given mapping:
     Mapping has the following fields:
-{all_source_keys}
+{all_target_keys}
     However, the given data also includes:
 {missing}
     In the data object:
