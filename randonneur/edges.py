@@ -52,9 +52,7 @@ def migrate_edges(
     """
     config = config or MigrationConfig()
     progressbar = (
-        partial(tqdm, desc="Transforming graph nodes")
-        if config.verbose
-        else lambda x: iter(x)
+        partial(tqdm, desc="Transforming graph nodes") if config.verbose else lambda x: iter(x)
     )
 
     if config.mapping:
@@ -113,9 +111,7 @@ def migrate_edges_with_stored_data(
             v=[k for k in migrations if k in verb_dispatch],
         )
     except KeyError:
-        raise KeyError(
-            f"Transformation {label} not found in given transformation registry"
-        )
+        raise KeyError(f"Transformation {label} not found in given transformation registry")
 
     if "edges" not in migrations.get("graph_context", []):
         raise WrongGraphContext(f"{label} migration can't be used on edges")

@@ -108,7 +108,10 @@ def right_case(value: Any, case_sensitive: bool) -> Any:
 
 class FlexibleLookupDict(Mapping):
     def __init__(
-        self, input_data: Iterable[dict], fields_filter: Optional[List[str]], case_sensitive: bool
+        self,
+        input_data: Iterable[dict],
+        fields_filter: Optional[List[str]],
+        case_sensitive: bool,
     ):
         """A dictionary that allow for more flexible matching of dictionaries against other dicts.
 

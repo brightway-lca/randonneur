@@ -83,6 +83,7 @@ class MigrationConfig(BaseModel):
     get commonly changed by software developers or users. Only applies to string values.
 
     """
+
     mapping: Optional[Dict[str, dict]] = None
     node_filter: Optional[Callable] = None
     edge_filter: Optional[Callable] = None
