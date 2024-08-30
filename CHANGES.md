@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.DEV]
+
+* Refactor config arguments out to `pydantic` class
+
 ## [0.1.0] - 2024-08-14
 
 Initial first working release
