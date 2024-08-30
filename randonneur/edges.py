@@ -1,6 +1,6 @@
 from functools import partial
 from pathlib import Path
-from typing import Callable, List, Optional
+from typing import List, Optional
 
 from loguru import logger
 from randonneur_data import Registry
@@ -14,7 +14,7 @@ from .edge_functions import (
     migrate_edges_update,
 )
 from .errors import WrongGraphContext
-from .utils import SAFE_VERBS, FlexibleLookupDict, apply_mapping
+from .utils import FlexibleLookupDict, apply_mapping
 from .config import MigrationConfig
 
 verb_dispatch = {

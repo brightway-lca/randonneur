@@ -96,6 +96,7 @@ def rescale_edge(edge: dict, factor: Number) -> dict:
 
 
 def right_case(value: Any, case_sensitive: bool) -> Any:
+    """Convert strings to lower case, and lists to tuples."""
     if isinstance(value, str) and not case_sensitive:
         return value.lower()
     elif isinstance(value, (tuple, list)) and not case_sensitive:
@@ -110,10 +111,28 @@ class FlexibleLookupDict(Mapping):
     def __init__(
         self,
         input_data: Iterable[dict],
-        fields_filter: Optional[List[str]],
-        case_sensitive: bool,
+        fields_filter: Optional[List[str]] = None,
+        case_sensitive: bool = False,
     ):
         """A dictionary that allow for more flexible matching of dictionaries against other dicts.
+
+        `input_data` is a dictionary like `{"foo": {"first": True, "bar": 42}}`. We want to match
+        this input against `{'first': True}` and get back `foo`. Here is an examples:
+
+        ```python
+        fld = FlexibleLookupDict(
+            input_data=[
+                {"source": {"foo": "a", "bar": "b"}},
+                {"source": {"foo": "b"}},
+            ]
+        )
+        fld[{"foo": "b"}] == {"source": {"foo": "b"}}
+        >>> True
+        ```
+
+        For real data we would have input data with both `source` and `target` (or `targets` for
+        disaggregation) keys. This class makes the **strong assumption** that `input_data` has
+        `source` and `target`/`targets` keys.
 
         We need to match a dictionary against another dictionary, but the other dictionary doesn't
         have a fixed set of keys - they can vary across all the possibilities. We therefore allow
@@ -121,7 +140,34 @@ class FlexibleLookupDict(Mapping):
 
         If `fields_filter` is given, then only consider keys present in that list.
 
-        If `case_sensitive`, then do case-sensitive matching when comparing strings."""
+        ```python
+        fld = FlexibleLookupDict(
+            input_data=[
+                {"source": {"foo": "a", "bar": "b"}},
+                {"source": {"foo": "b"}},
+            ],
+            fields_filter=["foo"]
+        )
+        fld[{"foo": "b", "other": "whatever"}] == {"source": {"foo": "b"}}
+        >>> True
+        ```
+
+        If `case_sensitive`, then do case-sensitive matching on values (not keys) when comparing
+        strings. Here is an example of a *case-insensitve* match:
+
+        ```python
+        fld = FlexibleLookupDict(
+            input_data=[
+                {"source": {"foo": "a", "bar": "b"}},
+                {"source": {"foo": "b"}},
+            ],
+            case_sensitive=False
+        )
+        fld[{"foo": "B"}] == {"source": {"foo": "b"}}
+        >>> True
+        ```
+
+        """
         self._case_sensitive = case_sensitive
         self._field_combinations = set()
         self._dict = {}
@@ -130,18 +176,49 @@ class FlexibleLookupDict(Mapping):
             fields_filter = set(fields_filter)
 
         for obj in input_data:
-            fields = set(obj["source"]).difference({"allocation"})
+            fields = set(obj["source"]).difference({"allocation", "conversion_factor"})
             if fields_filter:
                 fields = fields.intersection(fields_filter)
             self._field_combinations.add(tuple(sorted(fields)))
             key = tuple(
                 [right_case(obj["source"][field], case_sensitive) for field in sorted(fields)]
             )
-            if key in self._dict:
-                raise MultipleTransformations(
-                    f"Found multiple transformations for following field inputs: {key}"
-                )
-            self._dict[key] = obj
+            try:
+                # Short circuits to `KeyError` if not present
+                # We don't bother examining if disaggregation is consistent, this shouldn't be
+                # allowed full stop
+                if "targets" in obj and self._dict[key]:
+                    raise MultipleTransformations(f"""
+Found multiple transformations including disaggregation for:
+{obj['source']}
+""")
+
+                # `obj` is already present in the dictionary. This is OK, if the *functionally
+                # equivalent* values are being added. We would like to reject this data
+                # completely, but then we have to fix the input data ourselves, and... yuck.
+                existing = {
+                    key: right_case(value, case_sensitive)
+                    for key, value in self._dict[key]["target"].items()
+                }
+                given = {
+                    key: right_case(value, case_sensitive) for key, value in obj["target"].items()
+                }
+                if existing != given:
+                    raise MultipleTransformations(
+                        f"""
+Found multiple transformations for following field inputs:
+{obj['source']}
+
+Targets:
+
+{obj['target']}
+
+{self._dict[key]['target']}
+"""
+                    )
+                # TBD: Also check coherence for conversion factors
+            except KeyError:
+                self._dict[key] = obj
 
     def __getitem__(self, obj: dict) -> dict:
         if not isinstance(obj, dict):
