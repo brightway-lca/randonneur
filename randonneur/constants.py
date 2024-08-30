@@ -46,6 +46,7 @@ class MappingConstants:
             "name": "//*:elementaryExchange/*:name/text()",
             "unit": "//*:elementaryExchange/*:unitName/text()",
             "uuid": "//*:elementaryExchange/@elementaryExchangeId",
+            "formula": "//*:elementaryExchange/@formula",
             "context": [
                 "//*:elementaryExchange/*:compartment/*:compartment/text()",
                 "//*:elementaryExchange/*:compartment/*:subcompartment/text()",
