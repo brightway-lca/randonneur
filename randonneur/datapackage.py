@@ -5,9 +5,9 @@ from pathlib import Path
 from pprint import pformat
 from typing import Optional
 
-from .errors import UnmappedData, ValidationError
+from .errors import UnmappedData
+from .validation import DatapackageMetadata, Contributors, MappingFields
 
-CONTRIBUTORS_REQUIRED_FIELDS = {"title", "role", "path"}
 VERBS = {"create", "replace", "update", "delete", "disaggregate"}
 CC_BY = [
     {
@@ -48,16 +48,21 @@ class Datapackage:
         self.data = {}
         self.graph_context = graph_context or ["edges"]
 
-        if not self.contributors:
-            raise ValidationError("Must provide at least one contributor")
-        if not all(
-            contributor.get(field)
-            for contributor in self.contributors
-            for field in CONTRIBUTORS_REQUIRED_FIELDS
-        ):
-            raise ValidationError(
-                f"Contributors must all have all of the following fields: {CONTRIBUTORS_REQUIRED_FIELDS}"
-            )
+        Contributors(**contributors)
+        MappingFields(**mapping_source)
+        MappingFields(**mapping_target)
+        DatapackageMetadata(
+            name=self.name,
+            description=self.description,
+            contributors=self.contributors,
+            source_id=self.source_id,
+            target_id=self.target_id,
+            homepage=self.homepage,
+            created=self.created,
+            version=self.version,
+            licenses=self.licenses,
+            graph_context=self.graph_context,
+        )
 
     def metadata(self) -> dict:
         data = {

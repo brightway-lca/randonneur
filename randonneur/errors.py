@@ -1,9 +1,3 @@
-class ValidationError(Exception):
-    """Input data is invalid"""
-
-    pass
-
-
 class UnmappedData(Exception):
     """Given data doesn't match provided data mapping schema"""
 
