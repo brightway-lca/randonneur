@@ -33,6 +33,7 @@ dependencies = [
     "loguru",
     "pydantic",
     "randonneur_data",
+    "stats_arrays",
     "tqdm",
 ]
 
@@ -48,7 +49,7 @@ testing = [
     "randonneur",
     "pytest",
     "pytest-cov",
-    "python-coveralls"
+    "python-coveralls",
 ]
 dev = [
     "build",
