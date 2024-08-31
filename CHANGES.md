@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.DEV]
+## [0.2.0] - 2024-08-31
 
+* Update `FlexibleLookupDict` to allow multiple input pairs if identical results are produced
+* Validate `Datapackage` metadata with `pydantic`
 * Refactor config arguments out to `pydantic` class
 
 ## [0.1.0] - 2024-08-14
