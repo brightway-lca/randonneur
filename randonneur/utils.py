@@ -3,12 +3,9 @@ from collections.abc import Iterable, Mapping
 from numbers import Number
 from typing import Any, List, Optional
 
-try:
-    import stats_arrays as sa
-except ImportError:
-    sa = None
+import stats_arrays as sa
 
-from .errors import MultipleTransformations
+from .errors import MultipleTransformations, ConflictingConversionFactors
 
 ALL_VERBS = ["create", "delete", "replace", "update", "disaggregate"]
 SAFE_VERBS = ["update", "replace", "disaggregate"]
@@ -176,7 +173,7 @@ class FlexibleLookupDict(Mapping):
             fields_filter = set(fields_filter)
 
         for obj in input_data:
-            fields = set(obj["source"]).difference({"allocation", "conversion_factor"})
+            fields = set(obj["source"]).difference({"allocation"})
             if fields_filter:
                 fields = fields.intersection(fields_filter)
             self._field_combinations.add(tuple(sorted(fields)))
@@ -216,7 +213,22 @@ Targets:
 {self._dict[key]['target']}
 """
                     )
-                # TBD: Also check coherence for conversion factors
+                if "conversion_factor" in obj and "conversion_factor" not in self._dict[key]:
+                    self._dict[key]["conversion_factor"] = obj["conversion_factor"]
+                elif "conversion_factor" in obj and "conversion_factor" in self._dict[key]:
+                    if not math.isclose(
+                        obj["conversion_factor"],
+                        self._dict[key]["conversion_factor"],
+                        abs_tol=1e-2,
+                        rel_tol=1e-2,
+                    ):
+                        raise ConflictingConversionFactors(f"""
+Found at least two different conversion factors for the same transformation.
+First: {obj["conversion_factor"]}
+Second: {self._dict[key]["conversion_factor"]}
+For conversion from: {obj["source"]}
+To: {obj["target"]}
+                        """)
             except KeyError:
                 self._dict[key] = obj
 

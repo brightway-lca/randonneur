@@ -1,6 +1,6 @@
 import pytest
 
-from randonneur.errors import MultipleTransformations
+from randonneur.errors import MultipleTransformations, ConflictingConversionFactors
 from randonneur.utils import FlexibleLookupDict
 
 
@@ -66,26 +66,11 @@ def test_flexible_lookup_dict_ignore_allocated():
     assert {("foo",), ("bar", "foo")} == fld._field_combinations
 
 
-def test_flexible_lookup_dict_ignore_conversion_factor():
-    fld = FlexibleLookupDict(
-        input_data=[
-            {"source": {"foo": "a", "bar": "b", "conversion_factor": 0.5}},
-            {"source": {"foo": "b"}},
-        ],
-        fields_filter=None,
-        case_sensitive=True,
-    )
-    assert fld[{"foo": "a", "bar": "b"}] == {
-        "source": {"foo": "a", "bar": "b", "conversion_factor": 0.5}
-    }
-    assert {("foo",), ("bar", "foo")} == fld._field_combinations
-
-
 def test_flexible_lookup_dict_similar_allowed():
     FlexibleLookupDict(
         input_data=[
-            {"source": {"foo": "a", "bar": "b"}, 'target': {"foo": "strawberry"}},
-            {"source": {"foo": "a"}, 'target': {"foo": "strawberry"}},
+            {"source": {"foo": "a", "bar": "b"}, "target": {"foo": "strawberry"}},
+            {"source": {"foo": "a"}, "target": {"foo": "strawberry"}},
         ],
         fields_filter=["foo"],
         case_sensitive=False,
@@ -96,8 +81,8 @@ def test_flexible_lookup_dict_multiple_transformations():
     with pytest.raises(MultipleTransformations):
         FlexibleLookupDict(
             input_data=[
-                {"source": {"foo": "a", "bar": "b"}, 'target': {"foo": "strawberry"}},
-                {"source": {"foo": "a"}, 'target': {"foo": "raspberry"}},
+                {"source": {"foo": "a", "bar": "b"}, "target": {"foo": "strawberry"}},
+                {"source": {"foo": "a"}, "target": {"foo": "raspberry"}},
             ],
             fields_filter=["foo"],
             case_sensitive=False,
@@ -108,9 +93,66 @@ def test_flexible_lookup_dict_multiple_transformations_disaggregation():
     with pytest.raises(MultipleTransformations):
         FlexibleLookupDict(
             input_data=[
-                {"source": {"foo": "a", "bar": "b"}, 'targets': {}},
+                {"source": {"foo": "a", "bar": "b"}, "targets": {}},
                 {"source": {"foo": "a"}, "targets": {}},
             ],
             fields_filter=["foo"],
             case_sensitive=False,
         )
+
+
+def test_flexible_lookup_dict_conflicting_conversions():
+    with pytest.raises(ConflictingConversionFactors):
+        FlexibleLookupDict(
+            input_data=[
+                {
+                    "source": {"foo": "a", "bar": "b"},
+                    "target": {"foo": "banana"},
+                    "conversion_factor": 1000,
+                },
+                {
+                    "source": {"foo": "a", "bar": "b"},
+                    "target": {"foo": "banana"},
+                    "conversion_factor": 0.001,
+                },
+            ],
+        )
+
+
+def test_flexible_lookup_dict_no_conflicting_conversions():
+    FlexibleLookupDict(
+        input_data=[
+            {
+                "source": {"foo": "a", "bar": "b"},
+                "target": {"foo": "banana"},
+                "conversion_factor": 1,
+            },
+            {
+                "source": {"foo": "a", "bar": "b"},
+                "target": {"foo": "banana"},
+                "conversion_factor": 0.995,
+            },
+        ],
+    )
+
+
+def test_flexible_lookup_dict_conversions_take_later_value():
+    result = FlexibleLookupDict(
+        input_data=[
+            {
+                "source": {"foo": "a", "bar": "b"},
+                "target": {"foo": "banana"},
+            },
+            {
+                "source": {"foo": "a", "bar": "b"},
+                "target": {"foo": "banana"},
+                "conversion_factor": 0.995,
+            },
+        ],
+        fields_filter=["foo"],
+    )
+    assert result[{"foo": "a"}] == {
+        "source": {"foo": "a", "bar": "b"},
+        "target": {"foo": "banana"},
+        "conversion_factor": 0.995,
+    }

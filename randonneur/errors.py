@@ -20,3 +20,9 @@ class MultipleTransformations(Exception):
     """Multiple transformations given for same set of input fields"""
 
     pass
+
+
+class ConflictingConversionFactors(Exception):
+    """Multiple different conversion factors given for same migration"""
+
+    pass
