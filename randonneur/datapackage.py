@@ -2,13 +2,10 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from pprint import pformat
 from typing import Optional
 
-from .errors import UnmappedData
-from .validation import DatapackageMetadata, Contributors, MappingFields
+from .validation import DatapackageMetadata, Contributors, MappingFields, validate_data_for_verb
 
-VERBS = {"create", "replace", "update", "delete", "disaggregate"}
 CC_BY = [
     {
         "name": "CC BY 4.0",
@@ -54,7 +51,6 @@ class Datapackage:
         DatapackageMetadata(
             name=self.name,
             description=self.description,
-            contributors=self.contributors,
             source_id=self.source_id,
             target_id=self.target_id,
             homepage=self.homepage,
@@ -84,53 +80,9 @@ class Datapackage:
         return data
 
     def add_data(self, verb: str, data: list) -> None:
-        if verb not in VERBS:
-            raise ValueError(f"Transformation verb {verb} must be one of {VERBS}")
+        validate_data_for_verb(verb=verb, data=data, mapping=self.mapping)
         if verb not in self.data:
             self.data[verb] = []
-
-        all_source_keys = set(self.mapping["source"]["labels"])
-        all_target_keys = set(self.mapping["target"]["labels"])
-
-        for element in data:
-            missing = set(element["source"]).difference(all_source_keys)
-            if missing:
-                raise UnmappedData(
-                    f"""
-    One of more `source` data attributes is not found in given mapping:
-    Mapping has the following fields:
-{all_source_keys}
-    However, the given data also includes:
-{missing}
-    In the data object:
-{pformat(element)}
-    """
-                )
-            if verb == "disaggregate":
-                missing = (
-                    set.union(*[set(obj) for obj in element["targets"]])
-                    .difference(all_target_keys)
-                    .difference({"allocation"})
-                )
-            elif verb == "delete":
-                # No target element
-                missing = None
-            else:
-                missing = (
-                    set(element["target"]).difference(all_target_keys).difference({"allocation"})
-                )
-            if missing:
-                raise UnmappedData(
-                    f"""
-    One of more `target` data attributes is not found in given mapping:
-    Mapping has the following fields:
-{all_target_keys}
-    However, the given data also includes:
-{missing}
-    In the data object:
-{pformat(element)}
-    """
-                )
         self.data[verb].extend(data)
 
     def to_json(self, filepath: Path) -> Path:
