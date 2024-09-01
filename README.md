@@ -63,8 +63,6 @@ In [3]: transformed = rn.migrate_edges_with_stored_data(
    ...: )
    ...: transformed
    ...:
-2024-09-01 17:05:43.587 | INFO     | randonneur.edges:migrate_edges_with_stored_data:108 - Loaded transformation data simapro-ecoinvent-3.9.1-cutoff from registry with following verbs: ['replace']
-2024-09-01 17:05:43.587 | INFO     | randonneur.edges:migrate_edges:64 - Can apply the following transformation verbs: ['replace']
 Out[3]:
 [{'name': 'my process',
   'edges': [{'name': 'xylene production',
@@ -79,8 +77,6 @@ In [4]: rn.migrate_edges_with_stored_data(
    ...:     'ecoinvent-3.9.1-cutoff-ecoinvent-3.10-cutoff',
    ...: )
    ...:
-2024-09-01 17:05:54.982 | INFO     | randonneur.edges:migrate_edges_with_stored_data:108 - Loaded transformation data ecoinvent-3.9.1-cutoff-ecoinvent-3.10-cutoff from registry with following verbs: ['replace', 'disaggregate']
-2024-09-01 17:05:54.982 | INFO     | randonneur.edges:migrate_edges:64 - Can apply the following transformation verbs: ['replace', 'disaggregate']
 Out[4]:
 [{'name': 'my process',
   'edges': [{'name': 'BTX production, from pyrolysis gas, average',
