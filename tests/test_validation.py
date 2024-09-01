@@ -96,7 +96,7 @@ def test_validation_integration():
     Datapackage(
         name="Foo",
         description="Bar",
-        contributors={"title": "John", "role": "wrangler", "path": "example.com"},
+        contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
         mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
         mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
         source_id="Something",
@@ -110,7 +110,7 @@ def test_validation_integration():
     Datapackage(
         name="Foo",
         description="Bar",
-        contributors={"title": "John", "role": "wrangler", "path": "example.com"},
+        contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
         mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
         mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
     )
@@ -118,7 +118,7 @@ def test_validation_integration():
         Datapackage(
             name=42,
             description="Bar",
-            contributors={"title": "John", "role": "wrangler", "path": "example.com"},
+            contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
             mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
             mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
             source_id="Something",
@@ -133,7 +133,7 @@ def test_validation_integration():
         Datapackage(
             name="Foo",
             description="Bar",
-            contributors={"title": "John", "role": "wrangler", "path": "example.com"},
+            contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
             mapping_source={"labels": {"a": "something", "b": ["x", "y"]}},
             mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
             source_id="Something",
@@ -148,7 +148,7 @@ def test_validation_integration():
         Datapackage(
             name="Foo",
             description="Bar",
-            contributors={"title": "John", "role": "wrangler"},
+            contributors=[{"title": "John", "role": "wrangler"}],
             mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
             mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
             source_id="Something",

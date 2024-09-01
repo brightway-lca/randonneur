@@ -45,7 +45,8 @@ class Datapackage:
         self.data = {}
         self.graph_context = graph_context or ["edges"]
 
-        Contributors(**contributors)
+        for contributor in contributors:
+            Contributors(**contributor)
         MappingFields(**mapping_source)
         MappingFields(**mapping_target)
         DatapackageMetadata(
