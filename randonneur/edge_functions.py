@@ -1,8 +1,6 @@
 from copy import deepcopy
 from typing import Callable, List, Optional
 
-from frozendict import frozendict
-
 from .utils import rescale_edge
 
 

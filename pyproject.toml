@@ -29,7 +29,6 @@ classifiers = [
 ]
 requires-python = ">=3.9"
 dependencies = [
-    "frozendict",
     "loguru",
     "pydantic",
     "randonneur_data",
