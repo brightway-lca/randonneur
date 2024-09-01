@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2024-09-01
+
+* Refactor data validation into a separate function
+
 ## [0.2.0] - 2024-08-31
 
 * Update `FlexibleLookupDict` to allow multiple input pairs if identical results are produced
@@ -16,9 +20,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2024-08-14
 
 Initial first working release
-
-### Added
-
-### Changed
-
-### Removed
