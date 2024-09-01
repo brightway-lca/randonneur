@@ -4,7 +4,15 @@
 
 Keep moving forward.
 
-Randonneur is a library to make changes to life cycle inventory databases. You can use it to re-link your data to the latest version of a background database, to update existing databases with new data, or to perform other data transformations. Randonneur uses JSON files to describe these changes; contrast this with [wurst](https://github.com/polca/wurst), which can do these manipulations and more, but documents its manipulations in code.
+Randonneur is a library to make changes to life cycle inventory databases. Specifically, `randonneur` provides the following:
+
+* A data format for specifying life cycle inventory data transformations
+* Helper functions to create and validate data in this data format
+* Functions to apply the transformations to data
+
+You can use it to re-link your data to the latest version of a background database, to update existing databases with new data, or to perform other data transformations. Randonneur uses JSON files to describe these changes; contrast this with [wurst](https://github.com/polca/wurst), which can do these manipulations and more, but documents its manipulations in code.
+
+`randonneur` does not provide any data itself, but its sister library [randonneur_data](https://github.com/brightway-lca/randonneur_data) has data for many common transformations.
 
 Although designed to work with [Brightway](https://brightway.dev/), this library is not Brightway-specific.
 
@@ -17,22 +25,79 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 [![Codecov](https://codecov.io/gh/brightway-lca/randonneur/branch/main/graph/badge.svg)][codecov]
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
-[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
 
 [pypi status]: https://pypi.org/project/randonneur/
 [tests]: https://github.com/brightway-lca/randonneur/actions?workflow=Tests
 [codecov]: https://app.codecov.io/gh/brightway-lca/randonneur
 [pre-commit]: https://github.com/pre-commit/pre-commit
-[black]: https://github.com/psf/black
 
 ## Usage
 
 ### Generic usage pattern
 
-* Load a `randonneur` data migration file, normally from [randonneur_data](https://github.com/brightway-lca/randonneur_data) using `randonneur_data.Registry().get_file()`
-* Load an inventory database, normally in the [common Brightway inventory format](https://github.com/brightway-lca/bw_interface_schemas)
-* Apply the data transformation using either `migrate_edges` or `migrate_nodes`, optionally specifying the fields used for matching the transformation data, any mappings necessary to make the transformation data schema fit into your data schema, what filters should be applied to the input data (if any), and which verbs (`create`, `replace`, `update`, `delete`, or `disaggregate`) you want to apply
-* Save the modified data
+* Extract a `randonneur` data migration file, normally from [randonneur_data](https://github.com/brightway-lca/randonneur_data) using `randonneur_data.Registry().get_file()`
+* Extract an inventory database; this can be in the [common Brightway inventory format](https://github.com/brightway-lca/bw_interface_schemas), but you can also roll your own.
+* Apply the data transformation using `migrate_edges`, optionally specifying the fields used for matching the transformation data, any mappings necessary to make the transformation data schema fit into your data schema, what filters should be applied to the input data (if any), and which verbs (`create`, `replace`, `update`, `delete`, or `disaggregate`) you want to apply.
+* Load the modified data back into a suitable data store.
+
+Here's a basic example:
+
+```python
+In [1]: import randonneur as rn
+   ...: import randonneur_data as rd
+   ...:
+
+In [2]: my_lci = [{
+   ...:     'name': "my process",
+   ...:     'edges': [{
+   ...:         'name': 'Xylene {RER}| xylene production | Cut-off, U',
+   ...:         'amount': 1.0
+   ...:     }]
+   ...: }]
+   ...:
+
+In [3]: transformed = rn.migrate_edges_with_stored_data(
+   ...:     my_lci,
+   ...:     'simapro-ecoinvent-3.9.1-cutoff',
+   ...:     config=rn.MigrationConfig(fields=['name'])
+   ...: )
+   ...: transformed
+   ...:
+2024-09-01 17:05:43.587 | INFO     | randonneur.edges:migrate_edges_with_stored_data:108 - Loaded transformation data simapro-ecoinvent-3.9.1-cutoff from registry with following verbs: ['replace']
+2024-09-01 17:05:43.587 | INFO     | randonneur.edges:migrate_edges:64 - Can apply the following transformation verbs: ['replace']
+Out[3]:
+[{'name': 'my process',
+  'edges': [{'name': 'xylene production',
+    'amount': 1.0,
+    'filename': '38175dbb-3f48-592c-83f1-c1f667c4b8fd_43c61790-cbeb-493e-8836-279a12ce3e43.spold',
+    'location': 'RER',
+    'reference product': 'xylene',
+    'unit': 'kg'}]}]
+
+In [4]: rn.migrate_edges_with_stored_data(
+   ...:     transformed,
+   ...:     'ecoinvent-3.9.1-cutoff-ecoinvent-3.10-cutoff',
+   ...: )
+   ...:
+2024-09-01 17:05:54.982 | INFO     | randonneur.edges:migrate_edges_with_stored_data:108 - Loaded transformation data ecoinvent-3.9.1-cutoff-ecoinvent-3.10-cutoff from registry with following verbs: ['replace', 'disaggregate']
+2024-09-01 17:05:54.982 | INFO     | randonneur.edges:migrate_edges:64 - Can apply the following transformation verbs: ['replace', 'disaggregate']
+Out[4]:
+[{'name': 'my process',
+  'edges': [{'name': 'BTX production, from pyrolysis gas, average',
+    'amount': 0.11757529360371775,
+    'filename': '38175dbb-3f48-592c-83f1-c1f667c4b8fd_43c61790-cbeb-493e-8836-279a12ce3e43.spold',
+    'location': 'RER',
+    'reference product': 'xylene, mixed',
+    'unit': 'kg',
+    'allocation': 0.11757529360371775},
+   {'name': 'BTX production, from reformate, average',
+    'amount': 0.8824247063962822,
+    'filename': '38175dbb-3f48-592c-83f1-c1f667c4b8fd_43c61790-cbeb-493e-8836-279a12ce3e43.spold',
+    'location': 'RER',
+    'reference product': 'xylene, mixed',
+    'unit': 'kg',
+    'allocation': 0.8824247063962822}]}]
+```
 
 ### Data format
 
