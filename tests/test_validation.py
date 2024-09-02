@@ -7,27 +7,19 @@ from pydantic import ValidationError
 
 def test_contributors():
     Contributors(**{"title": "John", "role": "wrangler", "path": "example.com"})
-    Contributors(
-        **{"title": "John", "role": "wrangler", "path": "example.com", "extra": "ignore"}
-    )
+    Contributors(**{"title": "John", "role": "wrangler", "path": "example.com", "extra": "ignore"})
 
     with pytest.raises(ValidationError):
         Contributors(**{"title": "John", "role": "wrangler"})
 
 
 def test_mapping_fields():
-    MappingFields(
-        **{"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}}
-    )
+    MappingFields(**{"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}})
 
     with pytest.raises(ValidationError):
-        MappingFields(
-            **{"expression language": "foo", "labels": {"a": "something", "b": 42}}
-        )
+        MappingFields(**{"expression language": "foo", "labels": {"a": "something", "b": 42}})
     with pytest.raises(ValidationError):
-        MappingFields(
-            **{"expression language": "foo"}
-        )
+        MappingFields(**{"expression language": "foo"})
 
 
 def test_datapackage_metadata_complete():
@@ -40,7 +32,7 @@ def test_datapackage_metadata_complete():
         created=datetime.datetime.now(),
         version="1.0",
         licenses=[{"foo": "bar"}],
-        graph_context=['create', 'delete']
+        graph_context=["create", "delete"],
     )
 
 
@@ -50,7 +42,7 @@ def test_datapackage_metadata_partial():
         description="Bar",
         version="1.0",
         licenses=[{"foo": "bar"}],
-        graph_context=['create', 'delete']
+        graph_context=["create", "delete"],
     )
 
 
@@ -65,7 +57,7 @@ def test_datapackage_metadata_error():
             created=datetime.datetime.now(),
             version="1.0",
             licenses=[{"foo": "bar"}],
-            graph_context=['create', 'delete']
+            graph_context=["create", "delete"],
         )
     with pytest.raises(ValidationError):
         DatapackageMetadata(
@@ -77,7 +69,7 @@ def test_datapackage_metadata_error():
             created=datetime.datetime.now(),
             version="1.0",
             licenses="foo",
-            graph_context=['create', 'delete']
+            graph_context=["create", "delete"],
         )
     with pytest.raises(ValidationError):
         DatapackageMetadata(
@@ -88,7 +80,7 @@ def test_datapackage_metadata_error():
             created=datetime.datetime.now(),
             version="1.0",
             licenses=[{"foo": "bar"}],
-            graph_context=['create', 'delete']
+            graph_context=["create", "delete"],
         )
 
 
@@ -97,37 +89,55 @@ def test_validation_integration():
         name="Foo",
         description="Bar",
         contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
-        mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
-        mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
+        mapping_source={
+            "expression language": "foo",
+            "labels": {"a": "something", "b": ["x", "y"]},
+        },
+        mapping_target={
+            "expression language": "foo",
+            "labels": {"a": "something", "b": ["x", "y"]},
+        },
         source_id="Something",
         target_id="Something else",
         homepage="https://example.com",
         created=datetime.datetime.now(),
         version="1.0",
         licenses=[{"foo": "bar"}],
-        graph_context=['create', 'delete']
+        graph_context=["create", "delete"],
     )
     Datapackage(
         name="Foo",
         description="Bar",
         contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
-        mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
-        mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
+        mapping_source={
+            "expression language": "foo",
+            "labels": {"a": "something", "b": ["x", "y"]},
+        },
+        mapping_target={
+            "expression language": "foo",
+            "labels": {"a": "something", "b": ["x", "y"]},
+        },
     )
     with pytest.raises(ValidationError):
         Datapackage(
             name=42,
             description="Bar",
             contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
-            mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
-            mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
+            mapping_source={
+                "expression language": "foo",
+                "labels": {"a": "something", "b": ["x", "y"]},
+            },
+            mapping_target={
+                "expression language": "foo",
+                "labels": {"a": "something", "b": ["x", "y"]},
+            },
             source_id="Something",
             target_id="Something else",
             homepage="https://example.com",
             created=datetime.datetime.now(),
             version="1.0",
             licenses=[{"foo": "bar"}],
-            graph_context=['create', 'delete']
+            graph_context=["create", "delete"],
         )
     with pytest.raises(ValidationError):
         Datapackage(
@@ -135,27 +145,36 @@ def test_validation_integration():
             description="Bar",
             contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
             mapping_source={"labels": {"a": "something", "b": ["x", "y"]}},
-            mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
+            mapping_target={
+                "expression language": "foo",
+                "labels": {"a": "something", "b": ["x", "y"]},
+            },
             source_id="Something",
             target_id="Something else",
             homepage="https://example.com",
             created=datetime.datetime.now(),
             version="1.0",
             licenses=[{"foo": "bar"}],
-            graph_context=['create', 'delete']
+            graph_context=["create", "delete"],
         )
     with pytest.raises(ValidationError):
         Datapackage(
             name="Foo",
             description="Bar",
             contributors=[{"title": "John", "role": "wrangler"}],
-            mapping_source={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
-            mapping_target={"expression language": "foo", "labels": {"a": "something", "b": ["x", "y"]}},
+            mapping_source={
+                "expression language": "foo",
+                "labels": {"a": "something", "b": ["x", "y"]},
+            },
+            mapping_target={
+                "expression language": "foo",
+                "labels": {"a": "something", "b": ["x", "y"]},
+            },
             source_id="Something",
             target_id="Something else",
             homepage="https://example.com",
             created=datetime.datetime.now(),
             version="1.0",
             licenses=[{"foo": "bar"}],
-            graph_context=['create', 'delete']
+            graph_context=["create", "delete"],
         )

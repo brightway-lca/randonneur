@@ -3,6 +3,8 @@ from typing import Callable, List, Optional
 
 from .utils import rescale_edge
 
+EXCLUDED_ATTRS = ("target", "targets", "source", "conversion_factor")
+
 
 def migrate_edges_create(
     node: dict,
@@ -34,6 +36,10 @@ def migrate_edges_disaggregate(
             for allocated in migration_fld[edge]["targets"]:
                 new_edge = rescale_edge(deepcopy(edge), allocated["allocation"])
                 new_edge.update(allocated)
+                if config.add_extra_attributes:
+                    new_edge.update(
+                        {k: v for k, v in migration_fld[edge].items() if k not in EXCLUDED_ATTRS}
+                    )
                 edges_to_add.append(new_edge)
             edges_to_remove.add(id(edge))
         except KeyError:
@@ -61,6 +67,8 @@ def migrate_edges_replace(
             elif "allocation" in migration["target"]:
                 rescale_edge(edge, migration["target"]["allocation"])
             edge.update(migration["target"])
+            if config.add_extra_attributes:
+                edge.update({k: v for k, v in migration.items() if k not in EXCLUDED_ATTRS})
         except KeyError:
             continue
     return node

@@ -67,9 +67,7 @@ In the data object:
             # No target element
             missing = None
         else:
-            missing = (
-                set(element["target"]).difference(all_target_keys).difference({"allocation"})
-            )
+            missing = set(element["target"]).difference(all_target_keys).difference({"allocation"})
         if missing:
             raise UnmappedData(
                 f"""

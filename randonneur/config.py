@@ -92,3 +92,4 @@ class MigrationConfig(BaseModel):
     edges_label: str = "edges"
     verbs: List[str] = SAFE_VERBS
     case_sensitive: bool = False
+    add_extra_attributes: bool = False
