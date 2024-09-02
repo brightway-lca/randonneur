@@ -7,9 +7,7 @@ from .utils import rescale_edge
 def migrate_edges_create(
     node: dict,
     migration_fld: dict,
-    edges_label: str,
-    verbose: bool,
-    edge_filter: Optional[Callable] = None,
+    config: dict,
 ) -> dict:
     pass
 
@@ -17,9 +15,7 @@ def migrate_edges_create(
 def migrate_edges_delete(
     node: dict,
     migration_fld: dict,
-    edges_label: str,
-    verbose: bool,
-    edge_filter: Optional[Callable] = None,
+    config: dict,
 ) -> dict:
     pass
 
@@ -27,16 +23,12 @@ def migrate_edges_delete(
 def migrate_edges_disaggregate(
     node: dict,
     migration_fld: dict,
-    edges_label: str,
-    verbose: bool,
-    fields: Optional[List[str]] = None,
-    edge_filter: Optional[Callable] = None,
-    case_sensitive: bool = False,
+    config: dict,
 ) -> dict:
     edges_to_add, edges_to_remove = [], set()
 
-    for edge in node.get(edges_label, []):
-        if edge_filter and not edge_filter(edge):
+    for edge in node.get(config.edges_label, []):
+        if config.edge_filter and not config.edge_filter(edge):
             continue
         try:
             for allocated in migration_fld[edge]["targets"]:
@@ -47,8 +39,8 @@ def migrate_edges_disaggregate(
         except KeyError:
             continue
     if edges_to_remove:
-        node[edges_label] = [
-            edge for edge in node[edges_label] if id(edge) not in edges_to_remove
+        node[config.edges_label] = [
+            edge for edge in node[config.edges_label] if id(edge) not in edges_to_remove
         ] + edges_to_add
 
     return node
@@ -57,14 +49,10 @@ def migrate_edges_disaggregate(
 def migrate_edges_replace(
     node: dict,
     migration_fld: dict,
-    edges_label: str,
-    verbose: bool,
-    fields: Optional[List[str]] = None,
-    edge_filter: Optional[Callable] = None,
-    case_sensitive: bool = False,
+    config: dict,
 ) -> dict:
-    for edge in node.get(edges_label, []):
-        if edge_filter and not edge_filter(edge):
+    for edge in node.get(config.edges_label, []):
+        if config.edge_filter and not config.edge_filter(edge):
             continue
         try:
             migration = migration_fld[edge]
@@ -81,19 +69,11 @@ def migrate_edges_replace(
 def migrate_edges_update(
     node: dict,
     migration_fld: dict,
-    edges_label: str,
-    verbose: bool,
-    fields: Optional[List[str]] = None,
-    edge_filter: Optional[Callable] = None,
-    case_sensitive: bool = False,
+    config: dict,
 ) -> dict:
     """Difference is in intent of data developer, not in implementation."""
     return migrate_edges_replace(
         node=node,
         migration_fld=migration_fld,
-        fields=fields,
-        edges_label=edges_label,
-        verbose=verbose,
-        edge_filter=edge_filter,
-        case_sensitive=case_sensitive,
+        config=config,
     )

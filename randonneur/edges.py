@@ -86,9 +86,7 @@ This is almost never the desired behaviour, consider removing `create` from the 
             verb_dispatch[verb](
                 node=node,
                 migration_fld=flds[verb],
-                edge_filter=config.edge_filter,
-                edges_label=config.edges_label,
-                verbose=config.verbose,
+                config=config,
             )
 
     return graph
