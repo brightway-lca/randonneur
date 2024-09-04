@@ -147,8 +147,8 @@ Here are some examples:
   "version": "2.0.0",
   "licenses": [
     {
-      "name": "CC BY 4.0",
-      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
       "title": "Creative Commons Attribution 4.0 International"
     }
   ],
@@ -213,8 +213,8 @@ Here are some examples:
   "version": "2.0.0",
   "licenses": [
     {
-      "name": "CC BY 4.0",
-      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
       "title": "Creative Commons Attribution 4.0 International"
     }
   ],
@@ -273,8 +273,8 @@ Here are some examples:
     "version": "1.0.0",
     "licenses": [
         {
-            "name": "CC BY 4.0",
-            "path": "https://creativecommons.org/licenses/by/4.0/",
+            "name": "CC-BY-4.0",
+            "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
             "title": "Creative Commons Attribution 4.0 International",
         }
     ],

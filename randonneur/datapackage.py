@@ -4,15 +4,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
-from .validation import DatapackageMetadata, Contributors, MappingFields, validate_data_for_verb
-
-CC_BY = [
-    {
-        "name": "CC BY 4.0",
-        "path": "https://creativecommons.org/licenses/by/4.0/",
-        "title": "Creative Commons Attribution 4.0 International",
-    }
-]
+from randonneur.validation import (
+    DatapackageMetadata,
+    Contributors,
+    MappingFields,
+    validate_data_for_verb,
+)
+from randonneur.licenses import LICENSES
 
 
 class Datapackage:
@@ -40,7 +38,7 @@ class Datapackage:
         self.homepage = homepage
         self.created = created or datetime.now(timezone.utc).isoformat()
         self.mapping = {"source": mapping_source, "target": mapping_target}
-        self.licenses = licenses or CC_BY
+        self.licenses = licenses or [LICENSES["CC-BY-4.0"]]
         self.version = version
         self.data = {}
         self.graph_context = graph_context or ["edges"]

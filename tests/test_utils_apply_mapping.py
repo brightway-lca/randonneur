@@ -43,8 +43,8 @@ def apply_mapping(migrations: dict, mapping: dict, verbs: List[str]) -> dict:
     "version": "1.0.0",
     "licenses": [
         {
-            "name": "CC BY 4.0",
-            "path": "https://creativecommons.org/licenses/by/4.0/",
+            "name": "CC-BY-4.0",
+            "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
             "title": "Creative Commons Attribution 4.0 International",
         }
     ],
