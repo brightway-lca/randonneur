@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4] - 2024-09-04
+
+* Add `create_excel_template` function
+* Add all [SPDX](https://spdx.org/licenses/) licenses
+
 ## [0.3] - 2024-09-02
 
 * Allow optional propagation of extra transformation attributes
