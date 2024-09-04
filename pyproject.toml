@@ -34,6 +34,7 @@ dependencies = [
     "randonneur_data",
     "stats_arrays",
     "tqdm",
+    "xlsxwriter",
 ]
 
 [project.urls]
