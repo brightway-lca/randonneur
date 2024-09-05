@@ -12,6 +12,8 @@ Randonneur is a library to make changes to life cycle inventory databases. Speci
 
 You can use it to re-link your data to the latest version of a background database, to update existing databases with new data, or to perform other data transformations. Randonneur uses JSON files to describe these changes; contrast this with [wurst](https://github.com/polca/wurst), which can do these manipulations and more, but documents its manipulations in code.
 
+Another important difference with `wurst` is that `randoneur` does not have a fixed data schema - the schema is defined in each file.
+
 `randonneur` does not provide any data itself, but its sister library [randonneur_data](https://github.com/brightway-lca/randonneur_data) has data for many common transformations.
 
 Although designed to work with [Brightway](https://brightway.dev/), this library is not Brightway-specific.
@@ -65,7 +67,8 @@ In [3]: transformed = rn.migrate_edges_with_stored_data(
    ...:
 Out[3]:
 [{'name': 'my process',
-  'edges': [{'name': 'xylene production',
+  'edges': [{
+    'name': 'xylene production',
     'amount': 1.0,
     'filename': '38175dbb-3f48-592c-83f1-c1f667c4b8fd_43c61790-cbeb-493e-8836-279a12ce3e43.spold',
     'location': 'RER',
@@ -103,20 +106,20 @@ Migration data is specified in a JSON file as a single dictionary. This file **m
 * `licenses`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#licenses). Must be a list.
 * `version`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#version). Must be a string.
 * `contributors`: Follows the [data package specification](https://specs.frictionlessdata.io/data-package/#contributors). Must be a list.
-* `mapping`: A dictionary mapping the labels used in the transformation
-* `graph_context`: A list with either the string 'nodes', 'edges', or both. The context in which these transformations should be used.
+* `mapping`: A dictionary mapping the labels used in the transformation to data accessors.
+* `graph_context`: A list with either the string 'nodes', 'edges', or both 'nodes' and 'edges'. This defines what kinds of objects in the graph should be transformed.
 
-In addition, the following properties should follow the [data package specification](https://specs.frictionlessdata.io/data-package/) if provided:
+We strongly recommend you provide the following optional attributes:
+
+* `source_id`: An identifier for the source dataset following the [common identifier standard](#common-database-release-identifier-standard). Useful if the source data is specific.
+* `target_id`: An identifier for the target dataset following the [common identifier standard](#common-database-release-identifier-standard). Useful if the target data is specific.
+
+The following properties should follow the [data package specification](https://specs.frictionlessdata.io/data-package/) if provided:
 
 * `description`
 * `sources`
 * `homepage`
 * `created`
-
-You can specify the following optional attributes:
-
-* `source_id`: An identifier for the source dataset following the [common identifier standard](#common-database-release-identifier-standard). Useful if the source data is specific.
-* `target_id`: An identifier for the target dataset following the [common identifier standard](#common-database-release-identifier-standard). Useful if the target data is specific.
 
 Finally, at least one change type should be included. The change types are:
 
@@ -186,7 +189,7 @@ Here are some examples:
         "uuid": "2f033407-6060-4e1e-868c-9f362d10fdb2",
         "name": "Titanium"
       },
-      "allocation": 0.599,
+      "conversion_factor": 0.599,
       "comment": "To be modelled as pure elements, the titanium content of titanium dioxide is 0.599."
     }
   ]
@@ -296,8 +299,6 @@ Here are some examples:
 }
 ```
 
-You can use `randonneur.Datapackage` to ensure correct formatting and serialization.
-
 See the [randonneur_data](https://github.com/brightway-lca/randonneur_data) repo for more real-world implementations.
 
 ### Common database release identifier standard
@@ -306,30 +307,30 @@ At Brightcon 2022 we developed the following simple format for common database r
 
 `<database name>-<version>-<optional modifier>`
 
+`database name` is usually lower case.
+
 Here are some examples:
 
 * `agribalyse-3.1.1`
 * `forwast-1`
 * `ecoinvent-3.10-cutoff`
-* `SimaPro-9-biosphere`
+* `simapro-9-biosphere`
 
 ## Theory
 
-In normal life cycle assessment practice, we work with a large variety of software and database applications, and often need to harmonize data across these heterogeneous systems. Because many of these systems do not use simple unique identifiers, we often need to link across systems based on attibutes. For example, if the name, location, and unit of an input are the same in system `A` and `B`, then we can infer that these refer to the same underlying concept.
+In normal life cycle assessment practice, we work with a large variety of software and database applications, and often need to harmonize data across these heterogeneous systems. Because many of these systems do not commonly use simple and unique identifiers, we often need to link across systems based on data attibutes. For example, if the name, location, and unit of an input are the same in system `A` and `B`, then we can infer that these refer to the same underlying concept.
 
-In the real world nothing is so simple. Each player in the LCA data world is trying to give their users a positive experience, but over time this has led to many different terms for the same concept. Some legacy systems restrictions also prevent complete imports, and cause data transformations that are difficult to reverse engineer.
+In the real world it's not so simple. Each player in the LCA data world is trying to give their users a positive experience, but over time this has led to many different terms for the same concept. Some legacy systems restrictions also prevent complete imports, and cause data transformations that are difficult to reverse engineer.
 
-This library defines both a specification for transformation data files which allow different systems to be linked together by harmonizing the matching attributes, and a software-agnostic implementation of functions needed to use that format.
+This library defines both a specification for transformation data files which allow different systems to be linked together by harmonizing the matching attributes, and a software-agnostic reference implementation of functions needed to use that format.
 
-## Foot-guns
-
-
+Note that *not all verbs or graph object types* are currently supported by the reference implmentation.
 
 ## Transformations
 
-### Replace
+### Replace and Update
 
-Replacement substitutes an exchange one-to-one; as such, the new exchange must be completely defined. **However**, the `amount` should not be specified; rather, an `allocation` factor should be given, and the `amount` of the original exchange will be multiplied by `allocation`.
+`replace` indicates that a given object should be replaced with a new object. The replacement could substitutes an object one-to-one; as such, the new exchange must be completely defined. Please bear in mind that we are providing transformations for the object that the edge is referring to, not the edge itself. Therefore, the `amount`, uncertainty, etc. of the edge should not be specified. It the edge amount needs to be rescaled, for example because of a unit conversion, specify a `conversion_factor` in addition to the `source` and `target`.
 
 If `allocation` is not given, a default value of 1.0 is used.
 
@@ -345,18 +346,12 @@ The data format for `replace` type is:
         },
         "target": {
             # All fields needed to define the new exchange
-        },
-        # `dataset` is optional
-        "dataset": {
-            # All fields needed to identify the dataset to change
         }
     }]
 }
 ```
 
-### Update
-
-`update` changes attributes the same way that `replace` does - the only difference is that `replace` shows the intent to refer to a new object instead of an existing object with different attributes. Given the messiness of real-world data, there is no real bright line between these concepts, and their code implementation is identical.
+`update` changes attributes the same way that `replace` does - the only difference is that `replace` shows the intent to refer to a new object instead of an existing object with different attributes. Given the messiness of real-world data (i.e. what is truly a new object versus the same object with different descriptions), there is no real bright line between these concepts, and their code implementation is identical.
 
 #### Create
 
