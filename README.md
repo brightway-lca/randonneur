@@ -129,7 +129,8 @@ Finally, at least one change type should be included. The change types are:
 * `delete`
 * `disaggregate`
 
-Here are some examples:
+Here are some examples. First, migrating from one ecoinvent biosphere version to another:
+
 ```json
 {
   "name": "ecoinvent-3.9.1-biosphere-ecoinvent-3.10-biosphere",
@@ -195,6 +196,8 @@ Here are some examples:
   ]
 }
 ```
+
+Name, moving from SimaPro to ecoinvent nomenclature:
 
 ```json
 {
@@ -264,6 +267,8 @@ Here are some examples:
   ]
 }
 ```
+
+Finally, normalizing unit abbreviations to full names:
 
 ```json
 {
