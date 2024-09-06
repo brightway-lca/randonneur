@@ -23,13 +23,13 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 [![Python Version](https://img.shields.io/pypi/pyversions/randonneur)][pypi status]
 [![License](https://img.shields.io/pypi/l/randonneur)][license]
 
-[![Tests](https://github.com/brightway-lca/randonneur/workflows/Tests/badge.svg)][tests]
+[![Python 🐍 CI/CD tests](https://github.com/brightway-lca/randonneur/actions/workflows/python-test.yml/badge.svg)][tests]
 [![Codecov](https://codecov.io/gh/brightway-lca/randonneur/branch/main/graph/badge.svg)][codecov]
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
 
 [pypi status]: https://pypi.org/project/randonneur/
-[tests]: https://github.com/brightway-lca/randonneur/actions?workflow=Tests
+[tests]: https://github.com/brightway-lca/randonneur/actions/workflows/python-test.yml
 [codecov]: https://app.codecov.io/gh/brightway-lca/randonneur
 [pre-commit]: https://github.com/pre-commit/pre-commit
 
