@@ -328,7 +328,13 @@ Note that *not all verbs or graph object types* are currently supported by the r
 
 ## Transformations
 
+> [!NOTE]
+> Transformations are serialized to JSON. Therefore, only [JSON data types](https://en.wikipedia.org/wiki/JSON) are supported.
+
 ### Replace and Update
+
+> [!WARNING]
+> Be careful with nested data. The reference implementation takes a relatively simplistic approach, and completely overwrites existing data if a new `target` value is provided. If you had `{'foo': {'nested': {'has_permission': true, 'author': 'someone'}}}`, and the transformation gave a new value for `nested`, it would completely replace the `nested` dictionary instead of modifying the existing and  adding new elements.
 
 `replace` indicates that a given object should be replaced with a new object. The replacement could substitutes an object one-to-one; as such, the new exchange must be completely defined. Please bear in mind that we are providing transformations for the object that the edge is referring to, not the edge itself. Therefore, the `amount`, uncertainty, etc. of the edge should not be specified. It the edge amount needs to be rescaled, for example because of a unit conversion, specify a `conversion_factor` in addition to the `source` and `target`.
 
@@ -357,7 +363,10 @@ The data format for `replace` type is:
 
 Creates a new edge or node.
 
-Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
+> [!NOTE]
+> Because this application pattern is so different compared to updating existing values, we don't normally recommend using this functionality. It's preferable to go through the normal data importation process instead.
+
+Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `conversion_factor` or `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
 
 If you want to add an exchange to all datasets:
 
@@ -371,24 +380,7 @@ If you want to add an exchange to all datasets:
 }
 ```
 
-If you only want to create an exchange in one dataset:
-
-```python
-{
-    "create": [{
-        "targets": [{
-            # All fields needed to define an exchange
-        }],
-        "dataset": {
-            # All fields needed to identify the dataset
-        }
-    }]
-}
-```
-
-`dataset` must be a `dict`, not a list; it can only identify one dataset.
-
-Note that in the `wurst` format, `dataset` use the key `reference product` while exchanges use the key `product`; these are two different concepts, so have different keys.
+This code assumes that the `graph_context` is `['edges']`; the same operation will work with nodes and the correct graph context.
 
 ### Delete
 
@@ -399,10 +391,6 @@ Delete exchanges. Follows the same patterns as `replace` and `update`:
     "delete": [{
         "source": {
             # All fields needed to identify the exchange to be deleted
-        },
-        # `dataset` is optional
-        "dataset": {
-            # All fields needed to identify the dataset to change
         }
     }]
 }
@@ -412,9 +400,10 @@ Delete exchanges. Follows the same patterns as `replace` and `update`:
 
 Disaggregation is splitting one exchange into many. The `allocation` field is used to determine how much of the exchange passes to each new exchange.
 
-The new exchanges start as **copies** of the original exchange, and are updating using the additional data provided. In other words, this functions more like an `update` than a `replace`. This is because the most common use case for disaggregation is to split one input or output among several regions, where almost all metadata for the child exchanges would be identical.
+> [!NOTE]
+> `allocation` fields do not have to sum to one.
 
-`allocation` fields do not have to sum to one.
+The new exchanges start as **copies** of the original exchange, and are updating using the additional data provided.
 
 The data format includes a list of new exchanges for each matched source:
 
@@ -426,11 +415,7 @@ The data format includes a list of new exchanges for each matched source:
         },
         "targets": [{
             # Some fields which you want to change
-        }],
-        # `dataset` is optional
-        "dataset": {
-            # All fields needed to identify the dataset to change
-        }
+        }]
     }]
 }
 ```
@@ -442,14 +427,12 @@ To learn more, see the [Contributor Guide].
 
 ## License
 
-Distributed under the terms of the [MIT license][license],
-`randonneur` is free and open source software.
+Distributed under the terms of the [MIT license][license], `randonneur` is free and open source software.
 
 ## Issues
 
 If you encounter any problems,
 please [file an issue](https://github.com/cmutel/randonneur/issues/new/choose) along with a detailed description.
-
 
 <!-- github-only -->
 
