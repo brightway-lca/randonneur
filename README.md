@@ -21,7 +21,7 @@ Although designed to work with [Brightway](https://brightway.dev/), this library
 [![PyPI](https://img.shields.io/pypi/v/randonneur.svg)][pypi status]
 [![Status](https://img.shields.io/pypi/status/randonneur.svg)][pypi status]
 [![Python Version](https://img.shields.io/pypi/pyversions/randonneur)][pypi status]
-[![License](https://img.shields.io/pypi/l/randonneur)][license]
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)][license]
 
 [![Python 🐍 CI/CD tests](https://github.com/brightway-lca/randonneur/actions/workflows/python-test.yml/badge.svg)][tests]
 [![Codecov](https://codecov.io/gh/brightway-lca/randonneur/branch/main/graph/badge.svg)][codecov]
@@ -442,7 +442,7 @@ To learn more, see the [Contributor Guide].
 
 ## License
 
-Distributed under the terms of the [BSD 3 Clause license][license],
+Distributed under the terms of the [MIT license][license],
 `randonneur` is free and open source software.
 
 ## Issues
