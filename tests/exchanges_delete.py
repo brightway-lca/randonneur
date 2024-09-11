@@ -1,166 +1,168 @@
-# # pylint: disable-msg-cat=WCREFI
-# from copy import copy
+import pytest
 
-# import pytest
-
-# from randonneur import migrate_exchanges
+from randonneur import migrate_edges, MigrationConfig
 
 
-# @pytest.fixture
-# def generic():
-#     return [
-#         {
-#             "name": "n1",
-#             "reference product": "rp1",
-#             "location": "l1",
-#             "unit": "u1",
-#             "foo": "bar",
-#             "exchanges": [
-#                 {
-#                     "amount": 1,
-#                     "name": "n1",
-#                     "product": "rp1",
-#                     "unit": "u1",
-#                     "location": "l1",
-#                     "extra": "yes please",
-#                 },
-#                 {
-#                     "amount": 42,
-#                     "name": "n2",
-#                     "product": "rp1",
-#                     "unit": "u1",
-#                     "location": "l2",
-#                     "extra": "yes please",
-#                 },
-#             ],
-#         }
-#     ]
+@pytest.fixture
+def generic():
+    return [
+        {
+            "name": "n1",
+            "reference product": "rp1",
+            "location": "l1",
+            "unit": "u1",
+            "foo": "bar",
+            "edges": [
+                {
+                    "amount": 1,
+                    "name": "n1",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l1",
+                    "extra": "yes please",
+                },
+                {
+                    "amount": 42,
+                    "name": "n2",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l2",
+                    "extra": "yes please",
+                },
+            ],
+        }
+    ]
 
 
-# @pytest.fixture
-# def deletion():
-#     return {
-#         "delete": [
-#             {
-#                 "source": {
-#                     "name": "n1",
-#                     "product": "rp1",
-#                     "unit": "u1",
-#                     "location": "l1",
-#                 },
-#                 "dataset": {
-#                     "name": "n1",
-#                     "reference product": "rp1",
-#                     "location": "l1",
-#                     "unit": "u1",
-#                 },
-#             },
-#             {
-#                 "source": {
-#                     "name": "n2",
-#                     "product": "rp1",
-#                     "unit": "u1",
-#                     "location": "l2",
-#                     "extra": "yes please",
-#                 },
-#             },
-#         ]
-#     }
+@pytest.fixture
+def deletion_one():
+    return {
+        "delete": [
+            {
+                "source": {
+                    "name": "n1",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l1",
+                },
+            },
+        ]
+    }
 
 
-# def test_migrate_exchanges_delete_simple(generic, deletion):
-#     result = migrate_exchanges(
-#         deletion, generic, create=False, disaggregate=False, replace=False, update=False
-#     )
-#     assert not result[0]["exchanges"]
+@pytest.fixture
+def deletion_two():
+    return {
+        "delete": [
+            {
+                "source": {
+                    "name": "n2",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l2",
+                    "extra": "yes please",
+                },
+            },
+        ]
+    }
 
 
-# def test_migrate_exchanges_delete_empty(generic, deletion):
-#     result = migrate_exchanges(
-#         {"delete": []},
-#         generic,
-#     )
-#     assert len(result[0]["exchanges"]) == 2
+def test_migrate_edges_delete_simple(generic, deletion_one, deletion_two):
+    assert len(generic[0]["edges"]) == 2
+    migrate_edges(
+        generic,
+        deletion_one,
+        MigrationConfig(edge_filter=lambda x: x["name"] == "n1", verbs=["delete"]),
+    )
+    assert len(generic[0]["edges"]) == 1
+    migrate_edges(
+        generic,
+        deletion_two,
+        MigrationConfig(node_filter=lambda x: x["location"] == "l1", verbs=["delete"]),
+    )
+    assert len(generic[0]["edges"]) == 0
 
 
-# def test_migrate_exchanges_delete_missing(generic, deletion):
-#     result = migrate_exchanges(
-#         {}, generic, create=False, disaggregate=False, replace=False, update=False
-#     )
-#     assert len(result[0]["exchanges"]) == 2
+def test_migrate_edges_delete_empty(generic):
+    assert len(generic[0]["edges"]) == 2
+    migrate_edges(
+        generic,
+        {'delete': []},
+        MigrationConfig(verbs=["delete"]),
+    )
+    assert len(generic[0]["edges"]) == 2
 
 
-# def test_migrate_exchanges_delete_dataset_filter(generic, deletion):
-#     result = migrate_exchanges(
-#         deletion,
-#         copy(generic),
-#         dataset_filter=lambda x: x["name"] == "n2",
-#     )
-#     assert len(result[0]["exchanges"]) == 2
-#     result = migrate_exchanges(
-#         deletion,
-#         copy(generic),
-#         dataset_filter=lambda x: x["name"] == "n1",
-#     )
-#     assert not result[0]["exchanges"]
+def test_migrate_edges_delete_missing(generic):
+    assert len(generic[0]["edges"]) == 2
+    migrate_edges(
+        generic,
+        {},
+        MigrationConfig(verbs=["delete"]),
+    )
+    assert len(generic[0]["edges"]) == 2
 
 
-# def test_migrate_exchanges_delete_exchange_filter(generic, deletion):
-#     result = migrate_exchanges(
-#         deletion,
-#         copy(generic),
-#         exchange_filter=lambda x: x["name"] == "n1",
-#     )
-#     assert len(result[0]["exchanges"]) == 1
-#     result = migrate_exchanges(
-#         deletion,
-#         copy(generic),
-#         exchange_filter=lambda x: x["name"] == "n2",
-#     )
-#     assert not result[0]["exchanges"]
+def test_migrate_edges_edge_filter_fail(generic, deletion_one):
+    assert len(generic[0]["edges"]) == 2
+    migrate_edges(
+        generic,
+        deletion_one,
+        MigrationConfig(edge_filter=lambda x: x["name"] == "not this one", verbs=["delete"]),
+    )
+    assert len(generic[0]["edges"]) == 2
 
 
-# def test_migrate_exchanges_delete_custom_fields(generic, deletion):
-#     result = migrate_exchanges(
-#         deletion, copy(generic), fields=("name", "location", "extra")
-#     )
-#     assert len(result[0]["exchanges"]) == 1
+def test_migrate_edges_delete_multiple_identical(deletion_one):
+    database = [
+        {
+            "name": "n1",
+            "reference product": "rp1",
+            "location": "l1",
+            "unit": "u1",
+            "foo": "bar",
+            "edges": [
+                {
+                    "amount": 1,
+                    "name": "n1",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l1",
+                    "extra": "yes please",
+                },
+                {
+                    "amount": 1,
+                    "name": "n1",
+                    "product": "rp1",
+                    "unit": "u1",
+                    "location": "l1",
+                },
+            ],
+        }
+    ]
+    assert len(database[0]["edges"]) == 2
+    migrate_edges(
+        database,
+        deletion_one,
+        MigrationConfig(verbs=["delete"]),
+    )
+    assert len(database[0]["edges"]) == 0
 
 
-# def test_migrate_exchanges_delete_custom_fields_match_missing(generic, deletion):
-#     result = migrate_exchanges(
-#         deletion, copy(generic), fields=("name", "location", "missing")
-#     )
-#     assert len(result[0]["exchanges"]) == 0
+def test_migrate_edges_delete_warnings(deletion_one, deletion_two, recwarn):
+    from randonneur.edge_functions import warning_semaphore
+    warning_semaphore.missing_edges_label = False
 
-
-# def test_migrate_exchanges_delete_multiple_identical(deletion):
-#     database = [
-#         {
-#             "name": "n1",
-#             "reference product": "rp1",
-#             "location": "l1",
-#             "unit": "u1",
-#             "foo": "bar",
-#             "exchanges": [
-#                 {
-#                     "amount": 1,
-#                     "name": "n1",
-#                     "product": "rp1",
-#                     "unit": "u1",
-#                     "location": "l1",
-#                     "extra": "yes please",
-#                 },
-#                 {
-#                     "amount": 1,
-#                     "name": "n1",
-#                     "product": "rp1",
-#                     "unit": "u1",
-#                     "location": "l1",
-#                 },
-#             ],
-#         }
-#     ]
-#     assert len(database[0]["exchanges"]) == 2
-#     result = migrate_exchanges(deletion, database)
-#     assert len(result[0]["exchanges"]) == 0
+    assert len(recwarn) == 0
+    migrate_edges(
+        [{'name': 'foo'}],
+        deletion_one,
+        MigrationConfig(verbs=["delete"]),
+    )
+    assert len(recwarn) == 1
+    migrate_edges(
+        [{'name': 'foo'}],
+        deletion_two,
+        MigrationConfig(verbs=["delete"]),
+    )
+    assert len(recwarn) == 1

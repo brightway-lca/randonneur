@@ -70,13 +70,17 @@ def migrate_edges(
             case_sensitive=config.case_sensitive,
         )
         for verb in verbs
+        if verb != "create"
     }
 
-    if "create" in migrations and "create" in config.verbs:
-        logger.warning(
-            """`migrations` has `create` section - this will add exchanges to all nodes.
-This is almost never the desired behaviour, consider removing `create` from the `verb` input."""
-        )
+    if "create" in migrations and "create" in verbs and not config.node_filter:
+        logger.warning("""
+`migrations` has `create` section.
+No `node_filter` is configured, meaning that these edges will be added to all nodes.
+This is almost never the desired behaviour, consider removing `create` from the `verb` input.
+        """)
+    if "create" in migrations and "create" in verbs:
+        flds['create'] = migrations['create']
 
     for node in progressbar(graph):
         if config.node_filter and not config.node_filter(node):

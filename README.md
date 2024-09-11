@@ -378,14 +378,16 @@ If you want to add an exchange to all datasets:
 ```python
 {
     "create": [{
-        "targets": [{
+        "target": {
             # All fields needed to define an exchange
-        }]
+        }
     }]
 }
 ```
 
 This code assumes that the `graph_context` is `['edges']`; the same operation will work with nodes and the correct graph context.
+
+To add multiple edges, add multiple `{'target': {}}` dictionaries to the `create` list.
 
 ### Delete
 
