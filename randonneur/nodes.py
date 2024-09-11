@@ -4,10 +4,10 @@ from typing import List, Optional
 from loguru import logger
 from randonneur_data import Registry
 
-from .config import MigrationConfig
-from .errors import WrongGraphContext
-from .generic_transformation import generic_transformation
-from .node_functions import (
+from randonneur.config import MigrationConfig
+from randonneur.errors import WrongGraphContext
+from randonneur.generic_transformation import generic_transformation
+from randonneur.node_functions import (
     migrate_nodes_create,
     migrate_nodes_delete,
     migrate_nodes_disaggregate,

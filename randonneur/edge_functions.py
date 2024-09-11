@@ -2,8 +2,8 @@ import warnings
 from copy import deepcopy
 from typing import List
 
-from .config import MigrationConfig
-from .utils import EXCLUDED_ATTRS, FlexibleLookupDict, rescale_edge
+from randonneur.config import MigrationConfig
+from randonneur.utils import EXCLUDED_ATTRS, FlexibleLookupDict, rescale_edge
 
 
 class WarningSemaphore:

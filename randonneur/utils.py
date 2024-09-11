@@ -5,7 +5,7 @@ from typing import Any, List, Optional
 
 import stats_arrays as sa
 
-from .errors import ConflictingConversionFactors, MultipleTransformations
+from randonneur.errors import ConflictingConversionFactors, MultipleTransformations
 
 ALL_VERBS = ["create", "delete", "replace", "update", "disaggregate"]
 SAFE_VERBS = ["update", "replace", "disaggregate"]

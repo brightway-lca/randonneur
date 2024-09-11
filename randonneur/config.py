@@ -2,7 +2,7 @@ from typing import Callable, Dict, List, Optional
 
 from pydantic import BaseModel
 
-from .utils import SAFE_VERBS
+from randonneur.utils import SAFE_VERBS
 
 
 class MigrationConfig(BaseModel):

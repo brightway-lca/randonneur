@@ -4,8 +4,8 @@ from typing import Callable, Dict, List, Optional
 from loguru import logger
 from tqdm import tqdm
 
-from .config import MigrationConfig
-from .utils import FlexibleLookupDict, apply_mapping
+from randonneur.config import MigrationConfig
+from randonneur.utils import FlexibleLookupDict, apply_mapping
 
 
 def generic_transformation(

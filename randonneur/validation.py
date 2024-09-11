@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Union
 
 from pydantic import BaseModel, Field
 
-from .errors import UnmappedData
+from randonneur.errors import UnmappedData
 
 VERBS = {"create", "replace", "update", "delete", "disaggregate"}
 

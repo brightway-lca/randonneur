@@ -4,16 +4,16 @@ from typing import List, Optional
 from loguru import logger
 from randonneur_data import Registry
 
-from .config import MigrationConfig
-from .edge_functions import (
+from randonneur.config import MigrationConfig
+from randonneur.edge_functions import (
     migrate_edges_create,
     migrate_edges_delete,
     migrate_edges_disaggregate,
     migrate_edges_replace,
     migrate_edges_update,
 )
-from .errors import WrongGraphContext
-from .generic_transformation import generic_transformation
+from randonneur.errors import WrongGraphContext
+from randonneur.generic_transformation import generic_transformation
 
 verb_dispatch = {
     "create": migrate_edges_create,

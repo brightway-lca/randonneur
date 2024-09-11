@@ -1,8 +1,8 @@
 from copy import deepcopy
 from typing import List
 
-from .config import MigrationConfig
-from .utils import EXCLUDED_ATTRS, FlexibleLookupDict
+from randonneur.config import MigrationConfig
+from randonneur.utils import EXCLUDED_ATTRS, FlexibleLookupDict
 
 
 def migrate_nodes_disaggregate(*args, **kwargs):
