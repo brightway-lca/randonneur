@@ -79,6 +79,8 @@ class Datapackage:
         return data
 
     def add_data(self, verb: str, data: list) -> None:
+        if not data:
+            raise ValueError(f"Provided data `{data}`is empty")
         validate_data_for_verb(verb=verb, data=data, mapping=self.mapping)
         if verb not in self.data:
             self.data[verb] = []

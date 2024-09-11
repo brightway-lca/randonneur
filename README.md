@@ -1,6 +1,6 @@
 # randonneur
 
-<img src="randonneur.jpg" alt="https://www.flickr.com/photos/jswg/35681111281/">
+<img src="logo/randonneur_logo_horizontal/randonneur.png">
 
 Keep moving forward.
 
