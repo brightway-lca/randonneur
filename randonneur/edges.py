@@ -1,10 +1,8 @@
-from functools import partial
 from pathlib import Path
 from typing import List, Optional
 
 from loguru import logger
 from randonneur_data import Registry
-from tqdm import tqdm
 
 from .edge_functions import (
     migrate_edges_create,
@@ -14,8 +12,8 @@ from .edge_functions import (
     migrate_edges_update,
 )
 from .errors import WrongGraphContext
-from .utils import FlexibleLookupDict, apply_mapping
 from .config import MigrationConfig
+from .generic_transformation import generic_transformation
 
 verb_dispatch = {
     "create": migrate_edges_create,
@@ -31,8 +29,8 @@ def migrate_edges(
     migrations: dict,
     config: Optional[MigrationConfig] = None,
 ) -> List[dict]:
-    """For each edge in each node in ``data``, check each transformation in ``migrations``. For each
-    transformation for which there is a match, make the given changes to the edge.
+    """For each edge in each node in ``graph``, check each transformation in ``migrations``. For
+    each transformation for which there is a match, make the given changes to the edge.
 
     Here is an example:
 
@@ -47,53 +45,16 @@ def migrate_edges(
     The changes can be customized with a `MigrationConfig` object. See the `MigrationConfig` docs
     for information on its input arguments.
 
-    Returns `graph` with altered content.
+    *Changes graph in place*, and returns `graph` with altered content.
 
     """
-    config = config or MigrationConfig()
-    progressbar = (
-        partial(tqdm, desc="Transforming graph nodes") if config.verbose else lambda x: iter(x)
+    return generic_transformation(
+        graph=graph,
+        migrations=migrations,
+        verb_dispatch=verb_dispatch,
+        is_edges=True,
+        config=config,
     )
-
-    if config.mapping:
-        migrations = apply_mapping(
-            migrations=migrations, mapping=config.mapping, verbs=config.verbs
-        )
-
-    verbs = list(filter(lambda x: x in verb_dispatch and x in migrations, config.verbs))
-    logger.info("Can apply the following transformation verbs: {v}", v=verbs)
-
-    flds = {
-        verb: FlexibleLookupDict(
-            input_data=migrations[verb],
-            fields_filter=config.fields,
-            case_sensitive=config.case_sensitive,
-        )
-        for verb in verbs
-        if verb != "create"
-    }
-
-    if "create" in migrations and "create" in verbs and not config.node_filter:
-        logger.warning("""
-`migrations` has `create` section.
-No `node_filter` is configured, meaning that these edges will be added to all nodes.
-This is almost never the desired behaviour, consider removing `create` from the `verb` input.
-        """)
-    if "create" in migrations and "create" in verbs:
-        flds['create'] = migrations['create']
-
-    for node in progressbar(graph):
-        if config.node_filter and not config.node_filter(node):
-            continue
-
-        for verb in verbs:
-            verb_dispatch[verb](
-                node=node,
-                migration_fld=flds[verb],
-                config=config,
-            )
-
-    return graph
 
 
 def migrate_edges_with_stored_data(

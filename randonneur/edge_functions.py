@@ -2,7 +2,8 @@ from copy import deepcopy
 from typing import List
 import warnings
 
-from .utils import rescale_edge
+from .utils import rescale_edge, FlexibleLookupDict
+from .config import MigrationConfig
 
 EXCLUDED_ATTRS = ("target", "targets", "source", "conversion_factor")
 
@@ -18,7 +19,7 @@ warning_semaphore = WarningSemaphore()
 def migrate_edges_create(
     node: dict,
     migration_fld: List[dict],
-    config: dict,
+    config: MigrationConfig,
 ) -> dict:
     if config.edges_label not in node:
         if not warning_semaphore.missing_edges_label:
@@ -36,8 +37,8 @@ def migrate_edges_create(
 
 def migrate_edges_delete(
     node: dict,
-    migration_fld: dict,
-    config: dict,
+    migration_fld: FlexibleLookupDict,
+    config: MigrationConfig,
 ) -> dict:
     if config.edges_label not in node:
         if not warning_semaphore.missing_edges_label:
@@ -65,8 +66,8 @@ def migrate_edges_delete(
 
 def migrate_edges_disaggregate(
     node: dict,
-    migration_fld: dict,
-    config: dict,
+    migration_fld: FlexibleLookupDict,
+    config: MigrationConfig,
 ) -> dict:
     edges_to_add, edges_to_remove = [], set()
 
@@ -95,8 +96,8 @@ def migrate_edges_disaggregate(
 
 def migrate_edges_replace(
     node: dict,
-    migration_fld: dict,
-    config: dict,
+    migration_fld: FlexibleLookupDict,
+    config: MigrationConfig,
 ) -> dict:
     for edge in node.get(config.edges_label, []):
         if config.edge_filter and not config.edge_filter(edge):
@@ -117,8 +118,8 @@ def migrate_edges_replace(
 
 def migrate_edges_update(
     node: dict,
-    migration_fld: dict,
-    config: dict,
+    migration_fld: FlexibleLookupDict,
+    config: MigrationConfig,
 ) -> dict:
     """Difference is in intent of data developer, not in implementation."""
     return migrate_edges_replace(
