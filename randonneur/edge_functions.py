@@ -29,8 +29,6 @@ def migrate_edges_create(
             warning_semaphore.missing_edges_label = True
     else:
         for edge in migration_fld:
-            if config.edge_filter and not config.edge_filter(edge['target']):
-                continue
             node[config.edges_label].append(deepcopy(edge['target']))
     return node
 

@@ -82,14 +82,14 @@ def test_migrate_edges_create_simple(generic, creation_one, creation_two):
     assert len(generic[0]["edges"]) == 4
 
 
-def test_migrate_edges_edge_filter_fail(generic, creation_one):
+def test_migrate_edges_edge_filter_not_apply(generic, creation_one):
     assert len(generic[0]["edges"]) == 2
     migrate_edges(
         generic,
         creation_one,
         MigrationConfig(edge_filter=lambda x: x["location"] == "over there", verbs=["create"]),
     )
-    assert len(generic[0]["edges"]) == 2
+    assert len(generic[0]["edges"]) == 3
 
 
 def test_migrate_edges_create_empty(generic):
