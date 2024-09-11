@@ -469,6 +469,9 @@ Creates a new edge or node.
 > [!NOTE]
 > Because this application pattern is so different compared to updating existing values, we don't normally recommend using this functionality. It's preferable to go through the normal data importation process instead.
 
+> [!NOTE]
+> The reference implementation does not check if creation would create multiple identical objects, and the `randonneur` specification does not define what should be done if such creation were indicated.
+
 Because we are specifying a new node or exchange, we need to list **all** information needed to define that object, **including** the edges and edge `amount` values. This is different than the other modification types, where *relative* amounts are given with the key `conversion_factor` or `allocation`. We can't give relative amounts here because we have no edge to refer to, and we don't have a surefire way to identify the reference production edge (and there might not be one in any case).
 
 If you want to add an edge to all datasets, or a node to the graph:
@@ -477,7 +480,7 @@ If you want to add an edge to all datasets, or a node to the graph:
 {
     "create": [{
         "target": {
-            # All fields needed to define an exchange
+            # All fields needed to define the object
         }
     }]
 }
