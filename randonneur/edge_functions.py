@@ -2,10 +2,8 @@ from copy import deepcopy
 from typing import List
 import warnings
 
-from .utils import rescale_edge, FlexibleLookupDict
+from .utils import rescale_edge, FlexibleLookupDict, EXCLUDED_ATTRS
 from .config import MigrationConfig
-
-EXCLUDED_ATTRS = ("target", "targets", "source", "conversion_factor")
 
 
 class WarningSemaphore:

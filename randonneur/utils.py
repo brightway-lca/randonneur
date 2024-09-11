@@ -9,6 +9,7 @@ from .errors import MultipleTransformations, ConflictingConversionFactors
 
 ALL_VERBS = ["create", "delete", "replace", "update", "disaggregate"]
 SAFE_VERBS = ["update", "replace", "disaggregate"]
+EXCLUDED_ATTRS = ("target", "targets", "source", "conversion_factor")
 
 
 def apply_mapping(migrations: dict, mapping: dict, verbs: List[str]) -> dict:
