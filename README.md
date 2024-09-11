@@ -434,6 +434,24 @@ migrate_edges(
 >>> [{"edges": [{"name": "foo", "location": "bar"}]}]
 ```
 
+`add_extra_attributes`: Flag indicating whether to include additional attributes when doing
+replace, update, and disaggregate changes. Extra attributes are defined outside the "source" and
+"target" transformation keys. Note that keys in `randonneur.utils.EXCLUDED_ATTRS` are never
+added.
+
+```python
+migrate_edges(
+    graph=[{"edges": [{"name": "foo"}]}],
+    migrations={"update": [{
+        "source": {"name": "FOO"},
+        "target": {"location": "bar"},
+        "comment": "Reason for change",
+    }]},
+    config=MigrationConfig(add_extra_attributes=True),
+)
+>>> [{"edges": [{"name": "foo", "location": "bar", "comment": "Reason for change"}]}]
+```
+
 ### Replace and Update
 
 > [!WARNING]
