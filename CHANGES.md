@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5] - 2024-09-11
+
+* Add node creation and deletion
+* Add exchange creation and deletion
+* Change data format for creation from `targets` to singular `target`. Not a breaking change as creation was unsupported previously.
+
 ## [0.4] - 2024-09-04
 
 * Add `create_excel_template` function
@@ -16,11 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Allow optional propagation of extra transformation attributes
 
-## [0.2.2] - 2024-09-01
+### [0.2.2] - 2024-09-01
 
 * Fix validation of contributors as list
 
-## [0.2.1] - 2024-09-01
+### [0.2.1] - 2024-09-01
 
 * Refactor data validation into a separate function
 
