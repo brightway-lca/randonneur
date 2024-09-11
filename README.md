@@ -336,6 +336,104 @@ Note that *not all verbs or graph object types* are currently supported by the r
 > [!NOTE]
 > Transformations are serialized to JSON. Therefore, only [JSON data types](https://en.wikipedia.org/wiki/JSON) are supported.
 
+### Configuration
+
+All transformation operations can be configured via a `MigrationConfig` object. The following can be specified:
+
+`mapping`: Change the labels in the `migrations` data to match your data schema. `mapping` can
+change the labels in the migration `source` and `target` sections. The `mapping` input should be
+a dict with keys "source" and "target", and have values of `{old_label: new_label}` pairs:
+
+```python
+migrate_edges(
+    graph=[{"edges": [{"name": "foo"}]}],
+    migrations={"update": [{"source": {"not-name": "foo"}, "target": {"location": "bar"}}]},
+    config=MigrationConfig(mapping={"source": {"not-name": "name"}})
+)
+>>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+```
+
+`node_filter`: A callable which determines whether or not the given node should be modified.
+Applies to both verbs and edges, with the exception of node creation - it doesn't make sense to
+filter existing nodes as we are creating new objects.
+
+`node_filter` needs to be a callable which takes a node object and returns a boolean which tells
+if the node *should* be modified. In this example, the filter returns `False` and the node isn't
+modified:
+
+```python
+migrate_edges(
+    graph=[{"edges": [{"name": "foo"}]}],
+    migrations={"update": [{"source": {"name": "foo"}, "target": {"location": "bar"}}]},
+    config=MigrationConfig(node_filter=lambda node: node.get("sport") == "🏄‍♀️")
+)
+>>> [{"edges": [{"name": "foo"}]}]
+```
+
+`edge_filter`: A callable which determines whether or not the given edge should be modified.
+Applies only to edge transformations, and does *not* apply to edge creation, as this function is
+always called on the edge to modified, not on the transformation object.
+Returns
+
+`edge_filter` needs to be a callable which takes an edge object and returns a boolean which
+indicates if the edge *should* be modified.
+
+`fields`: A list of object keys as strings, used when checking if the given transformation
+matches the node or edge under consideration. In other words, only use the fields in `fields`
+when checking the `source` values in each transformation for a match. Each field in `fields`
+doesn't have to be in each transformation.
+
+```python
+migrate_edges(
+    graph=[{"edges": [{"name": "foo"}]}],
+    migrations={"update": [
+        {"source": {"name": "foo", "missing": "🔍"}, "target": {"location": "bar"}}
+    ]},
+    config=MigrationConfig(fields=["name"]),
+)
+>>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+```
+
+`verbose`: Display progress bars and more logging messages.
+
+`edges_label`: The label used for edges in the nodes of the `graph`. Defaults to "edges". In
+other data formats, this could be "flows" or "exchanges".
+
+```python
+migrate_edges(
+    graph=[{"e": [{"name": "foo"}]}],
+    migrations={"update": [{"source": {"name": "foo"}, "target": {"location": "bar"}}]},
+    config=MigrationConfig(edges_label="e"),
+)
+>>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+```
+
+`verbs`: The list of transformation types from `migrations` to apply. Transformations are run
+in the order as given in `verbs`, and in some complicated cases you may want to keep the same
+verbs but change their order to get the desired output state. In general, such complicated
+transformations should be broken down to smaller discrete and independent transformations
+whenever possible, and logs checked carefully after their application.
+
+The default value of `verbs` are the "safe" transformations - replace, update, and disaggregate.
+To get create and delete you need to specify them in the configuration.
+
+Only the verbs `create`, `disaggregate`, `replace`, `update`, and `delete` are used in our
+functions, regardless of what is given in `verbs`, as we don't know how to handle custom verbs.
+We need to write custom functions for each verb as they have difference behaviour.
+
+`case_sensitive`: Flag indicating whether to do case sensitive matching of transformations to
+nodes or edges in the graph. Default is false, as practical experience has shown us that cases
+get commonly changed by software developers or users. Only applies to string values.
+
+```python
+migrate_edges(
+    graph=[{"edges": [{"name": "foo"}]}],
+    migrations={"update": [{"source": {"name": "FOO"}, "target": {"location": "bar"}}]},
+    config=MigrationConfig(case_sensitive=False),
+)
+>>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+```
+
 ### Replace and Update
 
 > [!WARNING]
@@ -364,16 +462,16 @@ The data format for `replace` type is:
 
 `update` changes attributes the same way that `replace` does - the only difference is that `replace` shows the intent to refer to a new object instead of an existing object with different attributes. Given the messiness of real-world data (i.e. what is truly a new object versus the same object with different descriptions), there is no real bright line between these concepts, and their code implementation is identical.
 
-#### Create
+### Create
 
 Creates a new edge or node.
 
 > [!NOTE]
 > Because this application pattern is so different compared to updating existing values, we don't normally recommend using this functionality. It's preferable to go through the normal data importation process instead.
 
-Because we are specifying a new exchange, we need to list **all** information needed to define an exchange, **including** the exchange `amount`. This is different than the other modification types, where *relative* amounts are given with the key `conversion_factor` or `allocation`. We can't give relative amounts here because we have no exchange to refer to, and we don't have a surefire way to identify the reference production exchange (and there might not be one in any case).
+Because we are specifying a new node or exchange, we need to list **all** information needed to define that object, **including** the edges and edge `amount` values. This is different than the other modification types, where *relative* amounts are given with the key `conversion_factor` or `allocation`. We can't give relative amounts here because we have no edge to refer to, and we don't have a surefire way to identify the reference production edge (and there might not be one in any case).
 
-If you want to add an exchange to all datasets:
+If you want to add an edge to all datasets, or a node to the graph:
 
 ```python
 {
@@ -385,9 +483,7 @@ If you want to add an exchange to all datasets:
 }
 ```
 
-This code assumes that the `graph_context` is `['edges']`; the same operation will work with nodes and the correct graph context.
-
-To add multiple edges, add multiple `{'target': {}}` dictionaries to the `create` list.
+To add multiple nodes or edges, add multiple `{'target': {}}` dictionaries to the `create` list.
 
 ### Delete
 
