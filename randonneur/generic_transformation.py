@@ -1,11 +1,11 @@
 from functools import partial
-from typing import List, Optional, Dict, Callable
+from typing import Callable, Dict, List, Optional
 
 from loguru import logger
 from tqdm import tqdm
 
-from .utils import FlexibleLookupDict, apply_mapping
 from .config import MigrationConfig
+from .utils import FlexibleLookupDict, apply_mapping
 
 
 def generic_transformation(
@@ -40,13 +40,15 @@ def generic_transformation(
     }
 
     if is_edges and "create" in migrations and "create" in verbs and not config.node_filter:
-        logger.warning("""
+        logger.warning(
+            """
 `migrations` has `create` section.
 No `node_filter` is configured, meaning that these nodes will be added to all nodes.
 This is almost never the desired behaviour, consider removing `create` from the `verb` input.
-        """)
+        """
+        )
     if "create" in migrations and "create" in verbs:
-        flds['create'] = migrations['create']
+        flds["create"] = migrations["create"]
 
     if is_edges:
         for node in progressbar(graph):

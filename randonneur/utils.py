@@ -5,7 +5,7 @@ from typing import Any, List, Optional
 
 import stats_arrays as sa
 
-from .errors import MultipleTransformations, ConflictingConversionFactors
+from .errors import ConflictingConversionFactors, MultipleTransformations
 
 ALL_VERBS = ["create", "delete", "replace", "update", "disaggregate"]
 SAFE_VERBS = ["update", "replace", "disaggregate"]
@@ -186,10 +186,12 @@ class FlexibleLookupDict(Mapping):
                 # We don't bother examining if disaggregation is consistent, this shouldn't be
                 # allowed full stop
                 if "targets" in obj and self._dict[key]:
-                    raise MultipleTransformations(f"""
+                    raise MultipleTransformations(
+                        f"""
 Found multiple transformations including disaggregation for:
 {obj['source']}
-""")
+"""
+                    )
 
                 # `obj` is already present in the dictionary. This is OK, if the *functionally
                 # equivalent* values are being added. We would like to reject this data
@@ -223,13 +225,15 @@ Targets:
                         abs_tol=1e-2,
                         rel_tol=1e-2,
                     ):
-                        raise ConflictingConversionFactors(f"""
+                        raise ConflictingConversionFactors(
+                            f"""
 Found at least two different conversion factors for the same transformation.
 First: {obj["conversion_factor"]}
 Second: {self._dict[key]["conversion_factor"]}
 For conversion from: {obj["source"]}
 To: {obj["target"]}
-                        """)
+                        """
+                        )
             except KeyError:
                 self._dict[key] = obj
 

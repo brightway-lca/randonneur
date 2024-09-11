@@ -4,13 +4,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+from randonneur.licenses import LICENSES
 from randonneur.validation import (
-    DatapackageMetadata,
     Contributors,
+    DatapackageMetadata,
     MappingFields,
     validate_data_for_verb,
 )
-from randonneur.licenses import LICENSES
 
 
 class Datapackage:

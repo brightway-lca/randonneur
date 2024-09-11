@@ -5,41 +5,41 @@ from loguru import logger
 from randonneur_data import Registry
 
 from .config import MigrationConfig
-from .edge_functions import (
-    migrate_edges_create,
-    migrate_edges_delete,
-    migrate_edges_disaggregate,
-    migrate_edges_replace,
-    migrate_edges_update,
-)
 from .errors import WrongGraphContext
 from .generic_transformation import generic_transformation
+from .node_functions import (
+    migrate_nodes_create,
+    migrate_nodes_delete,
+    migrate_nodes_disaggregate,
+    migrate_nodes_replace,
+    migrate_nodes_update,
+)
 
 verb_dispatch = {
-    "create": migrate_edges_create,
-    "replace": migrate_edges_replace,
-    "delete": migrate_edges_delete,
-    "update": migrate_edges_update,
-    "disaggregate": migrate_edges_disaggregate,
+    "create": migrate_nodes_create,
+    "replace": migrate_nodes_replace,
+    "delete": migrate_nodes_delete,
+    "update": migrate_nodes_update,
+    "disaggregate": migrate_nodes_disaggregate,
 }
 
 
-def migrate_edges(
+def migrate_nodes(
     graph: List[dict],
     migrations: dict,
     config: Optional[MigrationConfig] = None,
 ) -> List[dict]:
-    """For each edge in each node in ``graph``, check each transformation in ``migrations``. For
-    each transformation for which there is a match, make the given changes to the edge.
+    """For each node in ``graph``, check each transformation in ``migrations``. For each
+    transformation for which there is a match, make the given changes to the node.
 
     Here is an example:
 
     ```python
-    migrate_edges(
-        graph=[{"edges": [{"name": "foo"}]}],
+    migrate_nodes(
+        graph=[{"name": "foo"}],
         migrations={"update": [{"source": {"name": "foo"}, "target": {"location": "bar"}}]},
     )
-    >>> [{"edges": [{"name": "foo", "location": "bar"}]}]
+    >>> [{"name": "foo", "location": "bar"}]
     ```
 
     The changes can be customized with a `MigrationConfig` object. See the `MigrationConfig` docs
@@ -52,12 +52,12 @@ def migrate_edges(
         graph=graph,
         migrations=migrations,
         verb_dispatch=verb_dispatch,
-        is_edges=True,
+        is_edges=False,
         config=config,
     )
 
 
-def migrate_edges_with_stored_data(
+def migrate_nodes_with_stored_data(
     graph: List[dict],
     label: str,
     data_registry_path: Optional[Path] = None,
@@ -76,10 +76,10 @@ def migrate_edges_with_stored_data(
     except KeyError:
         raise KeyError(f"Transformation {label} not found in given transformation registry")
 
-    if "edges" not in migrations.get("graph_context", []):
-        raise WrongGraphContext(f"{label} migration can't be used on edges")
+    if "nodes" not in migrations.get("graph_context", []):
+        raise WrongGraphContext(f"{label} migration can't be used on nodes")
 
-    return migrate_edges(
+    return migrate_nodes(
         graph=graph,
         migrations=migrations,
         config=config,

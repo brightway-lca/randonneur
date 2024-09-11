@@ -1,6 +1,6 @@
 import pytest
 
-from randonneur import migrate_edges, MigrationConfig
+from randonneur import MigrationConfig, migrate_edges
 
 
 @pytest.fixture
@@ -87,7 +87,7 @@ def test_migrate_edges_delete_empty(generic):
     assert len(generic[0]["edges"]) == 2
     migrate_edges(
         generic,
-        {'delete': []},
+        {"delete": []},
         MigrationConfig(verbs=["delete"]),
     )
     assert len(generic[0]["edges"]) == 2
@@ -151,17 +151,18 @@ def test_migrate_edges_delete_multiple_identical(deletion_one):
 
 def test_migrate_edges_delete_warnings(deletion_one, deletion_two, recwarn):
     from randonneur.edge_functions import warning_semaphore
+
     warning_semaphore.missing_edges_label = False
 
     assert len(recwarn) == 0
     migrate_edges(
-        [{'name': 'foo'}],
+        [{"name": "foo"}],
         deletion_one,
         MigrationConfig(verbs=["delete"]),
     )
     assert len(recwarn) == 1
     migrate_edges(
-        [{'name': 'foo'}],
+        [{"name": "foo"}],
         deletion_two,
         MigrationConfig(verbs=["delete"]),
     )

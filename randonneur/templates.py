@@ -138,11 +138,7 @@ def create_excel_template(data: List[dict], filepath: Path, replace_existing: bo
     sheet.autofit()
 
     # Shrinks target columns too small
-    sheet.set_column(
-        source_offset,
-        source_offset + len(target_fields),
-        25
-    )
+    sheet.set_column(source_offset, source_offset + len(target_fields), 25)
 
     workbook.close()
     return filepath

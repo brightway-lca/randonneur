@@ -1,9 +1,9 @@
+import warnings
 from copy import deepcopy
 from typing import List
-import warnings
 
-from .utils import rescale_edge, FlexibleLookupDict, EXCLUDED_ATTRS
 from .config import MigrationConfig
+from .utils import EXCLUDED_ATTRS, FlexibleLookupDict, rescale_edge
 
 
 class WarningSemaphore:
@@ -27,7 +27,7 @@ def migrate_edges_create(
             warning_semaphore.missing_edges_label = True
     else:
         for edge in migration_fld:
-            node[config.edges_label].append(deepcopy(edge['target']))
+            node[config.edges_label].append(deepcopy(edge["target"]))
     return node
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from randonneur import migrate_edges, MigrationConfig
+from randonneur import MigrationConfig, migrate_edges
 
 
 @pytest.fixture

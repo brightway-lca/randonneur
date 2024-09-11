@@ -1,6 +1,6 @@
 import pytest
 
-from randonneur.errors import MultipleTransformations, ConflictingConversionFactors
+from randonneur.errors import ConflictingConversionFactors, MultipleTransformations
 from randonneur.utils import FlexibleLookupDict
 
 

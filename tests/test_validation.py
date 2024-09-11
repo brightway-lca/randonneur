@@ -1,8 +1,10 @@
 import datetime
-from randonneur.validation import DatapackageMetadata, Contributors, MappingFields
-from randonneur import Datapackage
+
 import pytest
 from pydantic import ValidationError
+
+from randonneur import Datapackage
+from randonneur.validation import Contributors, DatapackageMetadata, MappingFields
 
 
 def test_contributors():

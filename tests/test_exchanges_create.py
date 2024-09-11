@@ -105,7 +105,6 @@ def test_migrate_edges_create_missing(generic):
 
 
 def test_migrate_edges_create_multiple_identical(generic):
-    assert len(generic[0]["edges"]) == 2
     change = {
         "create": [
             {
@@ -133,17 +132,18 @@ def test_migrate_edges_create_multiple_identical(generic):
 
 def test_migrate_edges_warnings(creation_one, creation_two, recwarn):
     from randonneur.edge_functions import warning_semaphore
+
     warning_semaphore.missing_edges_label = False
 
     assert len(recwarn) == 0
     migrate_edges(
-        [{'name': 'foo'}],
+        [{"name": "foo"}],
         creation_one,
         MigrationConfig(verbs=["create"]),
     )
     assert len(recwarn) == 1
     migrate_edges(
-        [{'name': 'foo'}],
+        [{"name": "foo"}],
         creation_two,
         MigrationConfig(verbs=["create"]),
     )
