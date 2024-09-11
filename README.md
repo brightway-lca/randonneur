@@ -1,8 +1,4 @@
-# randonneur
-
 <img src="logo/randonneur_logo_horizontal/randonneur.png">
-
-Keep moving forward.
 
 Randonneur is a library to make changes to life cycle inventory databases. Specifically, `randonneur` provides the following:
 
