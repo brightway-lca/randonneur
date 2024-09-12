@@ -379,6 +379,8 @@ matches the node or edge under consideration. In other words, only use the field
 when checking the `source` values in each transformation for a match. Each field in `fields`
 doesn't have to be in each transformation.
 
+If you changed labels in `mapping`, use the changed labels, not the original key labels.
+
 ```python
 migrate_edges(
     graph=[{"edges": [{"name": "foo"}]}],
