@@ -5,11 +5,7 @@ from pathlib import Path
 from typing import Optional
 
 from randonneur.licenses import LICENSES
-from randonneur.validation import (
-    DatapackageMetadata,
-    MappingFields,
-    validate_data_for_verb,
-)
+from randonneur.validation import DatapackageMetadata, MappingFields, validate_data_for_verb
 
 
 class Datapackage:
@@ -62,9 +58,9 @@ class Datapackage:
             "name": self.name,
             "description": self.description,
             "contributors": self.contributors,
-            "created": self.created.isoformat()
-            if isinstance(self.created, datetime)
-            else self.created,
+            "created": (
+                self.created.isoformat() if isinstance(self.created, datetime) else self.created
+            ),
             "version": self.version,
             "licenses": self.licenses,
             "graph_context": self.graph_context,
@@ -84,7 +80,10 @@ class Datapackage:
             self.data[verb] = []
         self.data[verb].extend(data)
 
-    def to_json(self, filepath: Path) -> Path:
+    def to_json(self, filepath: Optional[Path] = None) -> Path:
+        if filepath is None:
+            return json.dumps(self.metadata() | self.data, indent=2, ensure_ascii=False)
+
         if not isinstance(filepath, Path):
             filepath = Path(filepath)
         if filepath.suffix.lower() != ".json":
