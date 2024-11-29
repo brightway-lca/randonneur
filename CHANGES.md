@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* Better follow [Datapackage standard for `contributors`](https://datapackage.org/standard/data-package/#contributors).
+
 ## [0.5] - 2024-09-11
 
 * Add node creation and deletion

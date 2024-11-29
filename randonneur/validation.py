@@ -9,9 +9,9 @@ from randonneur.errors import UnmappedData
 VERBS = {"create", "replace", "update", "delete", "disaggregate"}
 
 
-class Contributors(BaseModel):
+class Contributor(BaseModel):
     title: str
-    role: str
+    roles: List[str]
     path: str
 
 
@@ -34,6 +34,7 @@ class DatapackageMetadata(BaseModel):
     version: str
     licenses: List[Dict[str, str]]
     graph_context: List[str]
+    contributors: List[Contributor] = Field(min_length=1)
 
 
 def validate_data_for_verb(verb: str, data: list, mapping: dict) -> None:

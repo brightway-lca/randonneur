@@ -6,7 +6,6 @@ from typing import Optional
 
 from randonneur.licenses import LICENSES
 from randonneur.validation import (
-    Contributors,
     DatapackageMetadata,
     MappingFields,
     validate_data_for_verb,
@@ -43,8 +42,6 @@ class Datapackage:
         self.data = {}
         self.graph_context = graph_context or ["edges"]
 
-        for contributor in contributors:
-            Contributors(**contributor)
         MappingFields(**mapping_source)
         MappingFields(**mapping_target)
         DatapackageMetadata(
@@ -57,6 +54,7 @@ class Datapackage:
             version=self.version,
             licenses=self.licenses,
             graph_context=self.graph_context,
+            contributors=self.contributors,
         )
 
     def metadata(self) -> dict:

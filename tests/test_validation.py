@@ -4,15 +4,15 @@ import pytest
 from pydantic import ValidationError
 
 from randonneur import Datapackage
-from randonneur.validation import Contributors, DatapackageMetadata, MappingFields
+from randonneur.validation import Contributor, DatapackageMetadata, MappingFields
 
 
 def test_contributors():
-    Contributors(**{"title": "John", "role": "wrangler", "path": "example.com"})
-    Contributors(**{"title": "John", "role": "wrangler", "path": "example.com", "extra": "ignore"})
+    Contributor(**{"title": "John", "roles": ["wrangler"], "path": "example.com"})
+    Contributor(**{"title": "John", "roles": ["creator"], "path": "example.com", "extra": "ignore"})
 
     with pytest.raises(ValidationError):
-        Contributors(**{"title": "John", "role": "wrangler"})
+        Contributor(**{"title": "John", "roles": ["wrangler"]})  # Missing `path`
 
 
 def test_mapping_fields():
@@ -35,6 +35,7 @@ def test_datapackage_metadata_complete():
         version="1.0",
         licenses=[{"foo": "bar"}],
         graph_context=["create", "delete"],
+        contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
     )
 
 
@@ -45,6 +46,7 @@ def test_datapackage_metadata_partial():
         version="1.0",
         licenses=[{"foo": "bar"}],
         graph_context=["create", "delete"],
+        contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
     )
 
 
@@ -60,6 +62,7 @@ def test_datapackage_metadata_error():
             version="1.0",
             licenses=[{"foo": "bar"}],
             graph_context=["create", "delete"],
+            contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
         )
     with pytest.raises(ValidationError):
         DatapackageMetadata(
@@ -72,6 +75,7 @@ def test_datapackage_metadata_error():
             version="1.0",
             licenses="foo",
             graph_context=["create", "delete"],
+            contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
         )
     with pytest.raises(ValidationError):
         DatapackageMetadata(
@@ -83,6 +87,7 @@ def test_datapackage_metadata_error():
             version="1.0",
             licenses=[{"foo": "bar"}],
             graph_context=["create", "delete"],
+            contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
         )
 
 
@@ -90,7 +95,7 @@ def test_validation_integration():
     Datapackage(
         name="Foo",
         description="Bar",
-        contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
+        contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
         mapping_source={
             "expression language": "foo",
             "labels": {"a": "something", "b": ["x", "y"]},
@@ -110,7 +115,7 @@ def test_validation_integration():
     Datapackage(
         name="Foo",
         description="Bar",
-        contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
+        contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
         mapping_source={
             "expression language": "foo",
             "labels": {"a": "something", "b": ["x", "y"]},
@@ -124,7 +129,7 @@ def test_validation_integration():
         Datapackage(
             name=42,
             description="Bar",
-            contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
+            contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
             mapping_source={
                 "expression language": "foo",
                 "labels": {"a": "something", "b": ["x", "y"]},
@@ -145,7 +150,7 @@ def test_validation_integration():
         Datapackage(
             name="Foo",
             description="Bar",
-            contributors=[{"title": "John", "role": "wrangler", "path": "example.com"}],
+            contributors=[{"title": "John", "roles": ["wrangler"], "path": "example.com"}],
             mapping_source={"labels": {"a": "something", "b": ["x", "y"]}},
             mapping_target={
                 "expression language": "foo",
@@ -163,7 +168,7 @@ def test_validation_integration():
         Datapackage(
             name="Foo",
             description="Bar",
-            contributors=[{"title": "John", "role": "wrangler"}],
+            contributors=[{"title": "John", "roles": ["wrangler"]}],
             mapping_source={
                 "expression language": "foo",
                 "labels": {"a": "something", "b": ["x", "y"]},
