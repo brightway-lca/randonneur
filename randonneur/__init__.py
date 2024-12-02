@@ -11,7 +11,7 @@ __all__ = (
     "read_excel_template",
 )
 
-__version__ = "0.5"
+__version__ = "0.6"
 
 from randonneur.config import MigrationConfig
 from randonneur.constants import MappingConstants
