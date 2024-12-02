@@ -1,7 +1,12 @@
+from collections import defaultdict
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
+import openpyxl
 import xlsxwriter
+
+from randonneur import Datapackage, MappingConstants
+from randonneur.licenses import LICENSES as ALL_LICENSES
 
 ROLES = [
     "author",
@@ -142,3 +147,137 @@ def create_excel_template(data: List[dict], filepath: Path, replace_existing: bo
 
     workbook.close()
     return filepath
+
+
+def read_excel_template(
+    filepath: Path,
+    worksheet: str = "Matching",
+    license_mapping: Optional[dict] = None,
+    field_mapping: Optional[dict] = None,
+) -> Datapackage:
+    wb = openpyxl.load_workbook(filepath)
+    ws = wb[worksheet]
+
+    SECTIONS = {
+        "Metadata",
+        "Contributors",
+        "Field mapping",
+        "Data",
+    }
+    CONTRIBUTORS = {
+        "Homepage": "path",
+        "Name": "title",
+        "Role": "roles",
+    }
+    METADATA_MAPPING = {
+        "Name": "name",
+        "Description": "description",
+        "License": "licenses",
+        "Version": "version",
+        "Source ID": "source_id",
+        "Target ID": "target_id",
+        "Source mapping": "mapping_source",
+        "Target mapping": "mapping_target",
+    }
+
+    current_section = None
+    metadata = {}
+    raw_data = defaultdict(list)
+
+    for line in [[cell.value for cell in row] for row in ws.iter_rows(max_row=ws.max_row)]:
+        if line[0] == "Randonneur template matching file":
+            continue
+        elif not any(line):
+            continue
+        elif line[0] in SECTIONS and current_section != "Data":
+            current_section = line[0]
+        else:
+            raw_data[current_section].append(line)
+
+    for section in SECTIONS:
+        if section not in raw_data:
+            raise ValueError(f"Missing required section {section}")
+
+    for line in raw_data["Metadata"]:
+        key, value = line[0], line[1]
+        if key == "License":
+            try:
+                metadata["licenses"] = [
+                    (
+                        license_mapping[value]
+                        if (isinstance(license_mapping, dict) and value in license_mapping)
+                        else ALL_LICENSES[value]
+                    )
+                ]
+            except KeyError as exc:
+                raise KeyError(f"Can't find given license short name {value}") from exc
+        elif value:
+            try:
+                metadata[METADATA_MAPPING[key]] = str(value)
+            except KeyError as exc:
+                raise KeyError(f"Can't understand metadata field {key}") from exc
+
+    for line in raw_data["Field mapping"]:
+        if isinstance(field_mapping, dict) and line[1] in field_mapping:
+            mapping = field_mapping[line[1]]
+        else:
+            mapping = getattr(MappingConstants, line[1], None)
+            if mapping is None:
+                raise KeyError(
+                    f"Can't find mapping {line[1]} in built-in or custom field mapping dictionaries"
+                )
+        try:
+            metadata[METADATA_MAPPING[line[0]]] = mapping
+        except KeyError as exc:
+            raise KeyError(f"Can't understand field mapping field {line[0]}") from exc
+
+    labels = [elem for elem in raw_data["Contributors"][0] if elem]
+    metadata["contributors"] = []
+    for line in raw_data["Contributors"][1:]:
+        try:
+            metadata["contributors"].append(
+                {
+                    CONTRIBUTORS[key]: ([value] if CONTRIBUTORS[key] == "roles" else value)
+                    for key, value in zip(labels, line)
+                    if value and key
+                }
+            )
+        except KeyError as exc:
+            raise KeyError("Can't find given contributor field") from exc
+
+    if "Source" not in raw_data["Data"][0]:
+        raise ValueError("Can't find 'Source' in data headers")
+    if "Target" not in raw_data["Data"][0]:
+        raise ValueError("Can't find 'Target' in data headers")
+    source_index, target_index = raw_data["Data"][0].index("Source"), raw_data["Data"][0].index(
+        "Target"
+    )
+    if source_index != 0:
+        raise ValueError("'Source' must be the first column in data headers")
+    labels = list(
+        zip(
+            ["source"] * target_index + ["target"] * (len(raw_data["Data"][0]) - target_index),
+            raw_data["Data"][1],
+        )
+    )
+    for source_target, label in labels:
+        if label not in metadata[f"mapping_{source_target}"]["labels"]:
+            given_labels = metadata[f"mapping_{source_target}"]["labels"]
+            raise ValueError(
+                f"Data label {label} not defined in {source_target} mapping:\n{given_labels}"
+            )
+
+    if len(raw_data["Data"]) <= 2:
+        raise ValueError("No data found")
+
+    data = []
+
+    for line in raw_data["Data"][2:]:
+        this = {"source": {}, "target": {}}
+        for (source_target, column), value in zip(labels, line):
+            this[source_target][column] = value
+        data.append(this)
+
+    rd = Datapackage(**metadata)
+    rd.add_data("replace", data)
+    return rd

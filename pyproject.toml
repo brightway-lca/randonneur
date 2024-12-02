@@ -35,6 +35,7 @@ dependencies = [
     "stats_arrays",
     "tqdm",
     "xlsxwriter",
+    "openpyxl<=3.2",
 ]
 
 [project.urls]
