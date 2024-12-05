@@ -279,5 +279,5 @@ def read_excel_template(
         data.append(this)
 
     rd = Datapackage(**metadata)
-    rd.add_data("replace", data)
+    rd.add_data("update", data)
     return rd
