@@ -17,7 +17,7 @@ class Contributor(BaseModel):
 
 class MappingFields(BaseModel):
     expression_language: str = Field(alias="expression language")
-    labels: Dict[str, Union[str, list]]
+    labels: Dict[str, Union[str, list, None]]
 
 
 class DatapackageMetadata(BaseModel):

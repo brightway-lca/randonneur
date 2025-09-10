@@ -66,3 +66,19 @@ class MappingConstants:
             ],
         },
     }
+    ILCD_BIO = {
+        "expression language": "XPath",
+        "labels": {
+            "name": "//*:baseName/text()",
+            "CAS number": "//*:CASNumber/text()",
+            "uuid": "//*:UUID/text()",
+            "unit_group_flow_property": "//*:flowProperty[@dataSetInternalID=//*:referenceToReferenceFlowProperty/text()]/*:referenceToFlowPropertyDataSet/@refObjectId",
+            "unit_name": None,  # Unit name not present in flow dataset
+            "unit_scaling": "//*:flowProperty[@dataSetInternalID=//*:referenceToReferenceFlowProperty/text()]/*:meanValue/text()",
+            "context": [
+                "//*:category[@level=\"0\"]/text()",
+                "//*:category[@level=\"1\"]/text()",
+                "//*:category[@level=\"2\"]/text()"
+            ]
+        },
+    }
