@@ -22,11 +22,11 @@ class MappingConstants:
     ECOSPOLD2 = {
         "expression language": "XPath",
         "labels": {
-            "filename": "concat(//*:activity/@id, '_', //*:intermediateExchange[*:outputGroup = '0' and @amount > 0]/@intermediateExchangeId, '.spold')",
+            "filename": "concat(//*:activity/@id, '_', //*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/@intermediateExchangeId, '.spold')",
             "name": "//*:activityName/text()",
             "location": "//*:geography/*:shortname/text()",
-            "reference product": "//*:intermediateExchange[*:outputGroup = '0' and @amount > 0]/*:name/text()",
-            "unit": "//*:intermediateExchange[*:outputGroup = '0' and @amount > 0]/*:unitName/text()",
+            "reference product": "//*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/*:name/text()",
+            "unit": "//*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/*:unitName/text()",
         },
     }
     ECOSPOLD1_BIO = {
