@@ -56,7 +56,7 @@ def test_read_excel_template_default(fixture):
     assert dp.licenses == [LICENSES["CC-BY-4.0"]]
     assert dp.version == "1"
     assert dp.graph_context == ["edges"]
-    assert dp.data["replace"] == expected
+    assert dp.data["update"] == expected
 
 
 def test_read_excel_template_custom_name(fixture):

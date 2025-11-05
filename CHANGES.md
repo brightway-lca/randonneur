@@ -5,8 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.6.2] - 2025-06-26
+## [0.6.3] - 2025-11-06
 
+* Fix bugs when validating `create` transformations and better test transformation validation
+
+## [0.6.2] - 2024-12-05
+
+* Fix bug in ecospold2 XPath expressions for negative production amounts of reference products
 * [#20: Change import paths for WASM compatibility](https://github.com/brightway-lca/randonneur/pull/20)
 
 ## [0.6.1] - 2024-12-05

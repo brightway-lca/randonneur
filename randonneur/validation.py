@@ -41,11 +41,16 @@ def validate_data_for_verb(verb: str, data: list, mapping: dict) -> None:
     if verb not in VERBS:
         raise ValueError(f"Transformation verb {verb} must be one of {VERBS}")
 
-    all_source_keys = set(mapping["source"]["labels"])
+    if verb != "create":
+        all_source_keys = set(mapping["source"]["labels"])
     all_target_keys = set(mapping["target"]["labels"])
 
     for element in data:
-        missing = set(element["source"]).difference(all_source_keys)
+        if verb != "create":
+            missing = set(element["source"]).difference(all_source_keys)
+        else:
+            missing = set([])
+
         if missing:
             raise UnmappedData(
                 f"""
@@ -58,6 +63,7 @@ In the data object:
 {pformat(element)}
 """
             )
+
         if verb == "disaggregate":
             missing = (
                 set.union(*[set(obj) for obj in element["targets"]])

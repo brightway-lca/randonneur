@@ -80,7 +80,7 @@ class Datapackage:
             self.data[verb] = []
         self.data[verb].extend(data)
 
-    def to_json(self, filepath: Optional[Path] = None) -> Path:
+    def to_json(self, filepath: Optional[Path] = None) -> Path | str:
         if filepath is None:
             return json.dumps(self.metadata() | self.data, indent=2, ensure_ascii=False)
 
@@ -95,3 +95,19 @@ class Datapackage:
             json.dump(self.metadata() | self.data, f, indent=2, ensure_ascii=False)
 
         return filepath
+
+    @staticmethod
+    def from_json(filepath: Path) -> "Datapackage":
+        assert filepath.is_file(), "Given path isn't a file"
+
+        file_data = json.load(open(filepath))
+
+        file_data["created"] = datetime.fromisoformat(file_data["created"])
+        mapping = file_data.pop("mapping")
+        file_data["mapping_source"] = mapping.pop("source")
+        file_data["mapping_target"] = mapping.pop("target")
+        data = {verb: file_data.pop(verb) for verb in ("create", "replace", "update", "delete", "disaggregate") if verb in file_data}
+
+        dp = Datapackage(**file_data)
+        dp.data = data
+        return dp
