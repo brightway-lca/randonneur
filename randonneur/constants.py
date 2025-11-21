@@ -57,13 +57,14 @@ class MappingConstants:
         "expression language": "XPath",
         "labels": {
             "name": "//*:elementaryExchange/*:name/text()",
-            "CAS number": "//*:elementaryExchange/@casNumber",
+            "cas_number": "//*:elementaryExchange/@casNumber",
             "unit": "//*:elementaryExchange/*:unitName/text()",
             "identifier": "//*:elementaryExchange/@elementaryExchangeId",
             "context": [
                 "//*:elementaryExchange/*:compartment/*:compartment/text()",
                 "//*:elementaryExchange/*:compartment/*:subcompartment/text()",
             ],
+            "synonyms": "//*:elementaryExchange/*:synonym/text()",
         },
     }
     ILCD_BIO = {
@@ -79,6 +80,6 @@ class MappingConstants:
                 "//*:category[@level=\"0\"]/text()",
                 "//*:category[@level=\"1\"]/text()",
                 "//*:category[@level=\"2\"]/text()"
-            ]
+            ],
         },
     }
