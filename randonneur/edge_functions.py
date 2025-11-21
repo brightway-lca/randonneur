@@ -105,6 +105,8 @@ def migrate_edges_replace(
             migration = migration_fld[edge]
             if "conversion_factor" in migration["target"]:
                 rescale_edge(edge, migration["target"]["conversion_factor"])
+            elif "conversion_factor" in migration:
+                rescale_edge(edge, migration["conversion_factor"])
             elif "allocation" in migration["target"]:
                 rescale_edge(edge, migration["target"]["allocation"])
             edge.update(migration["target"])
