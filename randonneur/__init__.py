@@ -13,7 +13,7 @@ __all__ = (
     "utils",
 )
 
-__version__ = "0.7"
+__version__ = "0.7.1"
 
 from randonneur.config import MigrationConfig
 from randonneur.constants import MappingConstants

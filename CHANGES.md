@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [0.7.1] - 2025-11-21
+
+* `add_conversion_factor_to_nodes` attribute to `MigrationConfig`
+* Change `CAS number` to `cas_number` in ecospold2 bio paths
+* Allow specifying an edge `conversion_factor` in the root data in addition to the `target` section.
+
 ## [0.7] - 2025-11-06
 
 * Fix edge filtering during `create` verbs
