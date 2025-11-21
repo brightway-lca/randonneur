@@ -125,6 +125,10 @@ class MigrationConfig(BaseModel):
     >>> [{"edges": [{"name": "foo", "location": "bar", "comment": "Reason for change"}]}]
     ```
 
+    `add_conversion_factor_to_nodes`: Flag indicating if a `conversion_factor` attribute should be
+    added to transformed node data, if available. This is different than edges which have amounts
+    that can be rescaled. Used primarily in matching elementary flows with unit conversions.
+
     """
 
     mapping: Optional[Dict[str, dict]] = None
@@ -136,3 +140,4 @@ class MigrationConfig(BaseModel):
     verbs: List[str] = SAFE_VERBS
     case_sensitive: bool = False
     add_extra_attributes: bool = False
+    add_conversion_factor_to_nodes: bool = False

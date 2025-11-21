@@ -6,11 +6,11 @@ from randonneur.utils import EXCLUDED_ATTRS, FlexibleLookupDict
 
 
 def migrate_nodes_disaggregate(*args, **kwargs):
-    raise NotImplemented
+    raise NotImplementedError
 
 
 def migrate_nodes_replace(*args, **kwargs):
-    raise NotImplemented
+    raise NotImplementedError
 
 
 def migrate_nodes_update(
@@ -26,9 +26,13 @@ def migrate_nodes_update(
             node.update(migration["target"])
             if config.add_extra_attributes:
                 node.update({k: v for k, v in migration.items() if k not in EXCLUDED_ATTRS})
+            if config.add_conversion_factor_to_nodes and migration.get("conversion_factor"):
+                node["conversion_factor"] = (
+                    node.get("conversion_factor", 1.) * migration.get("conversion_factor")
+                )
         except KeyError:
             continue
-    return node
+    return graph
 
 
 def migrate_nodes_delete(
