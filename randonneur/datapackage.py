@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 from randonneur.licenses import LICENSES
 from randonneur.validation import DatapackageMetadata, MappingFields, validate_data_for_verb
@@ -80,7 +80,7 @@ class Datapackage:
             self.data[verb] = []
         self.data[verb].extend(data)
 
-    def to_json(self, filepath: Optional[Path] = None) -> Path | str:
+    def to_json(self, filepath: Optional[Path] = None) -> Union[Path, str]:
         if filepath is None:
             return json.dumps(self.metadata() | self.data, indent=2, ensure_ascii=False)
 
